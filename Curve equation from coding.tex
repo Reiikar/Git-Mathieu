@@ -1,0 +1,881 @@
+\documentclass[10pt]{article}
+
+\usepackage{amsmath}
+\usepackage{verbatim}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage[utf8]{inputenc}
+\usepackage{pict2e}
+\usepackage{tikz}
+
+\usepackage[all]{xy}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=1.5cm}
+
+
+
+\newtheorem{def1}{Definition}[]
+\newtheorem{expl}{Example}[]
+\newtheorem{thm}{Theoreme}[]
+\newtheorem{prop1}{Proposition}[]
+\newtheorem{coro1}{Corollary}[]
+\newtheorem{lem1}{Lemma}[]
+\newtheorem{rq1}{Remark}[]
+\newtheorem{defp}{Définition/Proposition}[]
+\newtheorem{Analyse}{Analyse}[]
+\newtheorem{appli}{Application}[]
+\newtheorem{not1}{Notation}[]
+
+
+\newcommand{\s}{\vspace{0.3cm}}
+\newcommand{\cd}{\cdot}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\D}{\Delta}
+\newcommand{\op}{{\mathcal{O}_P/\!\raisebox{-.65ex}{\ensuremath{P}}}}
+\newcommand{\kki}{{k_i/\!\raisebox{-.65ex}{\ensuremath{k}}}}
+\newcommand{\fpf}{{F^+/\!\raisebox{-.65ex}{\ensuremath{F}}}}
+\newcommand{\ff}{{F'/\!\raisebox{-.65ex}{\ensuremath{F}}}}
+\newcommand{\ffp}{{F''/\!\raisebox{-.65ex}{\ensuremath{F'}}}}
+\newcommand{\ffq}{{F/\!\raisebox{-.65ex}{\ensuremath{\mathbb{F}_q}}}}
+\newcommand{\ffdouble}{{F''/\!\raisebox{-.65ex}{\ensuremath{F}}}}
+\newcommand{\ffr}{{F_r/\!\raisebox{-.65ex}{\ensuremath{\fqr}}}}
+\newcommand{\ffm}{{F_m/\!\raisebox{-.65ex}{\ensuremath{\fqm}}}}
+\newcommand{\fk}{{F/\!\raisebox{-.65ex}{\ensuremath{K}}}}
+\newcommand{\ml}{{M/\!\raisebox{-.65ex}{\ensuremath{L}}}}
+\newcommand{\plp}{{F'_{P'}/\!\raisebox{-.65ex}{\ensuremath{F_P}}}}
+\newcommand{\fkp}{{F'/\!\raisebox{-.65ex}{\ensuremath{K'}}}}
+\newcommand{\fkpp}{{F''/\!\raisebox{-.65ex}{\ensuremath{K''}}}}
+\newcommand{\kk}{K'/\!\raisebox{-.65ex}{\ensuremath{K}}}
+\newcommand{\aff}{\mathcal{A}_{\ff}}
+\newcommand{\av}{\mathcal{O}}
+\newcommand{\avp}{\mathcal{O'}}
+\newcommand{\rsg}{GRS_k(\al,v)}
+\newcommand{\al}{\alpha}
+\newcommand{\cw}{C_{\Omega}(D,G)}
+\newcommand{\cg}{C_{\la}(D,G)}
+\newcommand{\fqm}{\mathbb{F}_{q^m}}
+\newcommand{\fqn}{\mathbb{F}_{q^n}}
+\newcommand{\fq}{\mathbb{F}_q}
+\newcommand{\fqd}{\mathbb{F}_{q^2}}
+\newcommand{\fqo}{\mathbb{F}_{q_0}}
+\newcommand{\fqr}{\mathbb{F}_{q^r}}
+\newcommand{\w}{\omega}
+\newcommand{\af}{\mathcal{A}_F}
+\newcommand{\afp}{\mathcal{A}_{F'}}
+\newcommand{\vp}{\nu_P}
+\newcommand{\la}{\mathfrak{L}}
+\newcommand{\pf}{\mathbb{P}_F}
+\newcommand{\pfp}{\mathbb{P}_{F'}}
+\newcommand{\cf}{\mathfrak{C}_F}
+\newcommand{\df}{\mathfrak{D}_F}
+\newcommand{\z}{z^{-1}}
+\newcommand{\su}{\subseteq}
+\newcommand{\X}{\mathcal{X}}
+\newcommand{\Y}{\mathcal{Y}}
+\newcommand{\PR}{\mathcal{P}}
+\newcommand{\QR}{\mathcal{Q}}
+\newcommand{\h}{\mathcal{H}}
+\newcommand{\pl}{\mathbb{P}^1}
+\newcommand{\co}{\mathcal{C}}
+\newcommand{\coo}{\mathcal{D}}
+\newcommand{\f}{\mathbb{F}}
+\newcommand{\G}{\mathcal{G}}
+
+\title{Finding curve equation from coding}
+
+
+\begin{document}
+
+\s
+\begin{titlepage}
+
+  \begin{center}
+  		
+        \vspace*{5cm}
+ 		\textbf{\bf{\Large{FINDING CURVE EQUATION FROM CODING}}}
+
+ 		\vspace*{1cm}
+
+  \large{Mathieu Lhotel} \\
+  \large{\it{Université de Bourgogne Franche-Comté}}\\
+  \large{\today}
+    \end{center}
+
+\vspace*{2cm}
+
+\textbf{ABSTRACT.} \text{} 
+\it In this paper, we present a way to recover the defining equation of an algebraic curve $\Y$ defined over the finite field $\fq$, by using a coding theoritic approach. In particular, from the knowledge of the invariant code of a structured algebraic geometry code defined on $\Y$, we manage to recover enough points to recover the equation of the curve. We also give the link with McEliece cryptosystem using algebraic-geometry codes, as we prove that the security level of those cryptosystems reduces to the security of the underlying invariant code, which is easier to brute force.
+
+
+\end{titlepage}
+
+
+
+\section{Introduction}
+
+\s
+
+In the study of algebraic function fields over finite fields, we will mainly be interested in the problem : 
+
+\s
+
+Suppose that $L/K$ is a finite, algebraic extension of function fields over the finite field $\fq$, with $q=p^s$. What kind of informations do we need to recover the defining equation of $L$, that is the minimal polynomial of an element $y \in L$ such that $L=K(y)$ ?
+
+\s
+
+As another formulation, in a cover of smooth projective curves $\Y \rightarrow \X$, one can wonder how to recover the defining equation of $\Y$. In order to study this problem, we will consider the so-called algebraic-geometry codes. In 1978, McEliece  (see \cite{McE}) introduced a cryptosystem based on coding theory, that turns out to be a good candidate for post-quantum cryptography. It has been shown that the main issue of this cryptosystem is that it involves large key sizes, which is the reason why a lot of work has been made in order to reduce it, while keeping a good security level. A good idea to overpass this problem is to consider structured AG-codes, that is codes with non trivial permutation group (see for example the case of quasi-cyclic codes in \cite{Bar}, Chapter 5).  
+
+\s
+
+In this paper, we will see how to recover the equation of a curve (or equivalently, the defining equation of an algebraic function field) by using codes defined on the curve. To keep it in an algebraic point of vue, we will see that "structured codes on a curve" corresponds to "orbites of places of an algebraic function field under the action of an automorphism of the corresponding curve".
+
+\s
+
+In Section 2, we will gives some classical notations and definitions what will be useful later on. Section 3 will be devoted to the method itself. Section 4 gives some simple applications, such as Kummer or Artin-Schreier covering. Finally, section 5 will discuss the generalisation of the method to any covering with solvable Galois groups. 
+
+\s
+
+\section{Notations}
+
+\s
+
+Let $\fq$ be the finite field with $q$ elements, were $q=p^s$ is a power of a prime $p$. A function field of one variable over $\fq$ is a field $K$ such that there exists an element $x\in K$ such that $K/\fq(x)$ is an algebraic and separable extension. 
+
+We will denote by $\mathbb{P}_K$ the set of places of $K$, and any place $P \in \mathbb{P}_K$ comes with its valuation ring $O_P$ and its discrete valuation $\nu_P : K \rightarrow \Z$, . The degree of the place $P$, denoted $deg(P)$ is define as the finite integer $deg(P) := [O_P/P:\fq] < \infty$.
+The divisor group of $K$, denoted $Div(K)$, is the set of formal sums 
+\[A = \sum\limits_{P \in \rm{Supp}(A)} \nu_P(A) \cd P,\]
+where $\rm{Supp}(A)$ is a finite subset of $\mathbb{P}_K$, called the support of $A$, made of places such that $\nu_{P}(A) \neq 0$. \\ A place  $P \in \rm{Supp}(A)$ is called a zero of $A$ if $\nu_P(A) >0$ (resp. a pole of $A$ if $\nu_P(A) < 0$). For a function $z \in K$, we denote by $(z)^K$, $(z)^K_0$ and $(z)^K_{\infty}$ its principal divisor, divisor of zeroes and divisor of poles respectively, that is $(z)^K = (z)^K_0 + (z)^K_{\infty}$, where 
+\[(z)^K_0 = \sum\limits_{\nu_P(A) > 0}\nu_P(A) \cd P \quad and \quad (z)^K_{\infty} = \sum\limits_{\nu_P(A) < 0}\nu_P(A) \cd P.\]
+The degree of a divisor is naturally defined by the formula
+\[deg(A) = \sum\limits_{P \in \rm{Supp}(A)} \nu_P(A) \cd deg(P).\]
+Given a divisor $A \in Div(K)$, its Riemann-Roch space is defined as the $\fq$-vector space
+\[\mathcal{L}(A) = \{z \in L \ | \ (z)^L \geq -A\} \cup \{0\},\]
+and $l(A):= \rm{dim}_{\fq}(\mathcal{L}(A))$ as its dimension.
+
+
+\newpage
+
+Given a tower $\fq(x) \su K \su L$ of function fields over $\fq$, let us consider a place  $Q \in \mathbb{P}_K$ and one of its extension $P \in \mathbb{P}_L$, that is $P \mid Q$. The ramification index will as usual be denoted $e(P|Q)$, called the ramification index of $P|Q$. \\
+If $L := \fq(\Y)$ and $K:=\fq(\X)$ are the function fields of to curves and if $\pi : \Y \rightarrow \X$ is the corresponding morphism (supposed to be separable), we will consider the pullback of $Q \in \mathbb{P}_K$ as the divisor
+\[\pi^*Q = \sum\limits_{P \mid Q} e(P|Q) \cd P \in Div(L).\]
+We will make great use of the following lemma, which shows that pullbacks preserves the notion of principal divisors :
+
+\s
+
+\begin{lem1}
+Let $z \in L$ be a function. Then 
+\[(z)^L = \pi^*(z)^K, \ (z)^L_0 = \pi^*(z)_0^K \ and \ (z)^L_{\infty} = \pi^*(z)^K_{\infty}.\]
+\end{lem1} 
+
+\s
+
+\begin{proof}
+see \cite{Sti}, proposition 3.1.9.
+\end{proof}
+
+\s
+
+Finally, let us recall a few coding theory notations and results : \\
+ Let $\X$ be a smooth projective curve over $\fq$ with function field $L = \fq(\X)$, $\PR = \{P_1,...,P_n\}$ be a set of $n$ distincts places of degree 1 in $L$  and $G \in Div(L)$ be a divisor sucht that $\rm{Supp}(G) \cap \PR = \emptyset$. Let us also suppose that $deg(G)<n$. Then we define the AG-code associated to the triple $(\X,\PR,G)$ as the $\fq$-vector space
+\[\mathcal{C} := C_L(\X,\PR,G) = \{ (f(P_1),...,f(P_n)) \ | \ f \in L(G)\} \su \fq^n.\]
+In particular, we are interested in "structured" AG-codes, that is codes with non trivial permutation group. To be concret, consider an automorphism subgroup $\Sigma \su Aut(L)$, and denote by $Orb_{\Sigma}(P)$ the orbit of a place $P \in L$ under the action of this subgroup. Then if $\Sigma(\PR) = \PR$ and $\Sigma(G)=G$, then $\Sigma$ induces a permutation of the code $C_L(\X,\PR,G)$. In order to have this satisfied, the support $\PR$ and the divisor $G$ are chosen such that they are made of distincts orbits under the action of $\Sigma$. (see for exemple the construction of Elise Barelli in \cite{Bar} in section 5.3.1).
+
+\s
+
+\begin{rq1} \rm
+If $\Gamma = \langle\sigma\rangle$ is cyclic of order $\ell$ generated by $\sigma \in Aut(L)$ and if $\PR$ and $G$ are $\sigma$-invariant; the code $C_L(\X,\PR,G)$ is said to be $\ell$-quasi-cyclic. This case has already been studied in \cite{Bar}, chapter 5; but we will return to this case as a first example later. 
+\end{rq1}
+
+\s
+
+For an AG-code $\mathcal{C}$ that is invariant under the action of an automorphism group $\Gamma \su Aut(L)$, we can define its "invariant code" (that appeared for the first time in \cite{FOP}, and was developped in \cite{Bar}), by 
+
+\[\mathcal{C}^{\Sigma} := \{c \in \mathcal{C} \ | \ \tilde{\Sigma}(c)=c\},\]
+where $\tilde{\Sigma}$ is the permutation induced by $\Sigma$ on the code $\mathcal{C}$ (note that by construction, one have $\tilde{\Sigma}(\mathcal{C}) = \mathcal{C}$).
+
+A classical question in this cryptographic context is to wonder if one can recover the secret key (ie. the structure of the code $\mathcal{C}$) using its invariant code. If this is possible, we say that the security of the underlying cryptosystem reduces to the security of the smaller invariant code. In \cite{Bar} (see. Chaper 5), the authors showed that this was possible in the case of a Kummer covering of the projective line. Using our method, we will prove the same thing another way, and also prove that one can do the same security reduction in "many" other cases.
+
+\s
+
+\begin{thm} [Structure of the invariant code]
+Let $\mathcal{C} := C_L(\X,\PR,G)$ be an AG-code defined on $\X$, invariant under the action of an automorphism group $\Sigma \su Aut(\X)$. Then its invariant code is also an AG-code, defined on the quotient curve $\X/\Sigma$. In particular, there exist a support $\tilde{\PR}$ on the quotient curve, as well as a divisor $\tilde{G}$ such that
+\[\mathcal{C}^{\Sigma} = C_L(\X/\Sigma,\tilde{\PR},\tilde{G}).\]
+\end{thm}
+
+\s
+ 
+\begin{proof}
+see \cite{Bar}, theorem 5.2.
+\end{proof}
+
+\s
+
+\begin{rq1} \rm
+Under additionnal hypothesis, one can describe the support and the divisor of the invariant code, as we will see later. In particular, they can be understood by studying ramification in the extension $L / L^{\Sigma}$, where $L^{\Sigma}$ is the classical notation for the fixed field of $L$ under $\Sigma$ (recall that the fixed field is nothing but the function field of the quotint curve $\X/\Sigma$).
+\end{rq1}
+
+\s
+
+\begin{rq1} \rm
+It has been proven that $AG-codes$ on any curve with positive genus can be attacked (see. \cite{CMP}), and thus they are not safe enough to consider cryptosystem based on them. Nevertheless, one can still consider their subfield subcodes, for the ones no attack is yet known (see. \cite{Bar}, definition 1.9 for a definition of these codes). We will not focus on them later, but keep in mind that theorem 3 also hold for subfield subcodes, since the restiction to the subfield commutes with the invariant operation (see \cite{Bar}, remark 6 p. 46).
+\end{rq1}
+
+\s
+
+As a complement of this section, see  the book of Stichtenocht \cite{Sti}, chapter 1. 
+
+\section{Recovering the equation of a curve}
+
+\s
+
+Throught all this section, let $q=p^s$ be a power of a prime, and $\fq$ be the finite field with $q$ elements. Let us consider a separable morphism 
+\[\pi : \Y \rightarrow \X\]
+between curves defined over $\fq$. It corresponds to a tower of function fields $\fq(x) \su K \su L$, where $K=\fq(\X)$ and $L=\fq(\Y)=\fq(x,y)$. Since $L$ is an finite  algebraic extension of $K$, there exists an element $y \in L$ such that 
+\[L = K(y) \ , \ and \ H(x,y)=0 \ , \ H \in \fq[X,Y] \ irreducible.\]
+In particular, in order to recover the defining equation of the curve $\Y$, we have to rebuild the minimal polynomial of $y$ over $K$, that is $H$. To this end, let us introduce the following concept :
+
+
+\s
+
+\begin{def1}
+For a divisor $G \in Div(L)$, let us denote by $\tilde{G} \in Div(K)$ the largest divisor (according to the degree) such that
+\[\pi^*\tilde{G} \leq G.\]
+Note that $\tilde{G}$ is unique and thus well-defined.
+\end{def1} 
+
+\s 
+
+\begin{rq1}
+If $A \in Div(K)$, we have according to the definition of the pullback of a divisor (see p.3) :
+\[\widetilde{\pi^*A}=A.\]
+\end{rq1}
+
+\s
+
+Now, let us introduce a few notations. Denote by $\ell=[L:K]$ the degree of the extension $L/K$. Suppose that we are given a set of $r$ places of degree one in $K$, say $\tilde{\PR} = \{Q_1,...,Q_r\}$, that totally split in $L/K$. For any $1 \leq i \leq r$, one then have 
+\[\pi^*Q_i = P_{i,1} + ... + P_{i,\ell} \ , \ P_{i,j} \in \mathbb{P}_L\]
+Denote by $\PR = \{P_{i,j} \ | \ 1 \leq i \leq r \ and \ 1 \leq j \leq \ell\}$ the set of all extensions of the $Q_i$'s in $L$. Let $G \in Div(L)$ be a divisor of degree $d$ smaller that $n=\ell r$ such that $\rm{Supp}(G) \cap \PR = \emptyset$. Also, we denote by $\tilde{G} \in Div(K)$ its related divisor according to definition 1.
+Note that this implies that $\rm{Supp}(\tilde{G}) \cap \tilde{\PR} = \emptyset$ as well. 
+
+\s
+
+\begin{rq1} \rm
+In order to make the link with section 2.3 and coding theory, the situation described above is a particular case of the following : Consider a curve $\Y$ with function field $L$, together with a subgroup $\Sigma \su Aut(\Y)$. We then gets a cover $\Y \rightarrow \Y/\Sigma$, that is the function field $K = \fq(\Y/\Sigma) = L^{\Sigma}$. If $G$ is made of orbits under the action of $\Sigma$, then $\PR$ and $G$ gives rise to an AG-code $C_L(\Y,\PR,G)$ that is invariant under the action of $\Sigma$, and thus its invariant code is given by $C_L(\Y/\Sigma,\tilde{\PR},\tilde{G})$ (this is explained in \cite{Bar}, section 5.3.2, in the partical case where the quotient curve is the projective line). This means that the invariant support and divisor in Theorem 3 are here described using ramification in the extension $L/L^{\Sigma}$. 
+\end{rq1}
+
+\s
+
+Before describing the procedure to recover the equation of $\Y$, let us put together our assumptions :
+
+\begin{enumerate}
+\item We know a parity check matrix $H$ of the algebraic geometry code \[\mathcal{C} = C_L(\Y,\PR,G) ;\]
+\item We know a plane model of the quotient curve $\X$ (ie. the defining equation of the function field $K$), the set of places $\tilde{\PR}$ and the divisor $\tilde{G} \in Div(K)$;
+\item We know how the morphism $\pi : \Y \rightarrow \X$ acts on the set of places $\PR$, that is for every $P \in \PR$, we know the corresponding place $Q \in \tilde{\PR}$ such that $P \mid Q$ (ie. $Q=\pi(P)$);
+\item We have \it{"enough informations"} \rm on the pole divisor of $y$ in $K$, where $y \in L$ is such that $L=K(y)$. This assumption will be discussed later, since the key point of the attack will be to control the divisor 
+\[\widetilde{(y)^L_{\infty}} \in Div(K).\] 
+In fact, we will need to understand its support in $K$, and how he ramifies in $L/K$.
+\end{enumerate}
+\s
+
+Let us now explain what we plan to do. The main idea is to recover "enough" rational point on the curve $\Y$, in order to be able to recover its defining equation using interpolation. The good candidates are of course the elements in the support $\PR$ (recall that any degree one place in $L$ corresponds to a rational points in $\Y(\fq)$). Thanks to hypothesis $2)$, we know the coordinates of the rational points corresponding to $Q_i$'s in the plane model of the curve $\X$. In fact, let us denote by $\alpha$ a primitive element of $K$ over $\fq(x)$, that is $K = \fq(x,\alpha)$ (possible since $K/\fq(x)$ is separable and algebraic). Then one can denote by $(x(Q_i):\alpha(Q_i):1)$ the coordinate of the rationnal point in $\X(\fq)$ corresponding to the place $Q_i \in \tilde{\PR}$. \\
+
+As the curve $\Y$ covers the plane model of $\X$, it admits a model in $\mathbb{P}^3(\fq)$; that is any $P \in \PR$ corresponds to a point with coordinates $(x(P):\alpha(P):y(P):1) \in \mathbb{P}^3(\fq)$. Since places in $\PR$ are extensions of places in $\tilde{\PR}$, they corresponds to points that have the same $x$ and $\alpha$ coordinates, and equals to those of their restrictions in $K$. In other words, forall $1 \leq i \leq r$ and $1 \leq j \leq \ell$, the place $P_{i,j} \in \PR$ corresponds to the point
+\[ (x(Q_i):\alpha(Q_i):y(P_{i,j}):1) \in \Y(\fq).\]
+
+As a result, from hypothesis $2)$, one only need to recover the $y$-evaluation of points in $\PR$ in order to conclude. So the key part will be to recover the row vector
+\begin{center}
+\textbf{y} = $(y_{i,j})_{i,j}$, \quad \quad \quad (1)
+\end{center}
+where $y_{i,j} := y(P_{i,j})$, for every $1 \leq i \leq r$ and $1 \leq j \leq \ell$.
+
+\s
+
+In order to recover the vector \textbf{y}, we will construst a system of linear equations of which it is a solution. For that, recall that by definition, the parity check matrix of the code $\mathcal{C}=C_L(\Y,\PR,G)$ satisfies
+\[c \in \mathcal{C} \iff H \cd c^T = 0. \quad \quad \quad (2)\]
+Moreover, we know that a codeword $c \in \mathcal{C}$ comes from evaluation at $P_{i,j} \in \PR$ of functions in the Riemann-Roch space of $G$, that is.
+\[c = (f(P_{i,j})) \ , \ f \in L(G).\]
+
+Of course, $L(G)$ is unknown since the divisor $G$ is as well. But we actually don't need the whole $L(G)$ to recover \textbf{y}. In fact, we are searching for a subspace $\mathcal{L} \su L(G)$, big enough (we will explain it later), and made of functions that specifically have the form $g \cd y$, where $g \in K$ and $y$ is such that $L=K(y)$. In fact, if we found such a space, one have 
+\[\{c= (g(P_{i,j}) \cd y(P_{i,j})) \ , \ 1 \leq i \leq r \ , \ 1 \leq j \leq \ell \ and \ f\cd y \in \mathcal{L}\} \su \mathcal{C}.\] 
+
+In particular, since $g \in K$, the $g(P_{i,j})$ are known (recall the discussion above), and thus the right-hand side of $(2)$ will gives us a system where everything is known but the $y(P_{i,j})$, that is exactly what we want.
+
+\s
+
+Let us know explain how to get a space of functions $\mathcal{L} \su L(G)$ as above. In particular, since we know the quotient curve (that is we know its function field $K$) as well as the morphism of curve $\pi : \Y \rightarrow \X$, we will construct $\mathcal{L}$ as a pull-back of function in $K$. To be concrete, we are searching for a space of functions $\mathcal{F} \su K$, as big as possible, such that the following holds :
+
+\[\pi^*\mathcal{F} \cd y \in L(G). \quad \quad \quad (3)\]
+
+The following lemma gives us a good choice for the space $\mathcal{F}$, that will actually turn out to be the best one.
+
+\s
+
+\begin{lem1}
+The space of functions $\mathcal{F} \su K$, given by 
+\[\mathcal{F} := L\left(\widetilde{G}-\widetilde{(y)^L_{\infty}}\right) \su L(\tilde{G})\]
+satisfies condition $(3)$ above.
+\end{lem1}
+
+\s
+
+\begin{proof}
+The inclusion $\mathcal{F} \su L(\tilde{G})$ easy follows from the fact that $\widetilde{(y)^L_{\infty}}$ is a positive divisor, and thus $\tilde{G}-\widetilde{(y)^L_{\infty}} \leq \tilde{G}$. Let us show that $(3)$ holds. Let $f \in \mathcal{F} =  L\left(\tilde{G}-\widetilde{(y)^L_{\infty}}\right)$. By definition, one have 
+\[(f)^K \geq -\left(\tilde{G}-\widetilde{(y)^L_{\infty}}\right),\]
+and then 
+\[(\pi^*f)^L \geq -\pi^*\left(\tilde{G}-\widetilde{(y)^L_{\infty}}\right) = (y)^L_{\infty} - G \ , \ \quad using \ remark \ 4.\]
+Now, one gets 
+\[(\pi^*f \cd y)^L = (\pi^*f)^L  + (y)^L \geq  ((y)^L_{\infty} - G)+(y)^L = (y)^L_0 - G \geq -G,\]
+since $(y)^L_0$ is an effective divisor. In particular, we just proved that $\pi^*f \cd y \in L(G)$ for every $f \in \mathcal{F}$, that is $(3)$ holds.
+\end{proof}
+
+\s
+
+\begin{rq1} \rm
+As we are searching for a space $\mathcal{F}$ as big as possible, we can see in the above proof that we made the best choice possible. In fact, since we want functions with specific form $g \cd y$ where $g$ doesn't depend on the variable $y$, one need to compensate this fact by "deleting" the term $-(y)^L_{\infty}$, which is the smallest as possible, that is we loose the least information as possible in order to have our condition satisfied. 
+\end{rq1}
+
+\s
+
+Note that the space $\mathcal{F}$ in lemma $2$ can be explicitely determined in our situation, since it is a subspace of $K$ which is supposed to be known (see hypothesis 2) and 4) above). In particular, the divisor 
+\[D := \tilde{G} - \widetilde{(y)}^L_{\infty} \in Div(K) \quad \quad \quad (4)\]
+is known from now on. In particular, one can find a basis of its Riemann-Roch space, that is there exists functions $f_1,...,f_s \in K$ (where $s=l(D)$) such that 
+\[\mathcal{F} := L(D) = \langle f_1,...,f_s \rangle_{\fq}.\]
+
+Now let us consider the row vectors, for every $1 \leq k \leq s$ :
+\begin{center}
+\textbf{u}$_{k}:= \left(\pi^*f_k(P_{i,j})\right)_{i,j}$ , with $1 \leq i \leq r \ , \ 1 \leq j \leq \ell$.
+\end{center}
+
+At this point, we are able to compute the \textbf{u}$_{k}$ the following way :
+\begin{enumerate}
+\item We first compute the vectors \textbf{a}$_{k} := (f_k(Q_i))_i$ , $1 \leq i \leq r$. This is easily done since both the $f_k$'s and $Q_i$'s are known by this point;
+\item Next we use hypothesis $3)$ to recover the \textbf{u}$_{k}$'s : In fact, we know by construction that for any fixed $1 \leq i \leq r$, one have 
+\[f_k(Q_i) = \pi^*f_k(P_{i,j}) \ , \ 1 \leq j \leq \ell,\]
+since the function $\pi^*f_k$ doesn't act on the $y$-coordinates, as they are pull-backs of function in $K$. Since we know the indices (in $\PR$) corresponding to the extension in $L$ of any $Q \in \tilde{\PR}$, one can re-build the \textbf{u}$_{k}$'s by duplicating the value of $f_k(Q_i)$ in the corresponding coordinates.
+\end{enumerate}
+
+Now, using $2), 3)$ and the definition of an AG-code, one gets 
+\begin{center}
+\textbf{u}$_{k}$ $\star$ \textbf{y} $\in \mathcal{C}$, for every $1 \leq k \leq s,$
+\end{center}
+where $\star$ is the componentwise product of row vectors and \textbf{y} is the desired vector.
+If we denote by \textbf{D}$_{k} = $ Diag(\textbf{u}$_{k}$), equation $(2)$ leads to the linear system 
+\begin{center}
+$\begin{pmatrix}
+H \cd \textbf{D}_1 \\
+\vdots \\
+H \cd \textbf{D}_s
+\end{pmatrix}
+\cd \textbf{y}^T = 0, \quad \quad \quad (5)$
+\end{center}
+from which \textbf{y} is a particular solution.
+Then if we have enough equations, we can hope to recover \textbf{y} by solving it. Let us now give some more informations about this system.
+
+\s
+
+ Let us denote by
+\begin{center}
+$A := \begin{pmatrix}
+H \cd \textbf{D}_1 \\
+\vdots \\
+H \cd \textbf{D}_s
+\end{pmatrix}
+$
+\end{center}
+the above matrix. It is clear that the vector \textbf{y} is in the kernel of $A$, but since it's the only solution we are searching for, it can be interesting to investigate other solutions. In order to have unicity of the solution, we would like to have as much equations as possible. Thus, let us study how the parameters impact the number of equations and thus the space of solutions.
+
+\s 
+
+If $S$ denotes the number of equations in the linear system $(5)$, one have 
+\[S = \#\rm{Rows}(H) \times s,\]
+where $s := l(D)$. By definition, the number of rows of $H$ equals $n-dim_{\fq}(\mathcal{C})= \ell r - dim_{\fq}(\mathcal{C})$. Using the Riemann-Roch theorem (cf. theorem 1) twice gives 
+\[s = l(D) \leq deg\left(\tilde{G}-\widetilde{(y)}^L_{\infty}\right) +1 - g(K) ,\]
+and
+\[dim_{\fq}(\mathcal{C}) \leq deg(G)+1-g(L).\]
+Since $deg(\tilde{G}) = \lfloor \frac{deg(G)}{\ell} \rfloor$, it is clear from the above estimation that the number $S$ of equations depend on both genera of $L$ and $K$, as well as the degree of the divisor $G$ (if $n=\ell r$ is fixed). In particular, if $g(K)$ and $g(L)$ are too high, we will probably have less equations (keep in mind that $g(L) \geq g(K)$ and that $g(L)$ can be computed from $g(K)$ (see. Hurwitz' formula, \cite{Sti}, theorem 3.4.13)). \\
+Moreover, if the cover $\pi : \Y \rightarrow \X$ is fixed, as well as the cardinality of the set $\PR$ (that is $n$); there exist an integer $d_{max}$ such that the number of equations is maximal for $deg(G)=d_{max}$. 
+
+\s
+
+On the other side, in all our computing experiments, we noticed that theses parameters (ie. $deg(G)$ and both genera in particular) doesn't impact the structure of the kernel of $A$. This is actually a good remark since those kinds of problems usually tend to be harder in big genera situations. It turns out that it was pretty much predictable since it is possible to describe all solutions of the system, as explained in the next proposition. 
+
+\s
+
+\begin{prop1}
+Let $h \in L$ be a function such that 
+\[ (h)^L_{\infty} \leq (y)^L_{\infty}\]
+holds. Then the evaluation vector \textbf{h} $ := (h_{i,j})_{i,j}$ ,where $h_{i,j} := h(P_{i,j})$, for every $1 \leq i \leq r$ and $1 \leq j \leq \ell$ is also in the kernel of $A$.
+\end{prop1}
+
+\s
+
+\begin{proof}
+Recall the notations of section 3.2, take $h \in L$ as in proposition 1, and a function $g \in \mathcal{F}$. By definition of $\mathcal{F}$, one have 
+\[(\pi^*g)^L \geq -\pi^*\left(\tilde{G}-\widetilde{(y)}^L_{\infty}\right) = (y)^L_{\infty} - G.\]
+Thus we have 
+\[(\pi^*g \cd h)^L = (\pi^*g)^L  + (h)^L \geq  ((y)^L_{\infty} - G)+(h)^L = (h)^L_0 + \underbrace{((y)^L_{\infty}-(h)^L_{\infty})}_{\geq 0} - G \geq -G,\]
+that is $\pi^*\mathcal{F}\cd h \in L(G)$. This complete the proof.
+
+\end{proof}
+
+\s
+
+The above proposition proves that the space of solutions doesn't depend on the number of equations. 
+We will see in some examples later that we can explicitely decide whenever a function gives a solution or not, depending on the divisor $(y)^L_{\infty}$. This leads to a problem : how to choose the correct solution, that is the vector $\bf{y}$ \rm. We will see in the next section that depending on the cover, and especially on the action of the automorphism group $\Sigma$,  we can had to the system $(5)$ others equations, that are only satisfied by \textbf{y}, allowing us to separate it from other solutions.
+
+\s
+\section{Applications}
+
+\s
+
+\subsection{About the quotient curve}
+
+\s
+
+
+As we saw in section 3, our procedure allows us to recover the defining equation of a curve $\Y$, provided that we are given enough informations about one of its quotient curve $\X$. One can also see the situation as follow: Given a plane curve $\X$, can we recover the defining equation of one of its cover $\Y$ ? \\ The natural question is then which kind of curve $\X$ can be taken as ? \\
+
+The easiest case is then $\X$ equals the projective line $\mathbb{P}^1(\fq)$. In fact, this curve has genus 0 and we know exactly its rationals places. Note that this case has already been treated in \cite{Bar} (section 5), we will come back at it in section $4.2$.
+\\
+
+In what follows, we will see that we can take a general classes of curves as the quotient curve $\X$. In particular, from hypthesis $4)$ it is clear that we need to "control" the pole divisor of a prime element of $L/K$, that is we would like $\widetilde{(y)}^L_{\infty}$ to be as simple as possible. In order to satisfy this condition, the function field $K$ of the curve $\X$ has to be well-chosen. In fact, take an separating element $x \in K$, such that $K/\fq(x)$ is separable and algebraic. Thus there exist $\alpha \in K$ such that $K=\fq(x,\alpha)$. Let us define the classe of curve were $\X$ will be taken :
+
+\s
+
+\begin{def1}
+For a curve $\X$ over $\fq$, we say that it has separated variables if its function field $K=\fq(x,\alpha)$ is given by
+\[F_1(\alpha) = F_2(x) \ , \ F_1,F_2 \in \fq[T].\]
+In this case, one have $[K:\fq(x)] = deg(F_1)$.
+\end{def1}
+
+\s
+
+The following lemma explain why these curves are intersting in our case :
+
+\s
+
+\begin{lem1}
+Let $\X$ be a curve with separated variables, with function field $K=\fq(x,\alpha)$ given by the equation
+\[F_1(\alpha) = F_2(x),\]
+where $F,G \in \fq[T]$ are two univariate polynomials with co-prime degrees, and denote by $\pi : \X \rightarrow \mathbb{P}^1(\fq)$. the corresponding morphism of curves. Let us denote by $R_{\infty}$ the pole of $x$ in $\fq(x)$. Then $R_{\infty}$ is totally ramified in $K/\fq(x)$, and its unique extension $Q_{\infty} \in K$ is the unique pôle of $\alpha \in K$. In particular, one have 
+\[(\alpha)^K_{\infty} = deg(F_2) \cd Q_{\infty}.\]
+\end{lem1}
+
+\s
+
+\begin{proof}
+Let $Q_{\infty}$ be an extension of $R_{\infty}$ in $K$. One have obviously
+\[e(Q_{\infty}|R_{\infty}) \leq deg(F_1)=[K:\fq(x)].\]
+On the other side, from the defining equation of $K$; one gets
+\[F_1(\alpha) = F_2(x) \Rightarrow deg(F_1) \cd \nu_{Q_{\infty}}(\alpha) = e(Q_{\infty}|R_{\infty}) \cd deg(F_2) \cd \underbrace{\nu_{R_{\infty}}(x)}_{=-1},\]
+and since $(deg(F_1),deg(F_2))=1$, we get $deg(F_1) \mid e(Q_{\infty}|R_{\infty})$, that is $R_{\infty}$ is fully ramified in $K/\fq(x)$ and $e(Q_{\infty}|R_{\infty})=deg(F_1)$. Moreover, we have 
+\begin{align*}
+deg(F_1) \cd (\alpha)^K_{\infty} &= deg(F_2) \cd \pi^*(x)^{\fq(x)}_{\infty} \\
+&= deg(F_2) \cd \pi^* R_{\infty} \\
+&= deg(F_2) \cd e(Q_{\infty}|R_{\infty}) \cd Q_{\infty} \ ,
+\end{align*}
+which gives the result on the divisor of poles of $\alpha$ in $K$.
+\end{proof}
+
+\s
+
+The main point in these kind of curves is that we keep track of the place at infinity in the corresponding extension of function field, that will later allows us to look at this point in the tower $\Y \rightarrow \X \rightarrow \mathbb{P}^1(\fq)$, giving us a good way to describe the divisor $\widetilde{(y)_{\infty}^L} \in Div(K)$.
+
+
+\s
+
+\subsection{Kummer covering}
+
+\s
+
+Let $\X$ be a curve over $\fq$ with separated variables (see. definition 2), those function field is given by $K=\fq(x,\alpha)$, with
+\[F_1(\alpha) = F_2(x) \ , \ F_1,F_2 \in \fq[T] \]
+and $(deg(F_1),deg(F_2))=1$.  \\
+Our first example of cover is the so-called Kummer covering.
+
+\s
+
+Let $\ell \mid q-1$ be an integer (not necessarly a prime). Consider the extension $L=K(y)$, with
+\[y^{\ell} = f \ , \ f \in K\]
+and denote by $m:=deg((f)_{\infty}^K)$ the degree of the pole divisor of the function $f$. Suppose also that $(m,\ell)=1$. Then $L/K$ is a Kummer extension, it is cyclic of order $\ell=[L:K]$ and 
+\[Gal(L/K) = \{ \sigma : y \mapsto \xi \cd y \ | \ \xi \in \mu^*_{\ell}(\fq)\}.\] 
+
+\s
+
+Note that this kind of extension have been studied a lot, and that we know the ramification in such an extension (see for example \cite{Sti}, proposition 3.7.3).
+
+Let us explain the hypothesis before applying our procedure in this context (this is a special case of those given in 3.1). Denote by $\Y \rightarrow \X$ the morphism of curves that corresponds to the extension of function fields $L/K$. Here, our goal is to recover the minimal polynomial of $y$, that in fact is given by the function $f \in K$ (see definition above). To this end, we're given a $AG-code$ $\mathcal{C}$ on the curve $\Y$, that is stable under the action of the Galois group $Gal(L/K)$. In the Kummer case, this group is well-know. In fact, it is cyclic of order $\ell$ and the corresponding action is completely determined by the choice of an $\ell^{th}$ root of unity $\xi \in \mu^*_{\ell}(\fq)$ (see definition 3 above). We make the following hypotheses :
+
+\s
+
+\begin{enumerate}
+\item We know a parity check matrix $H$ of the code $\mathcal{C}$;
+\item The quotient curve $\X$ is known (that is polynomials $F_1$ and $F_2$), as well as the structure of the invariant code of $\mathcal{C}$, ie. $\tilde{\PR}$ and $\tilde{G}$ \ ;
+\item The automorphism $\sigma \in Gal(L/K)$ that acts on $\mathcal{C}$ is unknown, that is we don't know the corresponding root of unity $\xi$.
+\end{enumerate}
+
+\s
+
+
+According to section $3.2$, we need to control the divisor $\widetilde{(y)^L_{\infty}}$. Let us start with the following lemma.
+
+\s
+
+\begin{lem1}
+Keep notations as in lemma 3. Then in the above situation, the place $Q_{\infty}$ (the unique pole of $\alpha$) is fully ramified in $L/K$, and its unique extension $P_{\infty} \in L$ is the unique pole of $y$ in $L$. 
+\end{lem1}
+
+\s
+
+\begin{proof}
+Well-known from Kummer theory.
+\end{proof}
+
+\s
+
+\begin{prop1}
+We have
+\[(x)^L_{\infty} = \ell \cd deg(F_1) \cd P_{\infty},\]
+\[(\alpha)^L_{\infty} = \ell \cd deg(F_2) \cd P_{\infty},\]
+and
+\[(y)^L_{\infty} = m \cd P_{\infty}.\]
+\end{prop1}
+
+\s
+
+\begin{proof}
+Let $R_{\infty}$ be the simple pole of $x$ in $\fq(x)$. It is totally ramified in $K/\fq(x)$ (see lemma 3), so $(x)^K = deg(F_1) \cd Q_{\infty}$. We also know the divisor of poles of $\alpha$ in $K$, so using lemma 1 yields
+\[(x)^L_{\infty} = \pi^*(x)^K_{\infty} = deg(F_1) \cd \pi^*Q_{\infty} = \ell \cd deg(F_1) \cd P_{\infty},\]
+and
+\[(\alpha)^L_{\infty} = deg(F_2) \cd \pi^*Q_{\infty} = \ell \cd deg(F_2) \cd P_{\infty}.\]
+Next, by hypothesis one have $(f)^K_{\infty} = m \cd Q_{\infty}$ (recall that $Q_{\infty}$ is the unique pole of $x$ and $\alpha$ and $K$), so the equation $y^n=f$ gives
+\begin{align*} \ell \cd (y)^L_{\infty} &= \pi^*(f)^K_{\infty} \\
+&= m \cd e(P_{\infty}|Q_{\infty}) \cd P_{\infty} \ ,
+\end{align*}
+that is $(y)^L_{\infty} = m \cd P_{\infty}.$
+\end{proof}
+
+\s
+
+\begin{rq1} \rm Considering these extensions, the study of the divisor of pole we are interested in is particularly simple because it is only supported by one place, that correspond to the point at infinity in $\mathbb{P}^1(\fq)$, that is totally ramified in the tower $\fq(x)\su K \su L$.
+\end{rq1}
+
+\s
+
+The proposition 2 above allows us to give the precise structure of the divisor $D$ (recall its definition in $(4)$, section 3.2) in our context.
+
+\s
+
+\begin{coro1}
+One have
+\[D = \tilde{G} - \left\lceil\frac{m}{\ell}\right\rceil \cd Q_{\infty} \in Div(K).\]
+\end{coro1}
+
+\s
+
+\begin{proof}
+From the structure of $(y)^L_{\infty}$ given in proposition 2, it is clear that 
+\[\rm{Supp}\left(\widetilde{(y)^L_{\infty}}\right) = \{Q_{\infty}\}.\]
+It remains to show that if $D$ is defined as above, then $D = \widetilde{G - (y)^L_{\infty}}$. In fact, we have
+\begin{align*}
+\pi^*D &= \pi^* \left(\widetilde{G - \left\lceil\frac{m}{\ell}\right\rceil \cd Q_{\infty}}\right) \\
+&= \pi^*\tilde{G} - \left\lceil\frac{m}{\ell}\right\rceil \cd \pi^*\widetilde{Q_{\infty}} \\
+&= G - n \cd \left\lceil\frac{m}{\ell}\right\rceil \cd P_{\infty} \ \quad (using \ remark \ 4) \\
+& \leq G - m \cd P_{\infty} \\
+&= G-(y)^L_{\infty},
+\end{align*}
+
+the last equality coming from proposition 2. Moreover, this choice of $D$ is optimal (ie. the biggest, see. Definition 1) since $m/\ell$ can not be an integer (recall that $m$ and $\ell$ are coprime).
+\end{proof}
+
+\s
+
+Note that the divisor $D$ in the above corollary is know in our context from the hypothesis p.10, and thus one can consctruct the corresponding linear system (see (5) in section 3.2).
+
+\s
+
+\begin{rq1} \rm
+In \cite{Bar} (see section 5), the author provides a technique to recover the equation of $\Y$ if the quotient curve $\X$ is the projective line. In particular, they manage to recover the full Riemann-Roch space of the divisor $G$ from the one of $\tilde{G}$. It works only because in $\mathbb{P}^1(\fq)$, there is only one class of divisor of a given degree (which only holds in genus 0). Our procedure shows that we actually don't need to recover the hole space $L(G)$, but we only recquire to have a subspace that is "big enough". As a consequence, we are able to solve the problem outside of the genus 0 case; ie. in the case where the quotient curve has separated variables (and thus it can have any genus in practice).
+\end{rq1}
+
+\s
+
+As we already mentionned in section 3.3, the linear system $(5)$ doesn't only have the vector \textbf{y} as solution, but also any evaluation vector that comes from a function $h \in L$ such that 
+\[(h)^L_{\infty} \leq (y)^L_{\infty} = m \cd P_{\infty}.\]
+In the context of a Kummer covering, one can easyly find other solutions. In fact, let $h := x^i\alpha^j \in K$ be a function that only depend on variables $x$ and $\alpha$, and \bf{h} \rm = \textbf{x}$^i\boldsymbol{\alpha}^j$ \rm its corresponding row vector, following usual notations. Using proposition 2, and in particular the description of the pole divisors of $x$ and $\alpha$, one easyly see that 
+\[ (h)^L_{\infty} = \ell \cd \left(i \cd deg(F_1)+j \cd deg(F_2)\right) \cd P_{\infty}.\]
+As a result, $h$ is also a solution of the system $(5)$, provided that
+\[\ell \cd \left(i \cd deg(F_1)+j \cd deg(F_2)\right) \leq m.\]
+holds.
+
+\s
+
+Since we have found other solutions, one now need to choose the vector \textbf{y} amoung them. As already mentionned at the end of section 3.3, this can be done by adding other equations to the system, that are only satisfied by the vector \textbf{y}. Indeed, since the action of the automorphism group $\Sigma = \langle\sigma\rangle$ that acts on the support $\PR$ of the code $\mathcal{C}$ is given by 
+\[\sigma : y \longmapsto \xi \cd y,\]
+with $\xi \in \mu^*_{\ell}(\fq)$, the components of the vector \textbf{y} satisfy a geometric progression by orbit (recall that $\PR$ is made of orbit under the above action of the automorphism $\sigma$). To simplify a bit the situation, recall that the set $\PR$ is made of $r$ orbits of lenght $\ell$, and suppose in what follow that its elements are ordered orbit by orbit, that is if $\tilde{\PR} = \{Q_1,...,Q_r\} \in \mathbb{P}_K$, then elements of $\PR$ at indices $(i-1)\ell+1,...,i\ell$ correspond to the $\ell$ extensions of $Q_{i}$ in $L$ (for every $1\leq i \leq r$). Let us consider the following bloc matrices
+
+\begin{equation*}
+A(\xi) := 
+\begin{pmatrix}
+B(\xi) & 0 & \cdots & 0 \\
+0 & B(\xi) & \cdots & 0 \\
+\vdots & \ddots & \ddots & \vdots \\
+0 & \cdots & 0 & B(\xi)
+\end{pmatrix} \ , where \ 
+B(\xi) = 
+\begin{pmatrix}
+\xi & -1 & 0 & \cdots & 0 \\
+0 & \xi & -1 & \cdots & 0 \\
+\vdots & \ddots & \ddots & \ddots & 0 \\
+0 & \ddots & \ddots & \ddots & -1 \\
+-1 & 0 & \cdots & \cdots & \xi
+\end{pmatrix}
+\end{equation*}
+and $\xi$ is the root of unity that defines $\sigma$, and $A(\xi) \in M_{n}(\fq)$. Then we have
+\begin{equation*}
+A(\xi) \cd \textbf{y}^T
+= 0.
+\end{equation*}
+
+In particular, if we recall the equation $(5)$ from section 3.2, we get that \textbf{y} satisfies
+
+
+\begin{center}
+$\begin{pmatrix}
+A(\xi) \\
+H \cd \textbf{D}_1 \\
+\vdots \\
+H \cd \textbf{D}_s
+\end{pmatrix}
+\cd \textbf{y}^T = 0. \quad \quad \quad (6)$
+\end{center}
+
+The relation $(6)$ is enough to recover \textbf{y} since the other solutions of $(5)$ (given above) doesn't have this geometric progression structure, because it is clear by construction that the evaluation vectors \textbf{x} and $\boldsymbol{\alpha}$ are equals on each orbit of length $n$, since $\sigma$ only acts on $y$-coordinate of points on the curve $\Y$. 
+
+\s
+
+\begin{rq1} \rm
+Since, $\sigma$ (and so $\xi$) is supposed to be unknown at the beginning of the attack, one may have to test all the possibilities for $\xi$ in order to find the correct one. This leads to solve at most $\#\mu^*_{\ell}(\fq) = \varphi(\ell)$ linear systems like $(6)$, which remains reasonable since $\varphi(\ell)$ s rather small.
+\end{rq1}
+
+\s
+
+In all our computing experiences, system $(6)$ allows us to recover the desired vector \textbf{y}. To finish the attack, one only have to recover the polynomial $f$ that defines the extension $L/K$ by using a multivariate interpolation method. 
+
+\s
+
+\underline{Complexity analysis}
+
+\s
+
+
+\subsection{Artin-Schreier covering}
+
+\s
+
+As in section 4.2, the quotient curve $\X$ is taken as a curve over $\fq$ with separated variables, those function field $K = \fq(x,\alpha)$ is given by 
+\[F_1(\alpha) = F_2(x) \ , \ F_1,F_2 \in \fq[T]\]
+and $(deg(F_1),deg(F_2))=1$. \\ 
+Here, we will consider an Artin-Schreier cover of the curve $\X$.
+Let $p:=char(\fq)$ denote the characteristic of the base field $\fq$. Consider the extension $L=K(y)$, with
+\[y^p-y = f , \ f \in K\]
+ans denote by $m:=deg((f)^K_{\infty})$ the degree of the pole divisor of $f$ in $K$. Suppose that $(m,p)=1$. Then the extension $L/K$ is an Artin-Schreier extension, it is cyclic of order $p$ and 
+\[Gal(L/K) = \{ \sigma : y \mapsto y + \beta \ , \ \beta \in \{0,...,p-1\}\}.\]
+
+\s
+
+In this case, the hypotheses of our procedure are the same as in section 4.2, knowing that this time the automorphism is completely determined by the choice of the element $\beta \in \mathbb{F}_p$. Here again, our goal will be to recover the minimal polynomial of $y$ over $K$, that is the function $f \in K$. Using the defining equation of the function field $L$ and the fact that $m$ is prime to $p$, one can show that the place $Q_{\infty} \in \mathbb{P}_K$ (defined in lemma 3) is totally ramified in $L/K$. As usual, we denote by $P_{\infty}$ its unique extension in $L$. With our choices of parameters and hypotheses, we can proove that
+
+\s
+
+\begin{prop1}
+We have
+\[(x)^L_{\infty} = p \cd deg(F_1) \cd P_{\infty},\]
+\[(\alpha)^L_{\infty} = p \cd deg(F_2) \cd P_{\infty},\]
+and
+\[(y)^L_{\infty} = m \cd P_{\infty}.\]
+\end{prop1}
+
+\s
+
+\begin{proof}
+Similar to the proof of proposition 2 above.
+\end{proof}
+
+\s
+
+Note that this is exactly the same result as in the Kummer case. In particular, the divisor of poles of $y$ in $L$ is only supported by the place $P_{\infty}$. As a result, the divisor in $K$ that we will use to construct our linear system is here given by 
+\[D = \tilde{G} - \left\lceil\frac{m}{p}\right\rceil \cd Q_{\infty} \in Div(K).\]
+This allows us to construct the linear system (5), since the above divisor can be constructed from our hypothesis. 
+
+
+\newpage
+
+In the Artin-Schreier case, one can proceed the same way to find other solutions of $(5)$. In particular, a monomial $x^i\alpha^j \in K$ gives a solution vector if and only if 
+
+\[p \cd (i \cd deg(F_1)+j \cd deg(F_2)) \leq m.\]
+
+Note that this is pretty much the same condition as in Kummer case. Thus, one need a way to select the correct solution. For that, we add again other equations that are only satisfied by the vector \textbf{y}, recalling that here, the action of the automorphism group $\langle\sigma\rangle$ on the set $\PR$ is given by 
+\[\sigma : y \longmapsto y + \beta,\]
+where $\beta \in \mathbb{F}_p$. Thus the vector \textbf{y} we are searching for satisfies an arithmetic progression by orbit. In order to see it fluently, let us assume again that the support $\PR$ is ordered by orbit. Then let us consider the following bloc matrices :
+
+\begin{equation*}
+C := 
+\begin{pmatrix}
+B & 0 & \cdots & 0 \\
+0 & B & \cdots & 0 \\
+\vdots & \ddots & \ddots & \vdots \\
+0 & \cdots & 0 & B
+\end{pmatrix} \ , where \ 
+B = 
+\begin{pmatrix}
+-1 & 1 & 0 & \cdots & 0 \\
+0 & -1 & 1 & \cdots & 0 \\
+\vdots & \ddots & \ddots & \ddots & 0 \\
+0 & \ddots & \ddots & \ddots & 1 \\
+1 & 0 & \cdots & \cdots & -1
+\end{pmatrix}.
+\end{equation*}
+ Then we have
+\begin{equation*}
+C \cd \textbf{y}^T
+= 
+\begin{pmatrix}
+\beta \\
+\vdots \\
+\beta
+\end{pmatrix},
+\end{equation*}
+where $\beta$ is the element in $\mathbb{F}_p$ that defines the automorphism $\sigma$ (note that $\beta$ is supposed to be unknown here, but as in Kummer case, we can search for it in reasonable time) . Thus, if we recall the equation $(5)$ from section 3.2, we get that the vector \textbf{y} we are looking for satisfies
+
+\begin{center}
+$\begin{pmatrix}
+C\\
+H \cd \textbf{D}_1 \\
+\vdots \\
+H \cd \textbf{D}_s
+\end{pmatrix}
+\cd \textbf{y}^T = 
+\begin{pmatrix}
+\beta \\
+\vdots \\
+\beta \\
+0 \\
+\vdots \\
+0
+\end{pmatrix} \quad \quad \quad (7)$
+\end{center}
+
+The above relation $(7)$ allows us to isolate \textbf{y}, since the other solutions do not satifies this arithmetic progression, for the same reason as in the Kummer case. Thus one can finish the attack by retrieving the function $f$ using an interpolation method. 
+
+\s
+
+\underline{Complexity}
+
+\s
+
+\subsection{Generalisation to solvable Galois covering}
+
+\s
+
+Above, we showed that our procedure could apply to any Kummer or Artin-Schreier covering of a separated variable curve. Here we will see why those two examples are interesting. In fact, they both correspond to cyclic cover, and their common point is that the automorphism group $Aut(L/K)$ is cyclic. More especially, all extensions in sections 4.2 and 4.3 are Galois, with cyclic Galois group. The idea of this section is to consider a Galois extension of function fields $L/K$ such that $Gal(L/K)$ is a solvable group. \\
+In order to fix the ideas, let $K=\fq(x)$ be the rational functions function field, and $L=K(y)$ be a Galois extension, that correspond the a separable cover $\Y \rightarrow \mathbb{P}^1(\fq)$ (note that we could more generally take $K$ as the field of rational functions of a separated variable curve $\X$ over $\fq$, as we did before). We then suppose that $Gal(L/K)$ is solvable, that is we have sequence of normal subgroups
+\[ \{Id\} := \G_0 \triangleright \G_1 \triangleright \cdots \triangleright \G_t := Gal(L/\fq(x)). \quad \quad \quad (8)\]
+such that any quotient in $(8)$ is cyclic.
+The idea is then to use the Galois theory to make the correspondance between subfields $M$ of $L$ and normal subgroups of $Gal(M/\fq(x))$. (see for example \cite{Sti}, annex A.12 for more informations). 
+With notations as above, for every $0 \leq i \leq t$, let us denote by $L_i := L^{\G_i}$ the subfield of $L$ fixed by $\G_i$, with $L_t=\fq(x)$ and $L_0=L$. Then  extensions $L/L_i$ are Galois, with $\G_i$ as Galois group. In particular, in order to recover the equation of the curve $\Y$, we propose to apply the procedure described in section 3 recursively. 
+
+ \s
+ 
+For example, let us consider the normal subgroup $\G_{t-1} \su \G_t$. It is well-known from Galois theory that $L_{t-1}/\fq(x)$ is Galois, with Galois group equals to the quotient $\G_t/\G_{t-1}$, that is supposed to be cyclic. Thus, there exist an integer $\ell_{t-1}$ such that 
+\[ \G_t/\G_{t-1} \simeq \Z/\ell_{t-1}\Z,\] 
+and the extension $L_{t-1}/\fq(x)$ is cyclic of order $\ell_{n-1}$. 
+
+\s
+
+Repeating this for every subgroup in the sequence $(8)$, we get the existence (and uniquness) of integers $\ell_0,\ell_1,...,\ell_{n-1}$, as well as a tower of function field s
+\[\fq(x) := L_t \su L_{t-1} \su \cdots \su L_0 := L \quad \quad \quad (9)\]
+such that extensions $L_i/L_{i+1}$ are cyclic of order $\ell_i$, for every $0 \leq i \leq t-1$. \\
+
+Let us know formulate the hypothesis before describing how to recover the equation of the curve $\Y$ (that is the defining equation of the function field $L$). As before, we are given an AG-code on $\Y$ that is stable under the action of $Gal(L/\fq(x))$, and especially we know one of its parity check matrix. We also suppose that we know the structure of the its invariant code on the projective line. In particular, recall that the invariant support $\tilde{P}$ is a set of rational places on the projective line, and that the support $\PR \su \mathbb{P}_L$ correspond to all their extensions. In particular, places in $\tilde{\PR}$ are  totally split in $L/\fq(x)$, and thus also in any sub-extension of the tower $(9)$. \\
+
+From this point, the plan is to ride up the tower $(9)$, and thus to recover step by step the curve that corresponds to the function field $L_i$, together with the extensions of the places in $\tilde{\PR}$ in it (for any $0\leq i \leq t-1$). The crucial point is that any sub-extension $L_i/L_{i+1}$ is cyclic, meaning that we will be able to apply section 4.3 if $\ell_i = p$ and section 4.2 otherwise. (see \cite{Sti}, annex A.13 for a caracterisation of cyclic extensions of function field).
+
+\s
+
+\begin{rq1} \rm
+The hypothesis that we know the action of $Gal(L/\fq(x))$ on the support $\PR$ is really important in this context. In fact if we focus on the first step, one need to know the location in $\PR$ of the $\ell_{n-1}$ extensions of each place of $\tilde{\PR}$. This is mandatory because while constructing the system $(5)$, we  use a parity check matrix of a folded code of the big one (and not the code itself), and this require to know which columns one need to delete. 
+\end{rq1}
+
+\s
+
+As a more detailled example, let $\ell_1,\ell_2$ be two primes, that are coprime with $p=char(\fq)$. Consider a curve $\Y$ over $\fq$, with function field $L = \fq(x,y)$, such that
+\[P(x,y) = 0 \ , \ P \in \fq[X,Y] \ irreducible .\]
+Let us assume $L/\fq(x)$ is Galois of order $\ell_1\ell_2$. In particular, its Galois group is solvable. Let us denote by $S \su Gal(L/\fq(x))$ its unique $\ell_2$-Sylow (that is of course normal). Let $K = L^S$. Then we have :
+\begin{enumerate}
+\item  $\fq(x) \su K=L^S \su L$;
+\item $L/K$ is cyclic of order $\ell_2$, and $Gal(L/K) = S \simeq \Z/\ell_2\Z$;
+\item $K/\fq(x)$ is also cyclic, of order $\ell_1$, and $Gal(K/\fq(x)) \simeq \Z/\ell_1\Z$.
+\end{enumerate}
+
+Now, suppose we are given a parity check matrix of a code $C_L(\Y,\PR,G)$ that is stable under $Gal(L/\fq(x))$, together with its invariant code $C_L(\mathbb{P}^1,\tilde{\PR},\tilde{G})$. We also suppose that we now how $Gal(L/\fq(x))$ acts on the support $\PR$. We then proceed as follow.
+
+
+
+\begin{enumerate}
+\item By assumption, the extension $K/\fq(x)$ is cyclic of order $\ell_1$, with $(\ell_1,p)=1$. Thus, it is well-known that this is a Kummer extension. As a result, there exists a polynomial $b \in \fq[x]$ such that $K = \fq(x,\alpha)$, with
+\[ \alpha^k = b(x) \ , \ b \in \fq[T].\] Let us denote by $m_1:=deg(b)$, and suppose again that $m_1$ is prime to $k$ (as we did in the classical Kummer case, note that it allows the point at infinity in $\fq(x)$ to be totally ramified in $K/\fq(x)$). \\ Then , we can consider the divisor
+\[D_1 := \tilde{G} - \widetilde{(\alpha)^K_{\infty}} = \tilde{G} - \left\lceil\frac{m_1}{\ell_1}\right\rceil \cd R_{\infty} \in \mathbb{P}_{\fq(x)},\]
+where $R_{\infty}$ is the pole of $x$ in $\fq(x)$. It can be constructed from our hypothesis, and allows us to construct a linear system as $(5)$ in order to recover the evaluation vector $\boldsymbol{\alpha}$. However, note that in this case, we can't use the parity check matrix of the code $\mathcal{C}$ on $\Y$, since we are not reconstructing the curve $\Y$. In fact, this step allows us to recover the quotient curve $\X = \Y/S$ with function field $K$, and for this we need the parity check matrix of the subcode of $\mathcal{C}$ that is invariant under the subgroup $S \su Gal(L/\fq(x))$ of order $\ell_2$ (ie. its unique $\ell_2$-Sylow). This matrix can be constructed from one of $\mathcal{C}$, by deleting the good columns (ie. we keep only one column for each orbit under $T$, since they corresponds to redundant informations. \\
+At this point, assume that we recovered the vector $\boldsymbol{\alpha}$ using section $4.2$.
+
+\item Using step 1 above, one can recover extensions of places in $\tilde{P}$, as elements in $K$. By interpolation, this gives the polynomial $b$ and thus the defining equation of the curve $\X$ (see section 4.2). In particular, we know at this point a set $\PR'$ that corresponds to extensions of places in $\tilde{\PR}$ in $K$, as well as the divisor $G' := \pi^*\tilde{G}$, where $\pi : \X \rightarrow \mathbb{P}^1(\fq)$. Moreover, the subcode of $\mathcal{C}$ that is invariant under the $\ell_2$-Sylow $S$ of $Gal(L/\fq(x))$ is given by 
+\[C_L(\X,\PR',G').\]
+
+\item The next step is to use that we know on the curve $\X$ to recover $\Y$. This corresponds to recover the extension $L$ using informations on its fixed field $K=L^S$. As $L/K$ is cyclic of order $\ell_2$, one need to assume that $\ell_2 \mid q-1$, in which case there exist a function $f \in K$, with $m_2:= deg((f)^K_{\infty})$, such that $L=K(y)$, with
+\[y^l = f(x,\alpha).\]   
+If $(m_2,\ell_2)=1$, the place $R_{\infty}$ (ie. the pole of $x$ in $\fq(x)$) is totally ramified in $L/\fq(x)$, and we can use the divisor 
+\[D_2 := G' - \widetilde{(y)^L_{\infty}} = G' - \left\lceil\frac{m_2}{\ell_2}\right\rceil \cd Q_{\infty} \in \mathbb{P}_{K},\]
+where $Q_{\infty}$ is the unique extension of $R_{\infty}$ in $K$, to build a linear system and thus recover the evaluation vector \textbf{y}, that gives the $y$-coordinates of the points in $\PR$. As in section 4.2, it allows us to recover the defining equation of $\Y$, as a cover of $\X$.
+
+\item Using previous steps, one can recover the minimal polynomial of $y$ over $\fq(x)$ and thus conclude.
+\end{enumerate}
+
+\s
+
+\section{Perspectives}
+
+Let us put together our conclusions.
+
+\begin{enumerate}
+\item For solvable automorphism group, there are 2 cases for  each divisor $l$ of $\#Aut(L/\fq(x))$ :
+\begin{itemize}
+\item[-] If $l$ is prime to $p=char(\fq)$, thus it corresponds to a Kummer sub-extension. In this case, we need to have $l \mid q-1$ in order to have $\mu_l(\fq) \neq \{1\}$. Moreover the equation of this Kummer sub-extension $L/K$ looks like 
+\[ z^l = f , \]
+where $f \in K$, $d:=deg((f)^K_{\infty})$ and $L=K(z)$. We imposed above that $d$ should be prime to $l$. It allows to have a simple ramification of the point at infiny in each extension, but this is not mandatory. If this point had more that one extension, we would need to know any of them in order to construct the corresponding divisor D (cf. $(4)$).
+\item[-] If $l=p$, it corresponds to an Artin-Schreier sub-extension $L/K$, with 
+\[z^p-z = f, \]
+where $f \in K$, $d:=deg((f)^K_{\infty})$ and $L=K(z)$. Here again, we imposed for the same reasons $(p,d)=1$, as it is more conveniant.
+\end{itemize}
+\item In both Kummer and Artin-Schreier cases, that turns out to be the elementary parts of the field of application of our procedure, we supposed before the attack that we knew the root of unity $\xi$ that defines $\sigma$ (resp. $\beta \in \mathbb{F}_p$ in Artin-Schreier cases). Actually it is not mandatory because when adding geometric (resp. arithmetic) progression to the system $(5)$ in order to recover the good evaluation vector, we can guess the good $\xi$ (resp. $\beta$) by solving a system for each until we get unicity of the solution. This cost at most $l$ (resp. $p$) tries, which is not so much in practical applications.
+
+\item At any step of the procedure(see $1)$ above), we asked to know the degree $d$ of the divisor of poles of the function $f \in K$. Actually we can also works by guessing it, ie. since $(d,[L:K])=1$ by assumption, we only want information about $\frac{d}{[L:K]}$ in order to construct $D$. So we can try a few values of this quotient until we get unicity of the solution at the end. Note however that this could raise the complexity too much.
+\end{enumerate}
+
+\s
+
+As a matter of perspective results, it could be intersting to focus on covers where the support of the divisor of poles of $y$ is more complicated, that is made of more that one point. In fact, if those are known, we can show that our procedure still works. The fact is that we have no reasons to know it (it actually is the point of the attack !), so at the moment it seems hard to generalize more. \\
+In a coding theoritic point of vue, our procedure gives "negatives" results, in the sense that is shows that for this kind of covers, the security of the public code (constructed as a structured AG-code on $\Y$) is reduced to those of its invariant subcode, which is smaller and thus easier to brute force. It then shows that cryptosystems constructed from it should focus on hidding the structure of the invariant code, which can sometimes break completely the system.
+
+
+
+\newpage
+\bibliographystyle{alpha}
+\bibliography{bib}
+\end{document}
