@@ -1,0 +1,212 @@
+/* Kummer cover of the projective line */
+
+
+// load "/home/mlhotel/Bureau/magma_tst/article/kummer";
+
+//test 1: attack_kummer(223,3,5,20,3);
+//test 2 : attack_kummer(1009,7,5,20,6);
+// test n non premier : attack_kummer(1009,6,5,20,6);
+
+
+print "";
+
+attack_kummer := function(q,n,d,r,a);
+
+/* I/ Création d'un revêtement */
+
+	Fld:=GF(q);   
+	P1<X>:=PolynomialRing(Fld);
+	P3<U,V,W>:=PolynomialRing(Fld,3);
+	f:=RandomIrreduciblePolynomial(Fld,d);          // the unknown polynomial
+	f2:=MultivariatePolynomial(P3,f,1);
+	f3:=V^n-f2;
+	coeffs:=Coefficients(f3);
+	monoms:=Monomials(f3);
+	len:=#coeffs;
+	deg:=Degree(f3);
+	F:=&+[coeffs[i]*monoms[i]*W^(deg-Degree(monoms[i])) : i in [1..len]];     //le polynôme homogène qui définit la courbe Y
+	print "equ choisie :";
+	print "y^",n,"=",f;
+	print "";
+
+/* II/ Création d'un code publique */
+
+	P2<x,y,z>:=ProjectiveSpace(Fld,2);
+	Y:=Curve(P2,F);                                        //notre revêtement de P^1
+	xi:=RootOfUnity(n,Fld);       //root of unity that defines the automorphism
+	print "xi initial=",xi;
+	sigma:=iso<Y->Y | [x,xi*y,z],[x,xi^(-1)*y,z]>;  // the automorphism acting on the 
+
+		/* Création du support */
+
+	Pts:=Places(Y,1);
+	P_inf:=Pts[1];            //the place P_inf on Y
+	Exclude(~Pts,P_inf);
+	P:=[];
+	for i:=1 to r do
+    		R:=Random(Pts);
+    		Exclude(~Pts,R);
+    		Append(~P,R);
+    		for j := 1 to n-1 do
+        		rr:= (Y!RepresentativePoint(R))@sigma;
+        		R:=Place(rr);
+        		Exclude(~Pts,R);
+        		Append(~P,R);
+    		end for;
+	end for;
+
+		/* Création du diviseur */
+
+	Div:=DivisorGroup(Y);
+	Q:=Random(Pts);
+	G:=a*Q;
+	for i:= 1 to n-1 do
+    		rr:= (Y!RepresentativePoint(Q))@sigma;
+    		Q:=Place(rr);
+    		G:= G + a*Q;
+	end for;
+
+		/* Le code publique */
+
+	C_pub:=AGCode(P,G);
+
+
+/* III/ Beginning of the Attack */ 
+
+        H:=ParityCheckMatrix(C_pub);
+	x_coor:=[RepresentativePoint(p)[1] : p in P];  // the x-coordinates of points in P, known
+	y_coor:= [RepresentativePoint(p)[2] : p in P];    //the vector we want to recover
+	print "y_coor secret :",y_coor;
+	print "";
+	P_1:=ProjectiveSpace(Fld,1);
+	X:=Curve(P_1);                       // the quotient curve X=P^1
+	Q_inf := Places(X,1)[1];         // the pole of x in F_q(x)
+	G_tilde:= a*Place(X![RepresentativePoint(Support(G)[1])[1],1]); //the known invariant divisor
+	t := Floor(d/n)+1;   
+	D:=G_tilde - t*Q_inf;   //the divisor D that allows us to construct the linear system
+
+		/* CREATION OF THE LINEAR SYSTEM */
+
+	K<x> := FunctionField(X);
+	BASE := Basis(D);
+	s:=Dimension(D);
+	VEC:=[];
+	for j:=1 to s do 
+    		VEC[j] := BASE[j];    // VEC is the vector of f_j, where L(D)=<f_j>
+	end for;                     
+
+		//  1) Now compute ev_{P_tilde}(f_j) //
+
+	b:=[];                  
+	for j:=1 to s do 
+        	seq := [Evaluate(VEC[j],X![x_coor[i*n+1],1]) : i in [0..r-1]];
+        	Append(~b,seq);
+	end for;   
+
+		//  2) We duplicate coordinates to recover ev_{P}(phi^*f_j)//
+
+	u:=[];                 
+	for j:=1 to s do
+    		SEQ:=[];
+    		for i:=1 to r do
+        		for int:=1 to n do
+            			Append(~SEQ,b[j][i]);
+        		end for;
+    		end for;
+    		Append(~u,SEQ);
+	end for;
+
+		// 3) Creation of diagonal matrices
+
+	Matr:= [];
+	for j:=1 to s do
+    		D:= DiagonalMatrix(u[j]);
+    		Append(~Matr,D);
+	end for;                                // Matr[j] = D_j 
+
+
+                     /* Solving */
+
+	A:=H*Matr[1];
+	for j:=2 to s do
+    		A:=VerticalJoin(A,H*Matr[j]);
+	end for;
+
+	print "Solution without geometric progression :";  
+	if Dimension(Kernel(A)) ne 1 then 
+    		print "We don't have a unique solution";       
+	end if;
+	print "";
+	print "Adding geometric progression :";
+
+	R<T>:=PolynomialRing(Fld);
+	root:=Roots(R!CyclotomicPolynomial(n));
+	compteur:=0;
+	index:=0;
+	while compteur eq 0 do
+		B:=A;
+		index:=index+1;
+		xi:=root[index][1];
+		print "xi =",xi;
+		mtx:=[];
+		zeroes:=[0 : i in [1..n]];
+		for i:=1 to n-1 do
+			ups:=zeroes;
+			ups[i]:=xi;
+			ups[i+1]:=-1;
+                	Append(~mtx,ups);
+		end for;
+        	ups:=zeroes;
+        	ups[1]:=-1;
+        	ups[n]:=xi;
+        	Append(~mtx,ups);
+		B_xi:=Matrix(Fld,mtx);
+		A_xi:=B_xi;
+		for i:= 1 to r-1 do 
+    			A_xi:=DiagonalJoin(A_xi,B_xi);                  //geometric progression
+		end for;
+		B:=VerticalJoin(A_xi,B);
+		print "dim kernel=",Dimension(Kernel(Transpose(B)));
+		if Dimension(Kernel(Transpose(B))) eq 1 then 
+    			print "y is recovered";   
+    			compteur:=1;   
+			y_sol:=Kernel(Transpose(B)).1;    //y is the vector we were searching 						for, up to a multiplicative constant in F_q
+
+		/* Recovering the equation of Y */
+
+			poly := Interpolation([x_coor[i] : i in [1..n*r by n]],[y_sol[i]^n : i 					in [1..n*r by n]]);
+			R<x,y,z>:=CoordinateRing(ProjectiveSpace(Fld,2));
+			p:= Evaluate(poly,'x');
+			p:=p*Coefficients(p)[1]^(-1); // we make unitary the interpolated 									polynomial 
+			print "";
+			print "polynôme secret ",p;
+			print "";
+			if Eltseq(y_coor[1]*y_sol) eq y_coor then 
+				print "coordonnees en y retrouvees";
+			end if;
+		else 
+			print "mauvais choix de xi";
+		end if;
+	end while;
+	return Eltseq(y_coor[1]*y_sol);
+end function;
+
+//attack(223,3,5,P,C_pub);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
