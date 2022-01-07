@@ -1,0 +1,46 @@
+This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: Attack against quasi-cyclic AG-codes.aux
+The style file: alpha.bst
+Database file #1: bib.bib
+You've used 3 entries,
+            2543 wiz_defined-function locations,
+            578 strings with 4839 characters,
+and the built_in function-call counts, 999 in all, are:
+= -- 99
+> -- 24
+< -- 4
++ -- 7
+- -- 6
+* -- 54
+:= -- 168
+add.period$ -- 9
+call.type$ -- 3
+change.case$ -- 14
+chr.to.int$ -- 3
+cite$ -- 3
+duplicate$ -- 53
+empty$ -- 78
+format.name$ -- 12
+if$ -- 209
+int.to.chr$ -- 1
+int.to.str$ -- 0
+missing$ -- 3
+newline$ -- 18
+num.names$ -- 9
+pop$ -- 17
+preamble$ -- 1
+purify$ -- 18
+quote$ -- 0
+skip$ -- 43
+stack$ -- 0
+substring$ -- 50
+swap$ -- 12
+text.length$ -- 4
+text.prefix$ -- 3
+top$ -- 0
+type$ -- 20
+warning$ -- 0
+while$ -- 8
+width$ -- 5
+write$ -- 41
