@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.6)  7 JAN 2022 13:24
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.6)  18 JAN 2022 18:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -692,38 +692,38 @@ Package xypdf Info: Line width: 0.39998pt on input line 93.
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [1] [2] [3] [4]
-Underfull \hbox (badness 10000) in paragraph at lines 378--379
+Underfull \hbox (badness 10000) in paragraph at lines 414--415
 
  []
 
 [5] [6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 534--535
+Underfull \hbox (badness 10000) in paragraph at lines 570--571
+
+ []
+
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 572--574
+
+ []
+
+[9] [10] [11] [12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 924--926
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 536--538
+Underfull \hbox (badness 10000) in paragraph at lines 927--928
 
  []
 
-[8] [9] [10] [11] [12] [13] [14]
-Underfull \hbox (badness 10000) in paragraph at lines 895--897
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 898--899
-
- []
-
-[15] [16] [17] (./Attack against quasi-cyclic AG-codes.bbl) [18]
+[14] [15] [16] [17] [18] (./Attack against quasi-cyclic AG-codes.bbl) [19]
 (./Attack against quasi-cyclic AG-codes.aux) ) 
 Here is how much of TeX's memory you used:
- 16088 strings out of 483065
- 292369 string characters out of 5963550
- 563183 words of memory out of 5000000
- 30796 multiletter control sequences out of 15000+600000
- 540505 words of font info for 57 fonts, out of 8000000 for 9000
+ 16093 strings out of 483065
+ 292410 string characters out of 5963550
+ 563204 words of memory out of 5000000
+ 30800 multiletter control sequences out of 15000+600000
+ 541203 words of font info for 59 fonts, out of 8000000 for 9000
  81 hyphenation exceptions out of 8191
  60i,12n,60p,3270b,204s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fo
@@ -742,14 +742,15 @@ fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/fonts/type1/p
 ublic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symb
-ols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbo
-ls/msbm7.pfb>
-Output written on "Attack against quasi-cyclic AG-codes.pdf" (19 pages, 294269 
+s/cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mti7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msb
+m10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm
+7.pfb>
+Output written on "Attack against quasi-cyclic AG-codes.pdf" (20 pages, 317429 
 bytes).
 PDF statistics:
- 146 PDF objects out of 1000 (max. 8388607)
- 104 compressed objects within 2 object streams
+ 153 PDF objects out of 1000 (max. 8388607)
+ 109 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
