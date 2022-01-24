@@ -259,6 +259,33 @@ As a subfield subcode, the permutation $\tilde{\Sigma}$ also acts on the code $S
 
 \s
 
+Let us also recall the definition of the dual of a linear code as well as an easy lemma :
+
+\s
+
+\begin{def1}
+Let $\mathcal{C}$ be a $[n,k]$-linear code over a finite field $\fq$. Its dual code is defined by 
+\[\mathcal{C}^{\perp} := \{ y \in \fq^n \ | \ xy^T = 0 \ , \ \forall \ x \in \mathcal{C}\}.\]
+It is easy to see that any generator matrix of $\mathcal{C}^{\perp}$ is a parity check matrix of $\mathcal{C}$. In particular, $\mathcal{C}^{perp}$ is a $[n,n-k]$-code over $\fq$.
+\end{def1}
+
+\s
+
+Finally, we will also need a result using duality of AG-codes.
+
+\s
+
+\begin{prop1}
+Let $C_L(\X,\PR,G)$ be an AG-code defined on a curve $\X$. Then there existe a divisor $G' \in Div(\X)$ such that 
+\[C_L(\X,\PR,G)^{\perp} = C_L(\X,\PR,G').\]
+\end{prop1}
+
+\s
+
+\begin{proof}
+See \cite{Sti}, proposition 2.2.10
+\end{proof}
+
 \section{Invariant code}
 
 \s
@@ -323,7 +350,7 @@ Let $\mathcal{C} := C_L(\X,\PR,G)$ be an AG-code defined on a curve $\X$ with fu
 \s
  
 \begin{proof}
-This is a straightforward consequence of Lemma 2 and Proposition 1.
+This is a straightforward consequence of lemma 2 and Proposition 2.
 \end{proof}
 
 \s
@@ -357,7 +384,7 @@ Immediate consequence of Theorem 1 and Remark 2.
 
 \s
 
-\section{Recovering the equation of a curve}
+\section{Recovering the equation of a covering}
 
 
 \s
@@ -366,7 +393,7 @@ Throught all this section, let $q=p^s$ be a power of a prime, $m \geq 1$, and $\
 \[\pi : \Y \rightarrow \X\]
 between curves defined over $\fqm$. It corresponds to a tower of function fields $\fqm(x) \su K \su L$, where $K=\fqm(\X)$ and $L=\fqm(\Y)=\fqm(x,y)$. Since $L$ is a finite  algebraic extension of $K$, there exists an element $y \in L$ such that 
 \[L = K(y) \ , \ and \ H(x,y)=0 \ , \ H \in \fqm[X,Y] \ irreducible.\]
-The key part of our attack will be to recover the defining equation of the curve $\Y$, that is the minimal polynomial of $y$ over $K$. To this end, let us introduce the following concept :
+The key part of our attack will be to recover a defining equation of the curve $\Y$, that is the minimal polynomial of $y$ over $K$. To this end, let us introduce the following concept :
 
 
 \s
@@ -567,19 +594,19 @@ We will see in some examples later that we can explicitely decide whenever a fun
 \s
 
 
-As we saw in section 3, our procedure allows us to recover the defining equation of a curve $\Y$, provided that we are given enough informations about one of its quotient curve $\X$. One can also see the situation as follow: Given a plane curve $\X$, can we recover the defining equation of one of its cover $\Y$ ? \\ The natural question is then which kind of curve $\X$ can be taken as ? \\
+As we saw in section 4, our procedure allows us to recover the defining equation of a curve $\Y$, provided that we are given enough informations about one of its quotient curve $\X$. One can also see the situation as follow: Given a plane curve $\X$, can we recover the defining equation of one of its cover $\Y$ ? \\ The natural question is then which kind of curve $\X$ can be taken as ? \\
 
-The easiest case is then $\X$ equals the projective line $\mathbb{P}^1(\fqm)$. In fact, this curve has genus 0 and we know exactly its rationals places. Note that this case has already been treated in \cite{Bar} (section 5), we will come back at it in section $4.2$.
+The easiest case is then $\X$ equals the projective line $\mathbb{P}^1(\fqm)$. In fact, this curve has genus 0 and we know exactly its rationals places. We will come back at it in section $5.2$.
 \\
 
-In what follows, we will see that we can take a general classes of curves as the quotient curve $\X$. In particular, from hypthesis $4)$ it is clear that we need to "control" the pole divisor of a prime element of $L/K$, that is we would like $\widetilde{(y)}^L_{\infty}$ to be as simple as possible. In order to satisfy this condition, the function field $K$ of the curve $\X$ has to be well-chosen. In fact, take an separating element $x \in K$, such that $K/\fqm(x)$ is separable and algebraic. Thus there exist $\alpha \in K$ such that $K=\fqm(x,\alpha)$. Let us define the classe of curve were $\X$ will be taken :
+In what follows, we will see that we can take a general classe of curves as the quotient curve $\X$. In particular, from hypthesis $4.$ (see section 4) it is clear that we need to "control" the pole divisor of a prime element of $L/K$, that is we would like $\widetilde{(y)}^L_{\infty}$ to be as simple as possible (in terms of the cardinality of its support). In order to satisfy this condition, the function field $K$ of the curve $\X$ has to be well-chosen. In fact, take an separating element $x \in K$, such that $K/\fqm(x)$ is separable and algebraic. Thus there exist $\alpha \in K$ such that $K=\fqm(x,\alpha)$. Let us define the classe of curve were $\X$ will be taken :
 
 \s
 
 \begin{def1}
 For a curve $\X$ over $\fqm$, we say that it has separated variables if its function field $K=\fqm(x,\alpha)$ is given by
 \[F_1(\alpha) = F_2(x) \ , \ F_1,F_2 \in \fq[T].\]
-In this case, one have $[K:\fqm(x)] = \rm{deg}(\it{F_1}m)$.
+In this case, one have $[K:\fqm(x)] = \rm{deg}(\it{F_1})$.
 \end{def1}
 
 \s
@@ -589,7 +616,7 @@ The following lemma explain why these curves are intersting in our case :
 \s
 
 \begin{lem1}
-Let $\X$ be a curve with separated variables, with function field $K=\fq(x,\alpha)$ given by the equation
+Let $\X$ be a curve with separated variables, with function field $K=\fqm(x,\alpha)$ given by the equation
 \[F_1(\alpha) = F_2(x),\]
 where $F,G \in \fqm[T]$ are two univariate polynomials with co-prime degrees, and denote by $\pi : \X \rightarrow \mathbb{P}^1(\fqm)$. the corresponding morphism of curves. Let us denote by $R_{\infty}$ the pole of $x$ in $\fqm(x)$. Then $R_{\infty}$ is totally ramified in $K/\fqm(x)$, and its unique extension $Q_{\infty} \in K$ is the unique pôle of $\alpha \in K$. In particular, one have 
 \[(\alpha)^K_{\infty} = \rm{deg}\it{(F_2) \cd Q_{\infty}}.\]
@@ -622,7 +649,7 @@ The main point in these kind of curves is that we keep track of the place at inf
 
 \s
 
-Let $\X$ be a curve over $\fqm$ with separated variables (see. definition 2), those function field is given by $K=\fqm(x,\alpha)$, with
+Let $\X$ be a curve over $\fqm$ with separated variables (see. definition 5), those function field is given by $K=\fqm(x,\alpha)$, with
 \[F_1(\alpha) = F_2(x) \ , \ F_1,F_2 \in \fqm[T] \]
 and $(\rm{deg}\it(F_1),\rm{deg}\it(F_{\rm{2}}))=1$.  \\
 Our first example of cover is the so-called Kummer covering.
@@ -1053,7 +1080,7 @@ where $\bf{e} \rm \in \fq^n$ is a vector error such that $\w(e) \leq t$.
 
 \underline{\bf{Decryption}} Using a general decoding algorithm for algebraic geometry codes (see for example \cite{THRP}), we can find a codeword $\bf{c} \rm = \rm \bf{y - e} \rm \in \mathcal{C}_{\rm pub}$. From $\bf{c}$ and the knowledge of $\rm G_{pub}$, we can recover the message $\bf{m}$.
 
-Note that in this scheme, the automorphism itself and the curve $\mathcal{H}$ is considered as secret data, and only the order $\ell$ of $\sigma$ is known from the public key. In previous sections, we have shown that the knowledge of the full invariant code allows us to attack the system, recovering the secret elements. It means that in order to secure our scheme, we need to ensure that the invariant code can not be recovered easyly. 
+Note that in this scheme, \color{red}the automorphism itself and the curve $\mathcal{H}$ is considered as secret data, and only the order $\ell$ of $\sigma$ is known from the public key. \color{black} In previous sections, we have shown that the knowledge of the full invariant code allows us to attack the system, recovering the secret elements. It means that in order to secure our scheme, we need to ensure that the invariant code can not be recovered easyly. 
 
 \s
 
@@ -1077,8 +1104,41 @@ In the particular case where the quotient curve $\mathcal{H}/\langle\sigma\rangl
 
 From corollary 1, we know that the invariant code is given by 
 \[C_{\rm{inv}} := SSAG_q\left(\mathbb{P}^1(\fqm),\tilde{\PR},\tilde{G}\right),\]
-To construct an algebric system, we use the fact that by duality of AG-codes, one gets 
-\[ inserer suite\]
+To construct an algebric system, we start from the inclusion 
+\[C_L(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp} \su SSAG_q(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp} \otimes \fqm,\]
+that is a direct consequences of definitions (in the right-hand side, we have extended the scalars to $\fqm$ since its the field definition of the AG-code). This means that for every codeword $\bf{c} \rm \in C_L(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp}$, we have 
+\[\bf{c \cd G_{inv}}^{\rm{T}}  \rm {= 0}\ , \quad \quad \quad (*)\]
+where $\bf{G_{inv}}$ is a generator matrix of the invariant code $\mathcal{C}_{pub}^{\sigma}$ (that can be computed in polynomial time from the public data). Moreover, we know from proposition 1 that there exist a divisor $G' \in Div(\mathbb{P}^1(\fqm)$ such that
+\[ C_L(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp} = C_L(\mathbb{P}^1(\fqm),\tilde{\PR},G').\]
+As a consequence, the knowledge of a basis of the Riemann-Roch space $L(G')$ allows us to write formally codewords in $C_L(\mathbb{P}^1(\fqm),\tilde{\PR},G')$, without knowing the set $\tilde{\PR}$. The key part is that the projective line $\mathbb{P}^1(\fqm)$ has a trivial divisor class group. In particular, there exist a function in the rational function field $\fqm(x)$ such that
+\[ G' = (h)^{\fqm(x)} + deg(G') \cd P_{\infty},\]
+where $P_{\infty}$ is the usual notation for the pôle of $x$ in $\fqm(x)$. From the last equality, we get
+\[L(G') = \langle h(x)x^i \ | \ 0 \leq i \leq deg(G')-1\rangle_{\fqm},\]
+which is a dimension $r=deg(G')-1$ vector space over $\fqm$. \\
+Let us write the unknown support $\tilde{\PR} = (\tilde{P}_i)_{i=1}^n$, with $\tilde{P}_i=(x_i:1)$. The goal is to recover the $x_i's$. For that, we denote by  
+$\bf{X} \rm = (X_1,...,X_n)$ and $\bf{Z} \rm = (Z_1,...,Z_n)$ two sets of formal variables, respectively corresponding to $x_i's$ and $h(x_i)'s$. From equation $(*)$ above, we have the following system
+\begin{equation*}
+\begin{pmatrix}
+Z_1 & \cdots & Z_n \\
+Z_1X_1 & \cdots & Z_nX_n \\
+\vdots & \ddots & \vdots \\
+Z_1X_1^r & \cdots & Z_nX_r 
+\end{pmatrix}
+\cd \bf{G_{inv}} \rm{^T} = 0.
+\end{equation*}
+
+The first row provides $k=dim(\mathcal{C}_{\rm{inv}})$ linear equations in the variables $\textbf{Z}$, and since $k < n$, one can eliminate some variables in the set $\bf{Z}$. On the other hand, the 2-transitivity of the affine group on $\fqm$ allows us to fix arbitrarily the unknows $x_1$ and $x_2$. Therefore, the above system consist in $kr$ equations in $n-2$ variables $\bf{X}$ and $n-k$ variables $\textbf{Z}$. \\
+If we are able to solve this system, we recover the function $h$ (and thus $\tilde{G}$) as well as the support $\tilde{\PR}$; that is we have reconstructed the invariant code $\mathcal{C}_{\rm inv}$. Since the security of the whole system rely on it, we have broke the scheme.  
+
+\s
+
+\begin{rq1}
+The cost of solbing the above system is hard to produce. It is possible to have an upper bound of the complexity in the case where the system has a specific form; which can be useful to estimate the security of schemes using SSAG-codes over the line. Thoses results can be found in \cite{FOP}, \cite{FOP1} and \cite{FOP2}. 
+\end{rq1}
+
+Actually, if the quotient curve is $\mathbb{P}^1(\fqm)$, the security is the same as the scheme using quasi cyclic Goppa codes, and thus there no advantages. In particular, this means that the automorphisms $\sigma$ should be chosen such that $\mathcal{H}^{\sigma}$ is not rational. In the latter case, the fixed field has a more complex divisor class group and the above attack doesn't work. In the following section, we will describe the cost of an exhaustive search on the invariant code.
+
+\s
 
 \subsection{Brute force on the invariant code}
 
