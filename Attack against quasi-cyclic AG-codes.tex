@@ -8,6 +8,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{pict2e}
 \usepackage{tikz}
+\usepackage{caption}
 
 \usepackage[all]{xy}
 \usepackage{graphicx}
@@ -72,52 +73,28 @@
 \newcommand{\f}{\mathbb{F}}
 \newcommand{\G}{\mathcal{G}}
 
-\title{Finding curve equation from coding}
+
+\title{Structural attack on quasi-cyclic SSAG-code-based McEliece cryptosystems}
+\author{Mathieu Lhotel \footnote{Laboratoire de Mathématiques de Besançon, UMR 6623 CNRS
+        Université de Bourgogne Franche-Comté, France}}
+\date{\today}        
 
 
 \begin{document}
+\maketitle
+
+\begin{abstract} 
+\it In this paper, we present a structural attack on quasi-cyclic SSAG-code-based McEliece cryptosystems, by showing that the knowledge of the invariant code allow us to recover the secret data. In particular, this shows that the security of such systems must rely on the security of the invariant code. We then propose a McEliece's like scheme based on quasi-cyclic Hermitian codes, and describe knowns attacks against the invariant code. We conclude by providing some parameters that resist those attacks.   
+\end{abstract}
+
+\newpage
+
+
+
+\section{Introduction}
 
 \s
-\begin{titlepage}
-
-  \begin{center}
-  		
-        \vspace*{5cm}
- 		\textbf{\bf{\Large{Structural attack on quasi-cyclic SSAG-code-based McEliece cryptosystems}}}
-
- 		\vspace*{1cm}
-
-  \large{Mathieu Lhotel} \\
-  \large{\it{Université de Bourgogne Franche-Comté}}\\
-  \large{\today}
-    \end{center}
-
-\vspace*{2cm}
-
-\textbf{ABSTRACT.} \text{} 
-\it In this paper, we present a structural attack on quasi-cyclic SSAG-code-based McEliece cryptosystems, by showing that the knowledge of the invariant code allow us to recover the secret data. In particulat, this shows that the security of such systems must rely on the security of the invariant code. We then propose a sheme based on Hermitian codes, from witch we study the security by analysing a brute force attack on the invariant code.   
-
-\s
-
-***** OLD ABSTRACT *****
-
-\s
-
-way to recover the defining equation of an algebraic curve $\Y$ defined over a finite field, by using a coding theoritic approach. In particular, from the knowledge of the invariant code of a structured algebraic geometry code defined on $\Y$, we manage to recover enough points to recover the equation of the curve. We also give the link with McEliece cryptosystem using algebraic-geometry codes, as we prove that the security level of those cryptosystems reduces to the security of the underlying invariant code, which is easier to brute force.
-
-\s
-
-**************************
-
-
-\end{titlepage}
-
-
-
-\section{Introduction  (À RÉÉCRIRE)}
-
-\s
-In the area of post-quantum cryptography, public key cryptosystem using linear codes looks promising. The first such system was introduced by McEliece in 1978 \cite{McE} using binary classical Goppa codes. The main problem if this scheme is that the size of the public key (that is generating matrices of codes) is to large for certain practical use cases. Many propositions were made in order to correct this, mostly bu considering codes with additional structure, e.g. quasy-cyclic codes. Moreover, replacing classical Goppa codes (defined over the projective line) by their natural generalization, AG-codes on curves, can also help in providing more flexibility. 
+In the area of post-quantum cryptography, public key cryptosystem using linear codes looks promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public keys (that is generating matrices of codes) is to large for practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, e.g. quasi-cyclic codes. Moreover, replacing classical Goppa codes (defined over the projective line) by their natural generalization, AG-codes on curves, can also help in providing more flexibility. 
 
 \s
 
@@ -125,7 +102,7 @@ However, recent works from Couvreur, Marquez-Corbella ans Pellikaan \cite{CMP} b
 
 \s
 
-The present work describes an structural attack on McELiece's like scheme based on structured SSAG-codes. In fact, we show that the security of those system can be reduced to the security of the so-called invariant code, which can be constructed from the public key. Depending on the assumption of the scheme, this subcode, which was first introduced by \cite{LOI}, leaks to much informations about the public codes which can be recovered from it. As a consequence, the parameters of the underlying scheme must be chosen carefully in order to keep a good security level.
+The present work describes a structural attack on McEliece's like scheme based on structured SSAG-codes. In fact, we show that the security of those system can be reduced to the security of the so-called invariant code, which can be constructed from the public key. Depending on the assumption of the scheme, this subcode, which was first introduced by \cite{LOI}, leaks too much informations on the secret data about the public codes which can be recovered from it. As a consequence, the parameters of the underlying scheme must be chosen carefully in order to keep a good security level.
 
 \s
 
@@ -133,36 +110,8 @@ As a contremeasure to this atteck, we also propose a scheme based on SSAG-codes 
 
 \s
 
-In Section 2, we will gives some classical notations and definitions what will be useful later on, both in algebraic and coding theory. Section 3 will be devoted to the invariant code. In section 4, we describe our attack. Section 5 gives some simple applications, such as Kummer or Artin-Schreier covering. Section 6 will discuss the generalisation of the method to any covering with solvable Galois groups. Finally, we will propose in section 7 a scheme using QC-SSAG codes on the Hermitian curve which resists our attack, and describes knows attacks against the invariant code and counter-measures.
+In Section 2, we will give some classical notations and definitions what will be useful, both in algebraic and coding theory. Section 3 will be devoted to the invariant code. In Section 4, we detail our attack in a general framework. Section 5 gives some applications, such that Kummer or Artin-Schreier cases. Section 6 will discuss the generalization of the attack to any cover with solvable Galois group. Finally, we will propose in section 7 a scheme using QC-SSAG codes on the Hermitian curve which resists our attack, and describe knowns attacks against the invariant code and counter-measures.
 
-
-\s
-
-************** OLD INTRO
-
-\s
-
-In the study of algebraic function fields over finite fields, we will mainly be interested in the problem : 
-
-\s
-
-Suppose that $L/K$ is a finite, algebraic extension of function fields over the finite field $\fqm$, with $q=p^s$. What kind of informations do we need to recover the defining equation of $L$, that is the minimal polynomial of an element $y \in L$ such that $L=K(y)$ ?
-
-\s
-
-As another formulation, in a cover of smooth projective curves $\Y \rightarrow \X$, one can wonder how to recover the defining equation of $\Y$. In order to study this problem, we will consider the so-called algebraic-geometry codes. In 1978, McEliece  (see \cite{McE}) introduced a cryptosystem based on coding theory, that turns out to be a good candidate for post-quantum cryptography. It has been shown that the main issue of this cryptosystem is that it involves large key sizes, which is the reason why a lot of work has been made in order to reduce it, while keeping a good security level. A good idea to overpass this problem is to consider structured AG-codes, that is codes with non trivial permutation group (see for example the case of quasi-cyclic codes in \cite{Bar}, Chapter 5).  
-
-\s
-
-In this paper, we will see how to recover the equation of a curve (or equivalently, the defining equation of an algebraic function field) by using codes defined on the curve. To keep it in an algebraic point of vue, we will see that "structured codes on a curve" corresponds to "orbites of places of an algebraic function field under the action of an automorphism of the corresponding curve".
-
-\s
-
-In Section 2, we will gives some classical notations and definitions what will be useful later on. Section 3 will be devoted to the method itself. Section 4 gives some simple applications, such as Kummer or Artin-Schreier covering. Section 5 will discuss the generalisation of the method to any covering with solvable Galois groups. Finally, we will propose in section 6 using QC-SSAG code on the Hermitian curve which resists our attack.
-
-\s
-
-***************************
 
 \s
 
@@ -177,17 +126,17 @@ In Section 2, we will gives some classical notations and definitions what will b
 
 Let $\fqm$ be the finite field with $q^m$ elements, were $q=p^s$ is a power of a prime $p$ and $m \geq 1$. A function field of one variable over $\fqm$ is a field $K$ such that there exists an element $x\in K$ such that $K/\fqm(x)$ is an algebraic and separable extension. 
 
-In our context, and algebraic function field $K$ over $\fqm$ will always be the function field of an algebraic curve $\X$ defined over $\fqm$, that is, with classical notations, $K = \fqm(\X)$.
+In our context, and algebraic function field $K$ over $\fqm$ will always be seens as the field of rational functions of an algebraic curve $\X$ defined over $\fqm$, that is, with classical notations, $K = \fqm(\X)$.
 
-We will denote by $\mathbb{P}_K$ the set of places of $K$, and any place $P \in \mathbb{P}_K$ comes with its valuation ring $O_P$ and its discrete valuation $\nu_P : K \rightarrow \Z$, . The degree of the place $P$, denoted $\rm{deg}(P)$ is define as the finite integer $\rm{deg}(P) := \it [O_P/P:\fq] < \infty$.
+Denote by $\mathbb{P}_K$ the set of places of $K$. Any place $P \in \mathbb{P}_K$ comes with its valuation ring $O_P$ and its discrete valuation $\nu_P : K \rightarrow \Z \cup \{\infty\}$, . The degree of the place $P$, denoted $\rm{deg}(\it P)$ is define as the finite integer $\rm{deg}( \it P) := \it [O_P/P:\fqm] < \infty$.
 The divisor group of $K$, denoted $Div(K)$, is the set of formal sums 
 \[A = \sum\limits_{P \in \rm{Supp}(A)} \nu_P(A) \cd P,\]
-where $\rm{Supp}(A)$ is a finite subset of $\mathbb{P}_K$, called the support of $A$, made of places such that $\nu_{P}(A) \neq 0$. \\ A place  $P \in \rm{Supp}(A)$ is called a zero of $A$ if $\nu_P(A) >0$ (resp. a pole of $A$ if $\nu_P(A) < 0$). For a function $z \in K$, we denote by $(z)^K$, $(z)^K_0$ and $(z)^K_{\infty}$ its principal divisor, divisor of zeroes and divisor of poles respectively, that is $(z)^K = (z)^K_0 + (z)^K_{\infty}$, where 
-\[(z)^K_0 = \sum\limits_{\nu_P(A) > 0}\nu_P(A) \cd P \quad and \quad (z)^K_{\infty} = \sum\limits_{\nu_P(A) < 0}\nu_P(A) \cd P.\]
+where $\rm{Supp}(A)$ is a finite subset of $\mathbb{P}_K$, called the support of $A$, made of places such that $\nu_{P}(A) \neq 0$. \\ A place  $P \in \rm{Supp}(A)$ is called a zero of $A$ if $\nu_P(A) >0$ (resp. a pole of $A$ if $\nu_P(A) < 0$). For a function $z \in K$, we denote by $(z)^K$, $(z)^K_0$ and $(z)^K_{\infty}$ its principal divisor, divisor of zeros and divisor of poles respectively, that is $(z)^K = (z)^K_0 + (z)^K_{\infty}$, where 
+\[(z)^K_0 = \sum\limits_{\nu_P(A) > 0}\nu_P(A) \cd P \quad \rm{and} \it \quad (z)^K_{\infty} = \sum\limits_{\nu_P(A) < 0}\nu_P(A) \cd P.\]
 The degree of a divisor is naturally defined by the formula
-\[\rm{deg}(A) = \sum\limits_{P \in \rm{Supp}(A)} \nu_P(A) \cd \rm{deg}(P).\]
+\[\rm{deg} (\it A) = \sum\limits_{P \in \rm{Supp}(A)} \nu_P(A) \cd \rm{deg}(\it P).\]
 \s
-We will denote $Princ(K)$ the subgroup of $Div(K)$ made of principal divisors and $Div^0(K)$ the subgroup of degree zero divisors. Then the divisor class group of $K$ is defined by $Cl(K):=Div(K)/Princ(K)$ and the group of divisor classes of degree zero by $Cl^0(K):=Div^0(K)/Princ(K)$. 
+We will denote $Princ(K)$ the subgroup of $Div(K)$ made of principal divisors and $Div^0(K)$ the subgroup of degree zero divisors. The divisor class group of $K$ is defined by $Cl(K):=Div(K)/Princ(K)$ and the group of divisor classes of degree zero by $Cl^0(K):=Div^0(K)/Princ(K)$. 
 
 \s
 
@@ -197,11 +146,7 @@ Let $h(K) := \# Cl^0(K)$ and $r \geq 1$. The number of divisor classes in $Cl(K)
 
 \s
 
-We also also make use of the following result, that gives and estimation of the class number using the genus of the function field.
-
-\s
-
-\begin{thm} \rm (\color{red}see \cite{Tsf}, Proposition 3.1.23 \color{black}). \it \label{esti h(X)}
+\begin{thm} \rm (see \cite{Tsf}, Proposition 3.1.23). \it \label{esti h(X)}
 Let $K$ be an algebraic function field over $\fqm$ with genus $g(K)$. Then the number of divisor classes $h(K)$ satisfies
 \[ (\sqrt{q^m}-1)^{2g(K)} \leq h(K) \leq (\sqrt{q^m}+1)^{2g(K)}.\]
 \end{thm}
@@ -211,15 +156,12 @@ Given a divisor $A \in Div(K)$, its Riemann-Roch space is defined as the $\fq$-v
 \[\mathcal{L}(A) = \{z \in L \ | \ (z)^L \geq -A\} \cup \{0\},\]
 and $l(A):= \rm{dim}_{\fq}(\mathcal{L}(A))$ as its dimension.
 
-
-
-
 \s
 
 Given a tower $\fqm(x) \su K \su L$ of function fields over $\fqm$, let us consider a place  $Q \in \mathbb{P}_K$ and one of its extension $P \in \mathbb{P}_L$, denoted $P\mid Q$. The ramification index will as usual be denoted $e(P|Q)$. \\
 If $L := \fqm(\Y)$ and $K:=\fqm(\X)$ are the function fields of two curves and if $\pi : \Y \rightarrow \X$ is the corresponding separable morphism, we will consider the pullback of $Q \in \mathbb{P}_K$ as the divisor
 \[\pi^*Q = \sum\limits_{P \mid Q} e(P|Q) \cd P \in Div(L).\]
-We will make great use of the following lemma, which shows that pullbacks preserves the notion of principal divisors :
+We will make great use of the following lemma, which shows that pullbacks preserves the notion of principal divisors.
 
 \s
 
@@ -231,7 +173,7 @@ Let $z \in L$ be a function. Then
 \s
 
 \begin{proof}
-see \cite{Sti}, proposition 3.1.9.
+see \cite{Sti}, Proposition 3.1.9.
 \end{proof}
 
 \s
@@ -246,7 +188,7 @@ As before, let $\fq$ be a finite field with $q=p^s$ elements, and let $m \geq 1$
 \s
 
 \begin{def1}
-Let $\X$ be a smooth projective curve over $\fqm$ with function field $L = \fqm(\X)$, $\PR = \{P_1,...,P_n\}$ be a set of $n$ distincts places of degree 1 in $L$  and $G \in Div(L)$ be a divisor sucht that $\rm{Supp}(G) \cap \PR = \emptyset$. Let us also suppose that $\rm{deg}(G)<n$. Then we define the AG-code associated to the triple $(\X,\PR,G)$ as the $\fqm$-vector space
+Let $\X$ be a smooth projective curve over $\fqm$ with function field $L = \fqm(\X)$, $\PR = \{P_1,...,P_n\}$ be a set of $n$ distincts places of degree one in $L$  and $G \in Div(L)$ be a divisor sucht that $\rm{Supp}(G) \cap \PR = \emptyset$. Let us also suppose that $\rm{deg}(G)<n$. Then we define the AG-code associated to the triple $(\X,\PR,G)$ as the $\fqm$-vector space
 \[\mathcal{C} := C_L(\X,\PR,G) = \{ (f(P_1),...,f(P_n)) \ | \ f \in L(G)\} \su \fqm^n.\]
 \end{def1}
 
@@ -259,7 +201,7 @@ With notation as above, we define the subfield subcode of $C_L(\X,\PR,G)$ over $
 
 \s
 
-In particular, we will be interested in "structured" codes, that is codes with non trivial permutation group. To be concrete, consider an automorphism subgroup $\Sigma \su Aut(L)$, and denote by $Orb_{\Sigma}(P)$ the orbit of a place $P \in L$ under the action of this subgroup. Then if $\Sigma(\PR) = \PR$ and $\Sigma(G)=G$, then $\Sigma$ induces a permutation $\tilde{\Sigma}$ on the code $C_L(\X,\PR,G)$. In order to do this, the support $\PR$ and the divisor $G$ have to be choosen carefully, that is they are made of distincts unions of orbits under the action of $\Sigma$. With this satisfied, it is clear that $\PR$ and $G$ are $\Sigma$-invariant since by definition, each orbit of places in $L$ is invariant. \\
+In particular, we will be interested in "structured" codes, that is codes with non trivial permutation group. To be concrete, consider an automorphism subgroup $\Sigma \su Aut(L)$, and denote by $Orb_{\Sigma}(P)$ the orbit of a place $P \in \mathbb{P}_L$ under the action of this subgroup. If $\Sigma(\PR) = \PR$ and $\Sigma(G)=G$, then $\Sigma$ induces a permutation $\tilde{\Sigma}$ on the code $C_L(\X,\PR,G)$. In order to do this, the support $\PR$ and the divisor $G$ have to be chosen carefully, that is they are made of distincts unions of orbits under the action of $\Sigma$. With this satisfied, it is clear that $\PR$ and $G$ are $\Sigma$-invariant since by definition, each orbit of places in $L$ is invariant. \\
 As a subfield subcode, the permutation $\tilde{\Sigma}$ also acts on the code $SSAG_q(\X,\PR,G)$ over $\fq$.
 
 \s
@@ -275,9 +217,9 @@ Let us also recall the definition of the dual of a linear code as well as an eas
 \s
 
 \begin{def1}
-Let $\mathcal{C}$ be a $[n,k]$-linear code over a finite field $\fq$. Its dual code is defined by 
-\[\mathcal{C}^{\perp} := \{ y \in \fq^n \ | \ xy^T = 0 \ , \ \forall \ x \in \mathcal{C}\}.\]
-It is easy to see that any generator matrix of $\mathcal{C}^{\perp}$ is a parity check matrix of $\mathcal{C}$. In particular, $\mathcal{C}^{perp}$ is a $[n,n-k]$-code over $\fq$.
+Let $\mathcal{C}$ be a $[n,k]$-linear code over a finite field $\fqm$. Its dual code is defined by 
+\[\mathcal{C}^{\perp} := \{ y \in \fqm^n \ | \ xy^T = 0 \ , \ \forall \ x \in \mathcal{C}\}.\]
+It is easy to see that any generator matrix of $\mathcal{C}^{\perp}$ is a parity check matrix of $\mathcal{C}$. In particular, $\mathcal{C}^{\perp}$ is a $[n,n-k]$-code over $\fqm$.
 \end{def1}
 
 \s
@@ -287,7 +229,7 @@ Finally, we will also need a result using duality of AG-codes.
 \s
 
 \begin{prop1} \label{dual}
-Let $C_L(\X,\PR,G)$ be an AG-code defined on a curve $\X$. Then there existe a divisor $G' \in Div(\X)$ such that 
+Let $C_L(\X,\PR,G)$ be an AG-code defined on a curve $\X$. Then there exist a divisor $G' \in Div(\X)$ such that 
 \[C_L(\X,\PR,G)^{\perp} = C_L(\X,\PR,G').\]
 \end{prop1}
 
@@ -301,19 +243,33 @@ See \cite{Sti}, proposition 2.2.10
 
 \s
 
-\begin{def1} Given an AG-code $\mathcal(C) = C_L(\X,\PR,G)$ that is invariant under the action of an automorphism group $\Sigma \su Aut(L)$, we define its invariant code as the subcode 
+\begin{def1} Given an AG-code $\mathcal{C} = C_L(\X,\PR,G)$ on a curve $\X$ with function field $L$, that is invariant under the action of an automorphism group $\Sigma \su Aut(L)$, we define its invariant code as the subcode 
 
 \[\mathcal{C}^{\Sigma} := \{c \in \mathcal{C} \ | \ \tilde{\Sigma}(c)=c\},\]
 where $\tilde{\Sigma}$ is the permutation induced by $\Sigma$ on the code.
 \end{def1}
 \s
 
-In what follow, wi will study the structure of the invariant code, which will be our main tools in the next parts. In particular, we will show that this subcode is nothing but an $AG$-code itself, defined on the quotient curve $\X/\Sigma$. Notice that in our context, the function field of the quotient curve is precisly the fixed field $L^{\Sigma}$ of $L$. Let us start with the following lemma.
+Note that this code has repeated entries, so we usually use another one : the \it{punctered invariant code} \rm (see. \cite{Bar}, Chapter 3). It is denoted $\overline{\mathcal{C}}^{\Sigma}$, and is constructed from the classical invariant code by deleting the repeated entries. Later on, we will use the punctered one, but we will keep the notation $\mathcal{C}^{\Sigma}$. 
+
+\s
+
+\begin{rq1} \rm \label{gen inv}
+Keeping notations has in \cite{Bar}, Definition 3.1, suppose $\Sigma = \langle \sigma \rangle$ is cyclic of order $\ell$, and denote by $\sigma_{\ell}$ the $\ell$-quasi-cyclic shift restricted to $\mathcal{C}$. Let also $I_{\ell} := \{1,...,n\}\backslash \{1,\ell+1,...,n-\ell+1\}$, where $n=Length(\mathcal{C})$. Then the punctered invariant code can also be defined as
+\[ \overline{\mathcal{C}}^{\Sigma} = \rm Punct_{\it I_{\ell}}(\rm ker (\it \sigma_{\mathcal{C}}-id)).\]
+
+\s
+
+As a consequence, it is possible to build in polynomial time in the parameters of $\mathcal{C}$, a generator matrix of the invariant code from the knowledge of a generator matrix of $\mathcal{C}$ and the induced permutation. 
+\end{rq1}
+
+
+In what follow, we will study the structure of the invariant code, which will be our main tools in the next parts. In particular, we will show that this subcode is nothing but an $AG$-code itself, defined on the quotient curve $\X/\Sigma$. Note that the function field of the quotient curve is precisly the fixed field $L^{\Sigma}$ of $L$. Let us start with the following lemma.
 
 \s
 
 \begin{lem1} \label{inv}
-Let $\PR$ and $G$ be as in definition 1, and suppose that they are invariant under an automorphism $\sigma \in Aut(L)$. If $c = Ev_{\PR}(g) \in C_L(\X,\PR,G)$ is such that $\sigma(c) = c$, then $g$ is $\sigma$-invariant, ie. $g\circ \sigma = g$. 
+Let $\PR$ and $G$ be as in Definition 1, and suppose that they are invariant under an automorphism $\sigma \in Aut(L)$. If $c = Ev_{\PR}(g) \in C_L(\X,\PR,G)$ is such that $\sigma(c) = c$, then $g$ is $\sigma$-invariant, ie. $g\circ \sigma = g$. 
 \end{lem1}
 
 \s
@@ -324,26 +280,26 @@ Let us write $\PR = \{P_1,...,P_n\}$, and let $c=(g(P_1),...,g(P_n))$ be such th
 \forall \ i \in \{1,...,n\} \ , \ g(P_{\sigma(i)}) = g(P_i) &\iff \forall \ i \in \{1,...,n\} \ , \ (g \circ \sigma)(P_i) =g(P_i) \\
 & \iff \forall \ i \in \{1,...,n\} \ , \ (g\circ \sigma - g)(P_i) = 0.
 \end{align*}
-Since $G$ is $\sigma$ invariant, we have $g \circ \sigma \in L(G)$, and thus $g\circ \sigma - g \in L(G)$. This implies that the function $(g \circ \sigma - g)$ has at most $\rm{deg}(G)<\it{n}$ zeroes in $L$. Since the last equivalence above gives $n$ zeroes to the same function, one have $(g \circ \sigma - g) \equiv 0$. The result follows.
+Since the divisor $G$ is $\sigma$ invariant, we have $g \circ \sigma \in L(G)$, and thus $g\circ \sigma - g \in L(G)$ also. This implies that the function $(g \circ \sigma - g)$ has at most $\rm{deg}(G)<\it{n}$ zeroes in $L$. Since the last equivalence above gives $n$ zeroes to the same function, one have $(g \circ \sigma - g) \equiv 0$. The result follows.
 \end{proof}
 
 \s
 
 \begin{prop1} \label{invrr}
-Let $G \in Div(L)$ be a divisor of $L$ invariant by an automorphism $\sigma \in Aut(F)$. Then $L(G)^{\sigma} = L(\tilde{G})$ with $\tilde{G} \in Div(F^{\sigma})$.
+Let $G \in Div(L)$ be a divisor of $L$ invariant by an automorphism $\sigma \in Aut(L)$. Then there exists a divisor $\tilde{G} \in Div(F^{\sigma})$ such that $L(G)^{\sigma} = L(\tilde{G})$.
 \end{prop1}
 
 \s
 
 \begin{proof}
-As $G$ is supposed to be $\sigma$ invariant, there exist $s \in \N^*$ and places $Q_1,...,Q_s \in \mathbb{P}_L$ such that 
+Since $G$ is $\sigma$ invariant, there exist $s \in \N^*$ and places $Q_1,...,Q_s \in \mathbb{P}_L$ such that 
 \[\rm{Supp(G)} = \bigsqcup_{i=1}^s Orb_{\sigma}(Q_i),\]
 that is 
 \[G = \sum\limits_{i=1}^s t_i \sum\limits_{Q \in Orb_{\sigma}(Q_i)} R,\]
-for some $t_i \in \Z$. Now let $g \in L(G) \in L$ be such that $g \circ \sigma = g$ (ie. $g \in L(G)^{\sigma} \su L^{\sigma}$). \\
-For each $i \in \{1,...,s\}$, consider a place $Q'_i \in \mathbb{P}_{F^{\sigma}}$ be such that $Q_i \mid Q'_i$. It is well known that for every $Q \in Orb_{\sigma}(Q_i)$, one also have $Q \mid Q'_i$ and $e(Q|Q'_i)=e(Q_i|Q'_i)$. Since $g \in L(G)$, we know that
+for some $t_i \in \Z$. Now let $g \in L(G) \su L$ be such that $g \circ \sigma = g$ (ie. $g \in L(G)^{\sigma} \su L^{\sigma}$). \\
+For each $i \in \{1,...,s\}$, consider a place $Q'_i \in \mathbb{P}_{L^{\sigma}}$ be such that $Q_i \mid Q'_i$. It is well known that for every $Q \in Orb_{\sigma}(Q_i)$, one also have $Q \mid Q'_i$ and $e(Q|Q'_i)=e(Q_i|Q'_i)$. Since $g \in L(G)$, we know by definition that
 \[(g)_L \geq - \sum\limits_{i=1}^s t_i \sum\limits_{Q \in Orb_{\sigma}(Q_i)} Q\]
-Note that for every $i \in \{1,...,s\}$, we have $e(Q_i|Q'_i)\nu_{Q'_i}(g) = \nu_{Q_i}(g)$, so we have 
+Note that for every $i \in \{1,...,s\}$, we have $e(Q_i|Q'_i) \cd \nu_{Q'_i}(g) = \nu_{Q_i}(g)$, so we have 
 \[(g)_{L^{\sigma}} \geq - \sum\limits_{i=1}^s \dfrac{t_i}{e(Q_i|Q'_i)}  Q'_i.\]
 Let us define $\tilde{G}:= \sum\limits_{i=1}^s \left\lfloor\dfrac{t_i}{e(Q_i|Q'_i)}\right\rfloor  Q'_i \in Div(L^{\sigma})$. Then we have $g \in L(\tilde{G}) \su L^{\sigma}$. Hence $L(G)^{\sigma} \su L(\tilde{G})$. \\
 Conversly, let $g \in L^{\sigma}$ such that $g \in L(\tilde{G})$, with $\tilde{G}$ defined as above. Then we have 
@@ -354,28 +310,28 @@ that is $g \in L(G) \cap L^{\sigma} = L(G)^{\sigma}$.
 \s
 
 \begin{thm} [Structure of the invariant code] \label{invstruct}
-Let $\mathcal{C} := C_L(\X,\PR,G)$ be an AG-code defined on a curve $\X$ with function field $L$, invariant under the action of an automorphism group $\Sigma \su Aut(\X)$. Then its invariant code is also an AG-code, defined on the quotient curve $\X/\Sigma$. In particular, there exist a support $\tilde{\PR}$ on the quotient curve, as well as a divisor $\tilde{G}$ such that
+Let $\mathcal{C} := C_L(\X,\PR,G)$ be an AG-code defined on a curve $\X$ with function field $L$, invariant under the action of an automorphism group $\Sigma \su Aut(\X)$. Then its invariant code is also an AG-code, defined on the quotient curve $\X/\Sigma$. In particular, there exist a support $\tilde{\PR}$ and a divisor $\tilde{G}$ on the quotient curve $\X/\Sigma$ such that
 \[\mathcal{C}^{\Sigma} = C_L(\X/\Sigma,\tilde{\PR},\tilde{G}).\]
 \end{thm}
 
 \s
  
 \begin{proof}
-This is a straightforward consequence of lemma \ref{inv} and Proposition \ref{invrr}.
+Straightforward consequence of lemma \ref{inv} and Proposition \ref{invrr}.
 \end{proof}
 
 \s
 
 
 \begin{rq1} \rm
-The above theorem can be precised a bit, since we can explicit $\tilde{\PR}$ and $\tilde{G}$. Indeed, the divisor $\tilde{G}$ is nothing but the one introduced in Proposition 1, while $\tilde{\PR} := \{P' \in \mathbb{P}_{L^{\sigma}} \ ; \ P \mid P'\}$. In particular, they can be described by using the ramification in the cover $\X \rightarrow \X/\Sigma$.
+The above theorem can be precised a bit, since we can explicit $\tilde{\PR}$ and $\tilde{G}$. Indeed, the divisor $\tilde{G}$ is nothing but the one introduced in the proof of Proposition \ref{invrr}, while $\tilde{\PR} := \{P' \in \mathbb{P}_{L^{\sigma}} \ ; \ P \mid P'\}$. In particular, they can be described by using the ramification in the cover $\X \longmapsto \X/\Sigma$.
 \end{rq1}
 
 \s
 
 \begin{rq1} \rm \label{commute}
 Let $\mathcal{C}$ be an AG-code on $\X$ stable under $\Sigma \su Aut(\X)$, then
-\[(\mathcal{C}\cap \fq^n)^{\Sigma} = \{c \in \mathcal{C} \ | \ c \in \fq^n \ and \ \sigma(c)=c \ , \ \forall \sigma \in \Sigma\} = \mathcal{C}^{\Sigma} \cap \fq^n,\]
+\[(\mathcal{C}\cap \fq^n)^{\Sigma} = \{c \in \mathcal{C} \ | \ c \in \fq^n \ \rm and \it \ \sigma(c)=c \ , \ \forall \sigma \in \Sigma\} = \mathcal{C}^{\Sigma} \cap \fq^n,\]
 that is invariant and subfield subcode operations commute.
 \end{rq1}
 
@@ -384,7 +340,7 @@ that is invariant and subfield subcode operations commute.
 \begin{coro1} \label{ssag}
 With the notations of Theorem 1, let $SSAG_q(\X,\PR,G)$ be a subfield subcode of an AG-code and $\Sigma$ acting on it. Then 
 \[SSAG_q(\X,\PR,G)^{\Sigma} = SSAG_q(\X/\Sigma,\tilde{\PR},\tilde{G}),\]
-where $\tilde{\PR}$ and $\tilde{G}$ are defined as in remark 1.
+where $\tilde{\PR}$ and $\tilde{G}$ are defined as in Remark \rm 2.
 \end{coro1}
 
 \s
@@ -400,11 +356,11 @@ Immediate consequence of Theorem \ref{invstruct} and Remark \ref{commute}.
 
 \s
 
-Throught all this section, let $q=p^s$ be a power of a prime, $m \geq 1$, and $\fqm$ be the finite field with $q^m$ elements. Let us consider a separable morphism 
-\[\pi : \Y \rightarrow \X\]
-between curves defined over $\fqm$. It corresponds to a tower of function fields $\fqm(x) \su K \su L$, where $K=\fqm(\X)$ and $L=\fqm(\Y)=\fqm(x,y)$. Since $L$ is a finite  algebraic extension of $K$, there exists an element $y \in L$ such that 
-\[L = K(y) \ , \ and \ H(x,y)=0 \ , \ H \in \fqm[X,Y] \ irreducible.\]
-The key part of our attack will be to recover a defining equation of the curve $\Y$, that is the minimal polynomial of $y$ over $K$. To this end, let us introduce the following concept :
+Throughout all this section, we work in the finite field $\fqm$, with $m\geq 1$ and $q=p^s$ a prime power. Let us consider a separable morphism 
+\[\pi : \Y \longmapsto \X\]
+between curves defined over $\fqm$. It corresponds to a tower of function fields $\fqm(x) \su K \su L$, where $K=\fqm(\X)$ and $L=\fqm(\Y)=\fqm(x,y)$. Since $L$ is a finite  algebraic extension of $K$, there exists an element $y \in L$ such that $L=K(y)$; $y$ being a primitive element satisfying
+\[ H(y)=0 \ , \ H \in K[T] \ \rm irreducible \ polynomial.\]
+The key part of our attack will be to recover a defining equation of the curve $\Y$, that is the minimal polynomial $H$ of $y$ over $K$. To this end, let us introduce the following concept.
 
 
 \s
@@ -424,15 +380,15 @@ If $A \in Div(K)$, we have
 
 \s
 
-Now, let us introduce a few notations. Denote by $\ell=[L:K]$ the degree of the extension $L/K$. Suppose that we are given a set of $r$ places of degree one in $K$, say $\tilde{\PR} = \{Q_1,...,Q_r\}$, that totally split in $L/K$. For any $1 \leq i \leq r$, one then have 
-\[\pi^*Q_i = P_{i,1} + ... + P_{i,\ell} \ , \ P_{i,j} \in \mathbb{P}_L\]
-Denote by $\PR = \{P_{i,j} \ | \ 1 \leq i \leq r \ and \ 1 \leq j \leq \ell\}$ the set of all extensions of the $Q_i$'s in $L$. Let $G \in Div(L)$ be a divisor of degree $d$ smaller that $n=\ell r$ such that $\rm{Supp}(G) \cap \PR = \emptyset$. Also, we denote by $\tilde{G} \in Div(K)$ its related divisor according to definition \ref{pousséavant}.
+Let us give the settings of our attack. Denote by $\ell=[L:K]$ the degree of the extension $L/K$. Suppose that we are given a set of $r$ places of degree one in $K$, say $\tilde{\PR} = \{Q_1,...,Q_r\}$, that totally split in $L/K$. For any $1 \leq i \leq r$, one then have 
+\[\pi^*Q_i = P_{i,1} + ... + P_{i,\ell} \ , \rm with \it  \ P_{i,j} \in \mathbb{P}_L\]
+Denote by $\PR = \{P_{i,j} \ | \ 1 \leq i \leq r \ and \ 1 \leq j \leq \ell\}$ the set of all extensions of the $Q_i$'s in $L$. Let $G \in Div(L)$ be a divisor of degree $d$ smaller that $n=\ell r$ such that $\rm{Supp}(G) \cap \PR = \emptyset$. Also, we denote by $\tilde{G} \in Div(K)$ its related divisor according to Definition \ref{pousséavant}.
 Note that this implies that $\rm{Supp}(\tilde{G}) \cap \tilde{\PR} = \emptyset$ as well. 
 
 \s
 
 \begin{rq1} \rm
-The situation above can also be described in the following way : consider a curve $\Y$ with function field $L$, together with a subgroup $\Sigma \su Aut(\Y)$. We then gets a cover $\Y \rightarrow \Y/\Sigma$, that is the function field $K = \fqm(\Y/\Sigma) = L^{\Sigma}$. If $G$ is made of orbits under the action of $\Sigma$, then $\PR$ and $G$ gives rise to an AG-code $C_L(\Y,\PR,G)$ that is invariant under the action of $\Sigma$, and thus its invariant code is given by $C_L(\Y/\Sigma,\tilde{\PR},\tilde{G})$. As explained in the introduction, we will later be dealing with the subfield subcode version of those codes.  
+The situation above can also be described the following manner : Consider a curve $\Y$ with function field $L$, together with a subgroup $\Sigma \su Aut(\Y)$. We then gets a cover $\Y \longmapsto \Y/\Sigma$, as well as a function field $K = \fqm(\Y/\Sigma) = L^{\Sigma}$. If $G$ is made of orbits under the action of $\Sigma$, then $\PR$ and $G$ gives rise to an AG-code $C_L(\Y,\PR,G)$ that is invariant under the action of $\Sigma$, and thus its invariant code is given by $C_L(\Y/\Sigma,\tilde{\PR},\tilde{G})$. As explained in the introduction, we will later be dealing with the subfield subcode version of those codes.  
 \end{rq1}
 
 \s
@@ -440,9 +396,10 @@ The situation above can also be described in the following way : consider a curv
 Before describing the procedure to recover the equation of $\Y$, let us put together our assumptions :
 
 \begin{enumerate}
-\item We know a parity check matrix $H$ of the SSAG-code  \[\mathcal{C} = SSAG_q(\Y,\PR,G) ;\]
+\item We know a parity check matrix $H$ of the SSAG-code  \[\mathcal{C} = SSAG_q(\Y,\PR,G),\]
+that is generic framework of McEliece's scheme;
 \item We know a plane model of the quotient curve $\X$ (ie. the defining equation of the function field $K$), the set of places $\tilde{\PR}$ and the divisor $\tilde{G} \in Div(K)$ (that is exactly the invariant code);
-\item We know how the morphism $\pi : \Y \rightarrow \X$ acts on the set of places $\PR$, that is for every $P \in \PR$, we know the corresponding place $Q \in \tilde{\PR}$ such that $P \mid Q$ (ie. $Q=\pi(P)$);
+\item We know how the morphism $\pi : \Y \longmapsto \X$ acts on the set of places $\PR$, that is for every $P \in \PR$, we know the corresponding place $Q \in \tilde{\PR}$ such that $P \mid Q$ (ie. $Q=\pi(P)$);
 \item We have \it{"enough informations"} \rm on the pole divisor of $y$ in $K$, where $y \in L$ is such that $L=K(y)$. This assumption will be discussed later, since the key point of the attack will be to control the divisor 
 \[\widetilde{(y)^L_{\infty}} \in Div(K).\] 
 In fact, we will need to understand its support in $K$, and how he ramifies in $L/K$.
@@ -451,37 +408,37 @@ In fact, we will need to understand its support in $K$, and how he ramifies in $
 
 Let us now explain what we plan to do. The main idea is to recover first the support $\PR$, that are points on the curve $\Y$, in order to be able to recover its defining equation using interpolation. Thanks to hypothesis $2.$, we know the coordinates of the rational points corresponding to $Q_i$'s in the plane model of the curve $\X$. In fact, let us denote by $\alpha$ a primitive element of $K$ over $\fqm(x)$, that is $K = \fqm(x,\alpha)$ (possible since $K/\fqm(x)$ is separable and algebraic). Then one can denote by $(x(Q_i):\alpha(Q_i):1)$ the coordinate of the rationnal point in $\X(\fqm)$ corresponding to the place $Q_i \in \tilde{\PR}$. \\
 
-As the curve $\Y$ covers the plane model of $\X$, it admits a model in $\mathbb{P}^3(\fqm)$; that is any $P \in \PR$ corresponds to a point with coordinates $(x(P):\alpha(P):y(P):1) \in \mathbb{P}^3(\fqm)$. Since places in $\PR$ are extensions of places in $\tilde{\PR}$, they corresponds to points that have the same $x$ and $\alpha$ coordinates, and equals to those of their restrictions in $K$. In other words, forall $1 \leq i \leq r$ and $1 \leq j \leq \ell$, the place $P_{i,j} \in \PR$ corresponds to the point
+As the curve $\Y$ covers the plane model of $\X$, it admits a model in $\mathbb{P}^3(\fqm)$; that is any $P \in \PR$ corresponds to a point with coordinates $(x(P):\alpha(P):y(P):1) \in \mathbb{P}^3(\fqm)$. Since places in $\PR$ are extensions of places in $\tilde{\PR}$, they corresponds to points that have the same $x$ and $\alpha$ coordinates, and equals to those of their restriction in $K$. In other words, forall $1 \leq i \leq r$ and $1 \leq j \leq \ell$, the place $P_{i,j} \in \PR$ corresponds to the rational point
 \[ (x(Q_i):\alpha(Q_i):y(P_{i,j}):1) \in \Y(\fqm).\]
 
 As a result, from hypothesis $2$, one only need to recover the $y$-evaluation of points in $\PR$ in order to conclude. So the key part will be to recover the row vector
 \begin{equation}
-\textbf{y} = (y_{i,j})_{i,j}.
+\textbf{y} = (y_{i,j})_{i,j},
 \end{equation}
 where $y_{i,j} := y(P_{i,j})$, for every $1 \leq i \leq r$ and $1 \leq j \leq \ell$.
 
 \s
 
-In order to recover the vector \textbf{y}, we will construst a system of linear equations of which it is a solution. For that, recall that by definition, the parity check matrix of the code $\mathcal{C}=SSAG_q(\Y,\PR,G)$ satisfies
+In order to recover \textbf{y}, we will construst a linear system of which it is solution. For that, recall that by definition, the parity check matrix of the code $\mathcal{C}=SSAG_q(\Y,\PR,G)$ satisfies
 \begin{equation}
 c \in \mathcal{C} \iff H \cd c^T = 0.
 \end{equation}
 Moreover, we know that a codeword $c \in \mathcal{C}$ comes from evaluation at $P_{i,j} \in \PR$ of functions in the Riemann-Roch space of $G$, that is.
-\[c = (f(P_{i,j})) \ , \ f \in L(G).\]
+\[c = (f(P_{i,j})) \ , \ f \in L(G) \ \rm \color{red} and \ \it c \in \fq^n. \color{black}\]
 
-Of course, $L(G)$ is unknown since the divisor $G$ is as well. But we actually don't need the whole $L(G)$ to recover \textbf{y}. In fact, we are searching for a subspace $\mathcal{L} \su L(G)$, big enough (we will explain it later), and made of functions that specifically have the form $g \cd y$, where $g \in K$ and $y$ is such that $L=K(y)$. In fact, if we found such a space, one have 
-\[\{c= (g(P_{i,j}) \cd y(P_{i,j})) \ , \ 1 \leq i \leq r \ , \ 1 \leq j \leq \ell \ and \ f\cd y \in \mathcal{L}\} \su \mathcal{C}.\] 
+Of course, $L(G)$ is unknown since the divisor $G$ is as well. But we actually don't need the whole space $L(G)$ to recover \textbf{y}. In fact, we are searching for a subspace $\mathcal{L} \su L(G)$, big enough (we will explain it later), and made of functions that specifically have the form $g \cd y$, where $g \in K$ and $y$ is such that $L=K(y)$. In fact, if we found such a space, one have 
+\[\{c= (g(P_{i,j}) \cd y(P_{i,j})) \ , \ 1 \leq i \leq r \ , \ 1 \leq j \leq \ell \ and \ f\cd y \in \mathcal{L}\} \color{red} \cap \fq^n \color{black} \su \mathcal{C}.\] 
 
-In particular, since $g \in K$, the $g(P_{i,j})$ are known (recall the discussion above), and thus the right-hand side of $(2)$ will gives us a system where everything is known but the $y(P_{i,j})$, that is exactly what we want.
+In particular, since $g \in K$, the $g(P_{i,j})$ are known (recall the discussion above), and thus the right-hand side of $(2)$ gives us a system where everything is known but the $y(P_{i,j})$, that is exactly what we want.
 
 \s
 
-Let us know explain how to get a space of functions $\mathcal{L} \su L(G)$ as above. In particular, since we know the quotient curve (that is we know its function field $K$) as well as the morphism of curve $\pi : \Y \rightarrow \X$, we will construct $\mathcal{L}$ as a pull-back of function in $K$. To be concrete, we are searching for a space of functions $\mathcal{F} \su K$, as big as possible, such that the following holds :
+Let us now explain how to get a space of functions $\mathcal{L} \su L(G)$ as above. In particular, since we know the quotient curve (that is we know its function field $K$) as well as the morphism of curve $\pi : \Y \rightarrow \X$, we will construct $\mathcal{L}$ as a pull-back of function in $K$. To be concrete, we are searching for a space of functions $\mathcal{F} \su K$, as big as possible, such that 
 \begin{equation}
 \pi^*\mathcal{F} \cd y \in L(G). 
 \end{equation}
 
-The following lemma gives us a good choice for the space $\mathcal{F}$, that will actually turn out to be the best one.
+The following lemma gives us the optimal choice for the space $\mathcal{F}$.
 
 \s
 
@@ -497,7 +454,7 @@ satisfies condition $(3)$ above.
 The inclusion $\mathcal{F} \su L(\tilde{G})$ easy follows from the fact that $\widetilde{(y)^L_{\infty}}$ is a positive divisor, and thus $\tilde{G}-\widetilde{(y)^L_{\infty}} \leq \tilde{G}$. Let us show that $(3)$ holds. Let $f \in \mathcal{F} =  L\left(\tilde{G}-\widetilde{(y)^L_{\infty}}\right)$. By definition, one have 
 \[(f)^K \geq -\left(\tilde{G}-\widetilde{(y)^L_{\infty}}\right),\]
 and then 
-\[(\pi^*f)^L \geq -\pi^*\left(\tilde{G}-\widetilde{(y)^L_{\infty}}\right) = (y)^L_{\infty} - G \ , \ \quad using \ remark \ \ref{jsp}.\]
+\[(\pi^*f)^L \geq -\pi^*\left(\tilde{G}-\widetilde{(y)^L_{\infty}}\right) = (y)^L_{\infty} - G \ , \ \quad \rm using \ Remark \  \ref{jsp}.\]
 Now, one gets 
 \[(\pi^*f \cd y)^L = (\pi^*f)^L  + (y)^L \geq  ((y)^L_{\infty} - G)+(y)^L = (y)^L_0 - G \geq -G,\]
 since $(y)^L_0$ is an effective divisor. In particular, we just proved that $\pi^*f \cd y \in L(G)$ for every $f \in \mathcal{F}$, that is $(3)$ holds.
@@ -506,16 +463,16 @@ since $(y)^L_0$ is an effective divisor. In particular, we just proved that $\pi
 \s
 
 \begin{rq1} \rm \label{remark5}
-As we are searching for a space $\mathcal{F}$ as big as possible, we can see in the above proof that we made the best choice possible. In fact, since we want functions with specific form $g \cd y$ where $g$ doesn't depend on the variable $y$, one need to compensate this fact by "deleting" the term $-(y)^L_{\infty}$, which is the smallest as possible, that is we loose the least information as possible in order to have our condition satisfied. 
+As we are searching for a space $\mathcal{F}$ as big as possible, we can see in the above proof that we made the best choice possible. In fact, since we want functions with the specific form $g \cd y$ where $g$ doesn't depend on the variable $y$, one need to compensate this fact by "deleting" the term $-(y)^L_{\infty}$, which is the smallest as possible, that is we loose the least informations as possible in order (3) to be satisfied.
 \end{rq1}
 
 \s
 
-Note that the space $\mathcal{F}$ in lemma \ref{constructionD} can be explicitely determined in our situation, since it is a subspace of $K$ which is supposed to be known (see hypothesis 2. and 4. above). In particular, the divisor 
+Note that the space $\mathcal{F}$ in Lemma \ref{constructionD} can be explicitely determined in our situation, since it is a subspace of $K$ which is supposed to be known (see hypothesis 2. and 4. above). In particular, the divisor 
 \begin{equation}
 D := \tilde{G} - \widetilde{(y)}^L_{\infty} \in Div(K)
 \end{equation}
-is known from now on. In particular, one can find a basis of its Riemann-Roch space, that is there exists functions $f_1,...,f_s \in K$ (where $s=l(D)$) such that 
+is known from now on. In particular, one can find a basis of its Riemann-Roch space, that is there exists functions $f_1,...,f_s \in K$ (where $s=\rm dim(\it D)$) such that 
 \[\mathcal{F} := L(D) = \langle f_1,...,f_s \rangle_{\fqm}.\]
 
 Now let us consider the row vectors, for every $1 \leq k \leq s$ :
@@ -525,19 +482,19 @@ Now let us consider the row vectors, for every $1 \leq k \leq s$ :
 
 At this point, we are able to compute the \textbf{u}$_{k}$'s the following way :
 \begin{enumerate}
-\item We first compute the vectors \textbf{a}$_{k} := (f_k(Q_i))_i$ , $1 \leq i \leq r$. This is easily done since both the $f_k$'s and $Q_i$'s are known by this point;
+\item We first compute the vectors \textbf{a}$_{k} := (f_k(Q_i))_i$ , $1 \leq i \leq r$. This can be easily done since both the $f_k$'s and $Q_i$'s are known at this point;
 \item Next we use hypothesis $3.$ to recover the \textbf{u}$_{k}$'s : In fact, we know by construction that for any fixed $1 \leq i \leq r$, one have 
 \[f_k(Q_i) = \pi^*f_k(P_{i,j}) \ , \ 1 \leq j \leq \ell,\]
-since the function $\pi^*f_k$ doesn't act on the $y$-coordinates, as they are pull-backs of function in $K$. Since we know the indices (in $\PR$) corresponding to the extension in $L$ of any $Q \in \tilde{\PR}$, one can re-build the \textbf{u}$_{k}$'s by duplicating the value of $f_k(Q_i)$ in the corresponding coordinates.
+since the functions $\pi^*f_k$ doesn't act on the $y$-coordinate, as they are pull-backs of functions in $K$. Since we know the indices (in $\PR$) corresponding to the extension in $\mathbb{P}_L$ of any $Q \in \tilde{\PR}$, we can re-build the \textbf{u}$_{k}$'s by duplicating the value of $f_k(Q_i)$ in the corresponding coordinates.
 \end{enumerate}
 
-Now, using $(2)$ and $(3)$ above, one gets 
+Now, using equations $(2)$ and $(3)$ above, one gets 
 \begin{center}
-\textbf{u}$_{k}$ $\star$ \textbf{y} $\in \mathcal{C}$, for every $1 \leq k \leq s,$
+\textbf{u}$_{k}$ $\star$ \textbf{y} $\in \mathcal{C}$, for every $1 \leq k \leq s,$ \color{red} intersection $\fq^n$ ? \color{black}
 \end{center}
-where $\star$ is the componentwise product of row vectors and \textbf{y} is the desired vector.
+where $\star$ is the componentwise product of row vectors.
 If we denote by \textbf{D}$_{k} = $ Diag(\textbf{u}$_{k}$), equation $(2)$ leads to the linear system 
-\begin{equation}
+\begin{equation} \label{system}
 \begin{pmatrix}
 H \cd \textbf{D}_1 \\
 \vdots \\
@@ -546,7 +503,7 @@ H \cd \textbf{D}_s
 \cd \textbf{y}^T = 0, 
 \end{equation}
 from which \textbf{y} is a particular solution.
-Then if we have enough equations, we can hope to recover \textbf{y} by solving it. Let us now give some more informations about this system.
+Then if we have enough equations, we can hope to recover \textbf{y} by solving (\ref{system}). 
 
 \s
 
@@ -559,22 +516,22 @@ H \cd \textbf{D}_s
 \end{pmatrix}
 $
 \end{center}
-the above matrix. It is clear that the vector \textbf{y} is in the kernel of $A$, but since it's the only solution we are searching for, it can be interesting to investigate other solutions. In order to have unicity of the solution, we would like to have as much equations as possible. Thus, let us study how the parameters impact the number of equations and thus the space of solutions.
+the above matrix. It is clear by construction that \textbf{y} is in the kernel of $A$, but since it's the only solution we are searching for, it can be interesting to investigate other ones. In order to have unicity of the solution, we would like to have as much equations as possible. Thus, let us study how the parameters impact the number of equations and thus the space of solutions.
 
 \s 
 
 If $S$ denotes the number of equations in the linear system $(5)$, one have 
 \[S = \#\rm{Rows}(H) \times s,\]
-where $s := \ell(D)$. By definition, the number of rows of $H$ equals $n-dim_{\fqm}(\mathcal{C})= \ell r - dim_{\fqm}(\mathcal{C})$. Using the Riemann-Roch theorem  twice gives 
-\[s = l(D) \leq \rm{deg}\left(\tilde{G}-\widetilde{(y)}^L_{\infty}\right) +1 - g(K) ,\]
+where $s := \rm \dim(\it D)$. By definition, the number of rows of $H$ equals $n-\rm dim_{\fqm}(\mathcal{C})= \ell r - \rm dim_{\fqm}(\mathcal{C})$. Using the Riemann-Roch theorem  twice gives 
+\[s = \rm dim (\it D) \leq \rm{deg}\left(\it \tilde{G}-\widetilde{(y)}^L_{\infty}\right) +1 - \it g(K) ,\]
 and
-\[dim_{\fqm}(\mathcal{C}) \leq \rm{deg}(G)+1-g(L).\]
-Since $\rm{deg}(\tilde{G}) = \lfloor \frac{\rm{deg}(G)}{\ell} \rfloor$, it is clear from the above estimation that the number $S$ of equations depend on both genera of $L$ and $K$, as well as the degree of the divisor $G$ (if $n=\ell r$ is fixed). In particular, if $g(K)$ and $g(L)$ are too high, we will probably have less equations (keep in mind that $g(L) \geq g(K)$ and that $g(L)$ can be computed from $g(K)$ (see. Hurwitz' formula, \cite{Sti}, theorem 3.4.13)). \\
-Moreover, if the cover $\pi : \Y \rightarrow \X$ is fixed, as well as the cardinality of the set $\PR$ (that is $n$); there exist an integer $d_{max}$ such that the number of equations is maximal for $\rm{deg}(G)=d_{max}$. 
+\[\rm dim_{\fqm}(\mathcal{C}) \leq \rm{deg}\it(G)+1-g(L).\]
+Since $\rm{deg}(\tilde{G}) = \lfloor \frac{\rm{deg}(G)}{\ell} \rfloor$, it is clear from the above estimation that the number $S$ of equations depend on both genera of $L$ and $K$, as well as the degree of the divisor $G$ (provided that $n=\ell r$ is fixed). In particular, if $g(K)$ and $g(L)$ are too high, we will probably have less equations (keep in mind that $g(L) \geq g(K)$ and that $g(L)$ can be computed from $g(K)$ (see. Hurwitz' formula, \cite{Sti}, theorem 3.4.13)). \\
+Moreover, if the cover $\pi : \Y \longmapsto \X$ is fixed, as well as the cardinality of the set $\PR$ (that is $n$); there exist an integer $d_{max}$ such that the number of equations is maximal for $\rm{deg}(G)= \it d_{max}$. 
 
 \s
 
-On the other side, in all our computing experiments, we noticed that theses parameters (ie. $\rm{deg}(G)$ and both genera in particular) doesn't impact the structure of the kernel of $A$. This is actually a good remark since those kinds of problems usually tend to be harder in big genera situations. It turns out that it was pretty much predictable since it is possible to describe all solutions of the system, as explained in the next proposition. 
+On the other side, in all our computing experiments, we noticed that theses parameters (ie. $\rm{deg}(G)$ and both genera in particular) doesn't impact the structure of the kernel of $A$n and thus the solutions of (\ref{system}). This is actually a good remark since those kinds of problems usually tend to be harder in big genera situations. It turns out that it was pretty much predictable since it is possible to describe all solutions of the system, as explained in the next proposition. 
 
 \s
 
@@ -587,7 +544,7 @@ holds. Then the evaluation vector \textbf{h} $ := (h_{i,j})_{i,j}$ ,where $h_{i,
 \s
 
 \begin{proof}
-Recall the notations of section 3.2, take $h \in L$ as above, and a function $g \in \mathcal{F}$. By definition of $\mathcal{F}$, one have 
+Using notations of Lemma \ref{constructionD}, take $h \in L$ as above, and a function $g \in \mathcal{F}$. By definition of $\mathcal{F}$, one have 
 \[(\pi^*g)^L \geq -\pi^*\left(\tilde{G}-\widetilde{(y)}^L_{\infty}\right) = (y)^L_{\infty} - G.\]
 Thus we have 
 \[(\pi^*g \cd h)^L = (\pi^*g)^L  + (h)^L \geq  ((y)^L_{\infty} - G)+(h)^L = (h)^L_0 + \underbrace{((y)^L_{\infty}-(h)^L_{\infty})}_{\geq 0} - G \geq -G,\]
@@ -598,7 +555,7 @@ that is $\pi^*\mathcal{F}\cd h \in L(G)$. This complete the proof.
 \s
 
 The above proposition proves that the space of solutions doesn't depend on the number of equations. 
-We will see in some examples later that we can explicitely decide whenever a function gives a solution or not, depending on the divisor $(y)^L_{\infty}$. This leads to a problem : how to choose the correct solution, that is the vector $\bf{y}$ \rm. We will see in the next section that depending on the cover, and especially on the action of the automorphism group $\Sigma$,  we can had to the system $(5)$ others equations, that are only satisfied by \textbf{y}, allowing us to separate it from other solutions.
+We will see in some examples later that we can explicitely decide whenever a function gives a solution or not, depending on the divisor $(y)^L_{\infty}$. This leads to a problem : how to find $\bf{y}$ \rm amoung all possible solutions ? We will see in practical examples later that depending on the cover, and especially on the action of the automorphism group $\Sigma$,  we can had to the system $(5)$ others equations, that are only satisfied by \textbf{y}, allowing us to separate it from other solutions.
 
 \s
 \section{Applications}
@@ -610,18 +567,18 @@ We will see in some examples later that we can explicitely decide whenever a fun
 \s
 
 
-As we saw in section 4, our procedure allows us to recover the defining equation of a curve $\Y$, provided that we are given enough informations about one of its quotient curve $\X$. One can also see the situation as follow: Given a plane curve $\X$, can we recover the defining equation of one of its cover $\Y$ ? \\ The natural question is then which kind of curve $\X$ can be taken as ? \\
+As we saw in section 4, our procedure allows us to recover the defining equation of a curve $\Y$, provided that we are given enough informations about one of its quotient curve $\X$. One can also see the situation as follow: Given a plane curve $\X$, can we recover the defining equation of one of its cover $\Y$ ? A natural question is then for which type of curve $\X$ this is possible. \\
 
-The easiest case is then $\X$ equals the projective line $\mathbb{P}^1(\fqm)$. In fact, this curve has genus 0 and we know exactly its rationals places. We will come back at it in section $5.2$.
-\\
 
-In what follows, we will see that we can take a general classe of curves as the quotient curve $\X$. In particular, from hypthesis $4.$ (see section 4) it is clear that we need to "control" the pole divisor of a prime element of $L/K$, that is we would like $\widetilde{(y)}^L_{\infty}$ to be as simple as possible (in terms of the cardinality of its support). In order to satisfy this condition, the function field $K$ of the curve $\X$ has to be well-chosen. In fact, take an separating element $x \in K$, such that $K/\fqm(x)$ is separable and algebraic. Thus there exist $\alpha \in K$ such that $K=\fqm(x,\alpha)$. Let us define the classe of curve were $\X$ will be taken :
+The easiest case is then $\X$ equals the projective line $\mathbb{P}^1(\fqm)$. In fact, this curve has genus zero and we know exactly its rationals places. This case is not really intersting, and in fact in will be contained in the discussion below.\\
+
+In fact, we will see that we can take $\X$ in a general classe of curves. In particular, from Hypthesis $4.$ (see section 4) we need to control the pole divisor of a prime element of $L/K$, that is we would like $\widetilde{(y)}^L_{\infty}$ to be as simple as possible (in terms of the cardinality of its support). In order to satisfy this condition, the function field $K$ of the curve $\X$ has to be well chosen. In fact, take an separating element $x \in K$, such that $K/\fqm(x)$ is separable and algebraic. Thus there exist $\alpha \in K$ such that $K=\fqm(x,\alpha)$. Let us define the classe of curve were $\X$ will be taken.
 
 \s
 
 \begin{def1} \label{courbes à variables séparées}
 For a curve $\X$ over $\fqm$, we say that it has separated variables if its function field $K=\fqm(x,\alpha)$ is given by
-\[F_1(\alpha) = F_2(x) \ , \ F_1,F_2 \in \fq[T].\]
+\[F_1(\alpha) = F_2(x) \ , \ \rm where \ \it  F_1,F_2 \in \fq[T].\]
 In this case, one have $[K:\fqm(x)] = \rm{deg}(\it{F_1})$.
 \end{def1}
 
@@ -632,31 +589,31 @@ The following lemma explain why these curves are intersting in our case :
 \s
 
 \begin{lem1} \label{lemdegré}
-Let $\X$ be a curve with separated variables, with function field $K=\fqm(x,\alpha)$ given by the equation
+Let $\X$ be a curve with separated variables, whose function field $K=\fqm(x,\alpha)$ is given by the equation
 \[F_1(\alpha) = F_2(x),\]
-where $F,G \in \fqm[T]$ are two univariate polynomials with co-prime degrees, and denote by $\pi : \X \rightarrow \mathbb{P}^1(\fqm)$. the corresponding morphism of curves. Let us denote by $R_{\infty}$ the pole of $x$ in $\fqm(x)$. Then $R_{\infty}$ is totally ramified in $K/\fqm(x)$, and its unique extension $Q_{\infty} \in K$ is the unique pôle of $\alpha \in K$. In particular, one have 
-\[(\alpha)^K_{\infty} = \rm{deg}\it{(F_2) \cd Q_{\infty}}.\]
+where $F,G \in \fqm[T]$ are two univariate polynomials with coprime degrees, and denote by $\pi : \X \longmapsto \mathbb{P}^1(\fqm)$. the corresponding morphism of curves. Let $R_{\infty}$ be the pole of $x$ in $\fqm(x)$. Then $R_{\infty}$ is totally ramified in $K/\fqm(x)$, and its unique extension $Q_{\infty} \in K$ is the unique pole of $\alpha \in \mathbb{P}_K$. In particular, one have 
+\[(\alpha)^K_{\infty} = \rm{deg}\it{(F_{\rm 2}) \cd Q_{\infty}}.\]
 \end{lem1}
 
 \s
 
 \begin{proof}
-Let $Q_{\infty}$ be an extension of $R_{\infty}$ in $K$. One have obviously
+Let $Q_{\infty}$ be some extension of $R_{\infty}$ in $K$. One have obviously
 \[e(Q_{\infty}|R_{\infty}) \leq \rm{deg}\it(F_1)=[K:\fqm(x)].\]
 On the other side, from the defining equation of $K$; one gets
 \[F_1(\alpha) = F_2(x) \Rightarrow \rm{deg}(F_1) \cd \nu_{Q_{\infty}}(\alpha) = e(Q_{\infty}|R_{\infty}) \cd \rm{deg}\it(F_2) \cd \underbrace{\nu_{R_{\infty}}(x)}_{=-1},\]
-and since $(\rm{deg}\it(F_1),\rm{deg}(F_2))=1$, we get $\rm{deg}\it(F_1) \mid e(Q_{\infty}|R_{\infty})$, that is $R_{\infty}$ is fully ramified in $K/\fqm(x)$ and $e(Q_{\infty}|R_{\infty})=\rm{deg}\it(F_1)$. Moreover, we have 
+and since $(\rm{deg}\it(F_1),\rm{deg}(\it F_{\rm 2}))=1$, we get $\rm{deg}\it(F_1) \mid e(Q_{\infty}|R_{\infty})$, that is $R_{\infty}$ is fully ramified in $K/\fqm(x)$ and $e(Q_{\infty}|R_{\infty})=\rm{deg}\it(F_1)$. Moreover, we have 
 \begin{align*}
-\rm{deg}\it(F_1) \cd (\alpha)^K_{\infty} &= \rm{deg}\it(F_2) \cd \pi^*(x)^{\fq(x)}_{\infty} \\
-&= \rm{deg}\it(F_2) \cd \pi^* R_{\infty} \\
-&= \rm{deg}\it(F_2) \cd e(Q_{\infty}|R_{\infty}) \cd Q_{\infty} \ ,
+\rm{deg}\it(F_1) \cd (\alpha)^K_{\infty} &= \rm{deg}\it(F_{\rm 2}) \cd \pi^*(x)^{\fq(x)}_{\infty} \\
+&= \rm{deg}\it(F_{\rm 2}) \cd \pi^* R_{\infty} \\
+&= \rm{deg}\it(F_{\rm 2}) \cd e(Q_{\infty}|R_{\infty}) \cd Q_{\infty} \ ,
 \end{align*}
-which gives the result on the divisor of poles of $\alpha$ in $K$.
+which gives the result.
 \end{proof}
 
 \s
 
-The main point in these kind of curves is that we keep track of the place at infinity in the corresponding extension of function field, that will later allows us to look at this point in the tower $\Y \rightarrow \X \rightarrow \mathbb{P}^1(\fqm)$, giving us a good way to describe the divisor $\widetilde{(y)_{\infty}^L} \in Div(K)$.
+The main point in these kind of curves is that we keep track of the place at infinity in the corresponding extension of function field, that will later allow us to look at this point in the tower $\Y \longmapsto \X \longmapsto \mathbb{P}^1(\fqm)$; giving us a good way to describe the divisor $\widetilde{(y)_{\infty}^L} \in Div(K)$.
 
 
 \s
@@ -665,41 +622,46 @@ The main point in these kind of curves is that we keep track of the place at inf
 
 \s
 
-Let $\X$ be a curve over $\fqm$ with separated variables (see. definition \ref{courbes à variables séparées}), those function field is given by $K=\fqm(x,\alpha)$, with
-\[F_1(\alpha) = F_2(x) \ , \ F_1,F_2 \in \fqm[T] \]
-and $(\rm{deg}\it(F_1),\rm{deg}\it(F_{\rm{2}}))=1$.  \\
-Our first example of cover is the so-called Kummer covering.
+Let $\X$ be a curve over $\fqm$ with separated variables (see. Definition \ref{courbes à variables séparées}), those function field is given by $K=\fqm(x,\alpha)$, with
+\[F_1(\alpha) = F_2(x) \ ; \ \rm {with} \ \it F_1,F_{\rm 2} \in \fqm[T] \]
+and $(\rm{deg}\it(F_1),\rm{deg}\it(F_{\rm{2}}))=1$. 
 
 \s
 
 Let $\ell \mid q-1$ be an integer (not necessarly a prime). Consider the extension $L=K(y)$, with
-\[y^{\ell} = f \ , \ f \in K\]
-and denote by $m:=\rm{deg}\it((f)_{\infty}^K)$ the degree of the pole divisor of the function $f$. Suppose also that $(m,\ell)=1$. Then $L/K$ is a Kummer extension, it is cyclic of order $\ell=[L:K]$ and 
-\[Gal(L/K) = \{ \sigma : y \mapsto \xi \cd y \ | \ \xi \in \mu^*_{\ell}(\fq)\}.\] 
+\begin{equation} \label{kummer}
+y^{\ell} = f(x,\alpha) \ , \ f \in \fqm[X,T] 
+\end{equation}
+and denote by $d:=\rm{deg}\it(f)$ the degree of the bivariate polynomial $f$. Suppose also that $(d,\ell)=1$. Then $L/K$ is a Kummer extension; is cyclic of order $\ell=[L:K]$ and 
+\[Gal(L/K) = \{ \sigma : y \mapsto \xi \cd y \ | \ \xi \in \mu^*_{\ell}(\fqm)\}.\] 
 
 \s
 
-Note that this kind of extension have been studied a lot, and that we know the ramification in such an extension (see for example \cite{Sti}, proposition 3.7.3).
+\begin{rq1} \label{pk des polynômes}
+This special case of cyclic extension have been extensively studied and are well-known. With Artin-Shreier extensions, they caracterize in a sense all cyclic extensions (see \cite{Sti} Annex A.13). In particular, in their settings, the element $f$ as in (\ref{kummer}) should be an element in $K$, that is potentially a rational function. Above, we supposed that $f$ is a polynomial, since we can always reduce to this case using a change of variables. Finally, you can refer to \cite{Sti}, Proposition 3.7.3 for more details about ramification in Kummer extensions).
+\end{rq1}
 
-Let us explain the hypothesis before describing our attack in this context (this is a special case of those given in section 4.). Denote by $\Y \rightarrow \X$ the morphism of algebraic curves that corresponds to the extension of function fields $L/K$. We are given an $SSAG-code$ $\mathcal{C}$ on the curve $\Y$, that is stable under the action of the Galois group $Gal(L/K)$. In the Kummer case, this group is well-know :  it is cyclic of order $\ell$ and the corresponding action is completely determined by the choice of an $\ell^{th}$ root of unity $\xi \in \mu^*_{\ell}(\fqm)$. Our hypotheses are the following :
+\s
+
+Let us explain the hypotheses before describing our attack in this context (this is a special case of those given in section 4.). Denote by $\Y \longmapsto \X$ the morphism of algebraic curves that corresponds to the extension of function fields $L/K$. Suppose we are given an $SSAG$ code $\mathcal{C}$ on the curve $\Y$, that is invariant under the action of the whole Galois group $Gal(L/K)$. Since this group is well-know, the corresponding action is completely determined by the choice of an $\ell^{th}$-root of unity $\xi \in \mu^*_{\ell}(\fqm)$. Our hypotheses are then the following :
 
 \s
 
 \begin{enumerate}
 \item We know a parity check matrix $H$ of the code $\mathcal{C} = SSAG_q(\Y,\PR,G)$;
-\item The quotient curve $\X$ is known (that is polynomials $F_1$ and $F_2$), as well as the structure of the invariant code of $\mathcal{C}$, ie. $\tilde{\PR}$ and $\tilde{G}$ such that $\mathcal{C}^{\sigma} = SSAG_q(\X,\tilde{\PR},\tilde{G})$ \ ;
+\item The quotient curve $\X$ is known (that is polynomials $F_1$ and $F_2$), as well as the structure of the invariant code of $\mathcal{C}$, ie. $\tilde{\PR}$ and $\tilde{G}$ such that $\mathcal{C}^{\sigma} = SSAG_q(\X,\tilde{\PR},\tilde{G})$;
 \item The automorphism $\sigma \in Gal(L/K)$ that acts on $\mathcal{C}$ is unknown, that is we don't know the corresponding root of unity $\xi$.
 \end{enumerate}
 
 \s
 
 
-According to section $3.2$, we need to control the divisor $\widetilde{(y)^L_{\infty}}$. Let us start with the following lemma.
+According to Section $4$, we need to control the divisor $\widetilde{(y)^L_{\infty}}$. Let us start with the following lemma.
 
 \s
 
 \begin{lem1} \label{ramification}
-Keep notations as in lemma 3. Then in the above situation, the place $Q_{\infty}$ (the unique pole of $\alpha$) is fully ramified in $L/K$, and its unique extension $P_{\infty} \in L$ is the unique pole of $y$ in $L$. 
+Keep notations as in Lemma \ref{lemdegré}. Then in the above situation, the place $Q_{\infty}$ (the unique pole of $\alpha$) is fully ramified in $L/K$, and its unique extension $P_{\infty} \in L$ is the unique pole of $y$ in $L$. 
 \end{lem1}
 
 \s
@@ -715,84 +677,84 @@ We have
 \[(x)^L_{\infty} = \ell \cd \rm{deg}(F_1) \cd P_{\infty},\]
 \[(\alpha)^L_{\infty} = \ell \cd \rm{deg}(F_2) \cd P_{\infty},\]
 and
-\[(y)^L_{\infty} = m \cd P_{\infty}.\]
+\[(y)^L_{\infty} = d \cd P_{\infty}.\]
 \end{prop1}
 
 \s
 
 \begin{proof}
-Let $R_{\infty}$ be the simple pole of $x$ in $\fqm(x)$. It is totally ramified in $K/\fqm(x)$ (see lemma \ref{ramification}), so $(x)^K = \rm{deg}\it(F_1) \cd Q_{\infty}$. We also know the divisor of poles of $\alpha$ in $K$, so using lemma \ref{tiréarr} yields
+Let $R_{\infty}$ be the simple pole of $x$ in $\fqm(x)$. It is totally ramified in $K/\fqm(x)$ (see Lemma \ref{ramification}), so $(x)^K = \rm{deg}\it(F_1) \cd Q_{\infty}$. We also know the divisor of poles of $\alpha$ in $K$, so using Lemma \ref{tiréarr} yields
 \[(x)^L_{\infty} = \pi^*(x)^K_{\infty} = \rm{deg}\it(F_1) \cd \pi^*Q_{\infty} = \ell \cd \rm{deg}\it(F_1) \cd P_{\infty},\]
 and
-\[(\alpha)^L_{\infty} = \rm{deg}\it(F_2) \cd \pi^*Q_{\infty} = \ell \cd \rm{deg}\it(F_2) \cd P_{\infty}.\]
-Next, by hypothesis one have $(f)^K_{\infty} = m \cd Q_{\infty}$ (recall that $Q_{\infty}$ is the unique pole of $x$ and $\alpha$ and $K$), so the equation $y^n=f$ gives
+\[(\alpha)^L_{\infty} = \rm{deg}\it(F_{\rm 2}) \cd \pi^*Q_{\infty} = \ell \cd \rm{deg}\it(F_{\rm 2}) \cd P_{\infty}.\]
+Next, by hypothesis one have $(f)^K_{\infty} = d \cd Q_{\infty}$ (recall that $Q_{\infty}$ is the unique pole of $x$ and $\alpha$ and $K$), so the equation $y^n=f$ gives
 \begin{align*} \ell \cd (y)^L_{\infty} &= \pi^*(f)^K_{\infty} \\
-&= m \cd e(P_{\infty}|Q_{\infty}) \cd P_{\infty} \ ,
+&= d \cd e(P_{\infty}|Q_{\infty}) \cd P_{\infty} \ ,
 \end{align*}
-that is $(y)^L_{\infty} = m \cd P_{\infty}.$
+that is $(y)^L_{\infty} = d \cd P_{\infty}.$
 \end{proof}
 
 \s
 
-\begin{rq1} \rm Considering these extensions, the study of the divisor of pole we are interested in is particularly simple because it is only supported by one place, that correspond to the point at infinity in $\mathbb{P}^1(\fqm)$, that is totally ramified in the tower $\fqm(x)\su K \su L$.
+\begin{rq1} \rm Considering theses extensions, the divisor of pole of $y$ we are interested in is particularly simple because it is only supported by one place, that correspond to the point at infinity in $\mathbb{P}^1(\fqm)$, that is totally ramified in the tower $\fqm(x)\su K \su L$.
 \end{rq1}
 
 \s
 
-The proposition \ref{propclé} above allows us to give the precise structure of the divisor $D$ (recall its definition in $(4)$, section 3.2) in our context.
+Proposition \ref{propclé} above allows us to give the precise structure of the divisor $D$ (recall its definition in $(4)$, Section 4).
 
 \s
 
 \begin{coro1} \label{diviseurDKummer}
 One have
-\[D = \tilde{G} - \left\lceil\frac{m}{\ell}\right\rceil \cd Q_{\infty} \in Div(K).\]
+\[D = \tilde{G} - \left\lceil\frac{d}{\ell}\right\rceil \cd Q_{\infty} \in Div(K).\]
 \end{coro1}
 
 \s
 
 \begin{proof}
-From the structure of $(y)^L_{\infty}$ given in proposition 2, it is clear that 
+From the structure of $(y)^L_{\infty}$ given in Proposition \ref{propclé}, it is clear that 
 \[\rm{Supp}\left(\widetilde{(y)^L_{\infty}}\right) = \{Q_{\infty}\}.\]
 It remains to show that if $D$ is defined as above, then $D = \widetilde{G - (y)^L_{\infty}}$. In fact, we have
 \begin{align*}
-\pi^*D &= \pi^* \left(\widetilde{G - \left\lceil\frac{m}{\ell}\right\rceil \cd Q_{\infty}}\right) \\
-&= \pi^*\tilde{G} - \left\lceil\frac{m}{\ell}\right\rceil \cd \pi^*\widetilde{Q_{\infty}} \\
-&= G - n \cd \left\lceil\frac{m}{\ell}\right\rceil \cd P_{\infty} \ \quad (using \ remark \ \ref{jsp}) \\
-& \leq G - m \cd P_{\infty} \\
+\pi^*D &= \pi^* \left(\widetilde{G - \left\lceil\frac{d}{\ell}\right\rceil \cd Q_{\infty}}\right) \\
+&= \pi^*\tilde{G} - \left\lceil\frac{d}{\ell}\right\rceil \cd \pi^*\widetilde{Q_{\infty}} \\
+&= G - n \cd \left\lceil\frac{d}{\ell}\right\rceil \cd P_{\infty} \ \quad \rm (using \ Remark \ \ref{jsp}) \\
+& \leq G - d \cd P_{\infty} \\
 &= G-(y)^L_{\infty},
 \end{align*}
 
-the last equality coming from proposition \ref{propclé}. Moreover, this choice of $D$ is optimal (ie. the biggest, see. definition \ref{pousséavant}) since $m/\ell$ can not be an integer (recall that $m$ and $\ell$ are coprime).
+the last equality coming from Proposition \ref{propclé}. Moreover, this choice of $D$ is optimal (ie. the biggest, see. Definition \ref{pousséavant}) since $d/\ell$ can not be an integer (recall that $d$ and $\ell$ are coprime).
 \end{proof}
 
 \s
 
-Note that the divisor $D$ in the above corollary is know in our context from our hypothesis, and thus one can consctruct the corresponding linear system (see (5) in section 3.2).
+Note that the divisor $D$ in the above corollary is known in this context from our hypotheses, and thus one can consctruct the corresponding linear system (see (5)).
 
 \s
-
+hypothèses
 As we already mentionned earlier, the linear system $(5)$ doesn't only have the vector \textbf{y} as solution, but also any evaluation vector that comes from a function $h \in L$ such that 
-\[(h)^L_{\infty} \leq (y)^L_{\infty} = m \cd P_{\infty}.\]
-In the context of a Kummer covering, one can easyly find other solutions. In fact, let $h := x^i\alpha^j \in K$ be a function that only depend on variables $x$ and $\alpha$, and \bf{h} \rm = \textbf{x}$^i\boldsymbol{\alpha}^j$ \rm its corresponding row vector, following usual notations. Using proposition \ref{propclé}, and in particular the description of the pole divisors of $x$ and $\alpha$, one easyly see that 
-\[ (h)^L_{\infty} = \ell \cd \left(i \cd \rm{deg}\it(F_1)+j \cd \rm{deg}\it(F_2)\right) \cd P_{\infty}.\]
+\[(h)^L_{\infty} \leq (y)^L_{\infty} = d \cd P_{\infty}.\]
+In the context of a Kummer covering, one can easily find other solutions. In fact, let $h := x^i\alpha^j \in K$ be a function that only depend on variables $x$ and $\alpha$, and \bf{h} \rm = \textbf{x}$^i\boldsymbol{\alpha}^j$ \rm its corresponding row vector, following usual notations. Using Proposition \ref{propclé}, and in particular the description of the pole divisors of $x$ and $\alpha$, we see that 
+\[ (h)^L_{\infty} = \ell \cd \left(i \cd \rm{deg}\it(F_1)+j \cd \rm{deg}\it(F_{\rm 2})\right) \cd P_{\infty}.\]
 As a result, \bf{h} \rm is also a solution of the system $(5)$, provided that
-\[\ell \cd \left(i \cd \rm{deg}\it(F_1)+j \cd \rm{deg}\it(F_2)\right) \leq m.\]
+\[\ell \cd \left(i \cd \rm{deg}\it(F_1)+j \cd \rm{deg}\it(F_{\rm 2})\right) \leq d.\]
 
 
 \s
 
-Since we have found other solutions, one now need to choose the vector \textbf{y} amoung them. This can be done by adding other equations to the system, that are only satisfied by the vector \textbf{y}. Indeed, since the action of the automorphism group $\Sigma = \langle\sigma\rangle$ that acts on the support $\PR$ of the code $\mathcal{C}$ is given by 
+Since we have found other solutions, we need to choose the vector \textbf{y} amoung them. This can be done by adding other equations to the system, that are only satisfied by the vector \textbf{y}. Indeed, since the action of the automorphism group $\Sigma = \langle\sigma\rangle$ that acts on the support $\PR$ of the code $\mathcal{C}$ is given by 
 \[\sigma : y \longmapsto \xi \cd y,\]
-with $\xi \in \mu^*_{\ell}(\fqm)$, the components of the vector \textbf{y} satisfy a geometric progression by orbit (recall that $\PR$ is made of orbit under the above action of the automorphism $\sigma$). To simplify a bit the situation, recall that the set $\PR$ is made of $r$ orbits of lenght $\ell$, and suppose in what follow that its elements are ordered orbit by orbit, that is if $\tilde{\PR} = \{Q_1,...,Q_r\} \in \mathbb{P}_K$, then elements of $\PR$ at indices $(i-1)\ell+1,...,i\ell$ correspond to the $\ell$ extensions of $Q_{i}$ in $L$ (for every $1\leq i \leq r$). Let us consider the following bloc matrices
+with $\xi \in \mu^*_{\ell}(\fqm)$, the components of \textbf{y} satisfy a geometric progression by orbit (recall that $\PR$ is made of distincts orbit under the action of $\sigma$). To simplify a bit the situation, recall that the set $\PR$ is made of $r$ orbits of lenght $\ell$, and suppose its elements are ordered orbit by orbit, that is if $\tilde{\PR} = \{Q_1,...,Q_r\} \in \mathbb{P}_K$, then elements of $\PR$ at indices $(i-1)\ell+1,...,i\ell$ correspond to the $\ell$ extensions of $Q_{i}$ in $L$ (for every $1\leq i \leq r$). Let us consider the following bloc matrices
 
-\begin{equation*}
+\begin{equation*} 
 A(\xi) := 
 \begin{pmatrix}
 B(\xi) & 0 & \cdots & 0 \\
 0 & B(\xi) & \cdots & 0 \\
 \vdots & \ddots & \ddots & \vdots \\
 0 & \cdots & 0 & B(\xi)
-\end{pmatrix} \ , where \ 
+\end{pmatrix} \ , \rm where \it \ 
 B(\xi) = 
 \begin{pmatrix}
 \xi & -1 & 0 & \cdots & 0 \\
@@ -811,7 +773,7 @@ A(\xi) \cd \textbf{y}^T
 In particular, one gets
 
 
-\begin{equation}
+\begin{equation} \label{system kummer}
 \begin{pmatrix}
 A(\xi) \\
 H \cd \textbf{D}_1 \\
@@ -821,17 +783,17 @@ H \cd \textbf{D}_s
 \cd \textbf{y}^T = 0.
 \end{equation}
 
-The relation $(6)$ is enough to recover \textbf{y} since the other solutions of $(5)$ doesn't satisfy this geometric progression structure, because it is clear by construction that the evaluation vectors \textbf{x} and $\boldsymbol{\alpha}$ are equals on each orbit of length $\ell$, since $\sigma$ only acts on $y$-coordinate of points on the curve $\Y$. 
+The system $(\ref{system kummer})$ is enough to recover \textbf{y} since the other solutions of $(5)$ doesn't satisfy this geometric progression structure, because it is clear by construction that the evaluation vectors \textbf{x} and $\boldsymbol{\alpha}$ are equals on each orbit of length $\ell$, since $\sigma$ only acts on $y$-coordinate of points on the curve $\Y$. 
 
 \s
 
 \begin{rq1} \rm
-Since, $\sigma$ (and so $\xi$) is supposed to be unknown at the beginning of the attack, one may have to test all the possibilities for $\xi$ in order to find the correct one. This leads to solve at most $\#\mu^*_{\ell}(\fq) = \varphi(\ell)$ linear systems like $(6)$, which remains reasonable since $\varphi(\ell)$ is rather small.
+Since, $\sigma$ (and so $\xi$) is supposed to be unknown at the beginning of the attack, one may have to test all the possibilities for $\xi$ in order to find the correct one. This leads to solve at most $\#\mu^*_{\ell}(\fq) = \varphi(\ell)$ linear systems like $(\ref{system kummer})$, which remains reasonable since $\varphi(\ell)$ is rather small.
 \end{rq1}
 
 \s
 
-In all our computing experiences, system $(6)$ allows us to recover the desired vector \textbf{y}. To finish the attack, one only have to recover the polynomial $f$ that defines the extension $L/K$ by using a multivariate interpolation method. You can find in annex A a detailled algorithm, as well as a complexity analysis.
+In all our computing experiences, system $(\ref{system kummer})$ allows us to recover the desired vector \textbf{y}. To finish the attack, one only have to recover the polynomial $f$ that defines the extension $L/K$ by using a bivariate polynomial interpolation method. You can find in annex A a detailled algorithm for this attack, as well as a complexity analysis.
 
 \s
 
@@ -842,16 +804,18 @@ In all our computing experiences, system $(6)$ allows us to recover the desired 
 
 As in section 5.2, the quotient curve $\X$ is taken as a curve over $\fqm$ with separated variables, those function field $K = \fq(x,\alpha)$ is given by 
 \[F_1(\alpha) = F_2(x) \ , \ F_1,F_2 \in \fqm[T]\]
-and $(\rm{deg}\it(F_1),\rm{deg}\it(F_2))=1$. \\ 
+and $(\rm{deg}\it(F_1),\rm{deg}\it(F_{\rm 2}))=1$. \\ 
 Here, we will consider an Artin-Schreier cover of the curve $\X$.
 Let $p:=char(\fqm)$ denote the characteristic of the base field $\fqm$. Consider the extension $L=K(y)$, with
-\[y^p-y = f , \ f \in K\]
-ans denote by $m:=\rm{deg}\it((f)^K_{\infty})$ the degree of the pole divisor of $f$ in $K$. Suppose that $(m,p)=1$. Then the extension $L/K$ is an Artin-Schreier extension, it is cyclic of order $p$ and 
+\[y^p-y = f(x,\alpha) , \ \rm with \it \ f \in \fqm[X,T]\]
+and denote by $d:=\rm{deg}\it(f)$ the degree of the bivariate polynomial $f$. Suppose also that $(d,p)=1$. Then the extension $L/K$ is an Artin-Schreier extension, is cyclic of order $p$ and 
 \[Gal(L/K) = \{ \sigma : y \mapsto y + \beta \ , \ \beta \in \{0,...,p-1\}\}.\]
+Note that once again, we took $f$ as a polynomial instead of a potential rationnal function for the same reasons as in section 5.2 (see. Remark \ref{pk des polynômes}).
+
 
 \s
 
-In this case, the hypotheses of our procedure are the same as in section 5.2, knowing that this time the automorphism is completely determined by the choice of the element $\beta \in \mathbb{F}_p$. Here again, our goal will be to recover the minimal polynomial of $y$ over $K$, that is the function $f \in K$. Using the defining equation of the function field $L$ and the fact that $m$ is prime to $p$, one can show that the place $Q_{\infty} \in \mathbb{P}_K$ (defined in lemma 3) is totally ramified in $L/K$. As usual, we denote by $P_{\infty}$ its unique extension in $L$. With our choices of parameters and hypotheses, we can proove that
+In this case, the hypotheses of our procedure are the same as in section 5.2, knowing that this time the automorphism is completely determined by the choice of an element $\beta \in \mathbb{F}_p$. Here again, our goal will be to recover the minimal polynomial of $y$ over $K$, that is $f \in \fqm[X,T]$. Using the defining equation of the function field $L$ and the fact that $d$ is prime to $p$, one can show that the place $Q_{\infty} \in \mathbb{P}_K$ (same notations as in Lemma \ref{ramification} is totally ramified in $L/K$. As usual, we denote by $P_{\infty}$ its unique extension in $L$. With our choices of parameters and hypotheses, we can proove that
 
 \s
 
@@ -860,7 +824,7 @@ We have
 \[(x)^L_{\infty} = p \cd \rm{deg}\it(F_1) \cd P_{\infty},\]
 \[(\alpha)^L_{\infty} = p \cd \rm{deg}\it(F_2) \cd P_{\infty},\]
 and
-\[(y)^L_{\infty} = m \cd P_{\infty}.\]
+\[(y)^L_{\infty} = d \cd P_{\infty}.\]
 \end{prop1}
 
 \s
@@ -871,28 +835,28 @@ Similar to the proof of proposition \ref{propclé} above.
 
 \s
 
-Note that this is exactly the same result as in the Kummer case. In particular, the divisor of poles of $y$ in $L$ is only supported by the place $P_{\infty}$. As a result, the divisor in $K$ that we will use to construct our linear system is here given by 
-\[D = \tilde{G} - \left\lceil\frac{m}{p}\right\rceil \cd Q_{\infty} \in Div(K).\]
-This allows us to construct the linear system (5), since the above divisor can be constructed from our hypothesis. 
+Note that this is almost the same result as in the Kummer case. In particular, the divisor of poles of $y$ in $L$ is only supported by the place $P_{\infty}$. As a result, the divisor in $K$ that we will use to construct our linear system is here given by 
+\[D = \tilde{G} - \left\lceil\frac{d}{p}\right\rceil \cd Q_{\infty} \in Div(K).\]
+This allows us to construct the linear system (5), since $D$ can be constructed from our hypotheses. 
 
 \s
 
 In the Artin-Schreier case, one can proceed the same way to find other solutions of $(5)$. In particular, a monomial $x^i\alpha^j \in K$ gives a solution vector if and only if 
 
-\[p \cd (i \cd \rm{deg}\it(F_1)+j \cd \rm{deg}\it(F_2)) \leq m.\]
+\[p \cd (i \cd \rm{deg}\it(F_1)+j \cd \rm{deg}\it(F_{\rm 2})) \leq d.\]
 
 Note that this is pretty much the same condition as in Kummer case. Thus, one need a way to select the correct solution. For that, we add again other equations that are only satisfied by the vector \textbf{y}, recalling that here, the action of the automorphism group $\langle\sigma\rangle$ on the set $\PR$ is given by 
 \[\sigma : y \longmapsto y + \beta,\]
 where $\beta \in \mathbb{F}_p$. Thus the vector \textbf{y} we are searching for satisfies an arithmetic progression by orbit. In order to see it fluently, let us assume again that the support $\PR$ is ordered by orbit. Then let us consider the following bloc matrices :
 
-\begin{equation*}
+\begin{equation*} 
 C := 
 \begin{pmatrix}
 B & 0 & \cdots & 0 \\
 0 & B & \cdots & 0 \\
 \vdots & \ddots & \ddots & \vdots \\
 0 & \cdots & 0 & B
-\end{pmatrix} \ , where \ 
+\end{pmatrix} \ , \rm where \it \ 
 B = 
 \begin{pmatrix}
 -1 & 1 & 0 & \cdots & 0 \\
@@ -914,7 +878,7 @@ C \cd \textbf{y}^T
 \end{equation*}
 where $\beta$ is the element in $\mathbb{F}_p$ that defines the automorphism $\sigma$ (note that $\beta$ is supposed to be unknown here, but as in Kummer case, we can search for it in reasonable time) . Thus, if we add this to $(5)$ we get
 
-\begin{equation}
+\begin{equation} \label{a-s system}
 \begin{pmatrix}
 C\\
 H \cd \textbf{D}_1 \\
@@ -932,119 +896,66 @@ H \cd \textbf{D}_s
 \end{pmatrix} 
 \end{equation}
 
-The above relation $(7)$ allows us to isolate \textbf{y}, since the other solutions do not satifies this arithmetic progression, for the same reason as in the Kummer case. Thus one can finish the attack by retrieving the function $f$ using an interpolation method. 
+The new system $(\ref{a-s system})$ allows us to isolate \textbf{y}, since the other solutions do not satifies this arithmetic progression, for the same reason as in the Kummer case. Thus one can finish the attack by retrieving the polynomial $f$ using an interpolation method. 
 
 \s
 
-\subsection{Generalisation to solvable Galois covering}
+\subsection{Generalization to solvable Galois covering}
 
 \s
 
-Above, we showed that we could apply our method to any Kummer or Artin-Schreier covering of a separated variable curve. Here we will see why those two examples are interesting. In fact, they both correspond to cyclic cover, and their common point is that the automorphism group $Aut(L/K)$ is cyclic. More especially, all extensions in sections 5.2 and 5.3 are Galois, with cyclic Galois group. The idea of this section is to consider a Galois extension of function fields $L/K$ such that $Gal(L/K)$ is a solvable group. \\
-In order to fix the ideas, let $K=\fqm(x)$ be the rational functions function field, and $L=K(y)$ be a Galois extension, that correspond the a separable cover $\Y \rightarrow \mathbb{P}^1(\fqm)$ (note that we could more generally take $K$ as the field of rational functions of a separated variable curve $\X$ over $\fqm$, as we did before). We then suppose that $Gal(L/K)$ is solvable, that is we have sequence of normal subgroups
-\begin{equation}
- \{Id\} := \G_0 \triangleright \G_1 \triangleright \cdots \triangleright \G_t := Gal(L/\fq(x)). 
+In section 5.2 and 5.3, we applied our attack in the special case of Kummer and Artin-Schreier covers. Thoses cases are specially interesting since they are the elementary blocks of cyclic covers (see for example \cite{Sti}, Annex A.13 for a characterization of cyclic extensions of function fields). Our aim in this section is to generalize the attack in the case of a solvable Galois covering.
+
+Throughout all this section, let $\X$ be a curve over $\fqm$ with separated variables (see Definition \ref{courbes à variables séparées}) and $K\fqm(\X)$. Consider a Galois cover $\pi : \Y \longmapsto \X$ of $\X$ by a curve $\Y$ with function field $L$, such that the extension $L/K$ is Galois with Galois group $\G = \rm Gal \it (L/K)$. Let us also suppose that $\G$ is solvable, that is there exist a sequence of normal subgroups 
+\begin{equation} \label{jordan holder seq}
+ \{Id\} := \G_0 \triangleright \G_1 \triangleright \cdots \triangleright \G_s := \G, 
 \end{equation} 
-such that any quotient in $(8)$ is cyclic.
-The idea is then to use the Galois theory to make the correspondance between subfields $M$ of $L$ and normal subgroups of $Gal(M/\fq(x))$. (see for example \cite{Sti}, annex A.12 for more informations). 
-With notations as above, for every $0 \leq i \leq t$, let us denote by $L_i := L^{\G_i}$ the subfield of $L$ fixed by $\G_i$, with $L_t=\fqm(x)$ and $L_0=L$. Then  extensions $L/L_i$ are Galois, with $\G_i$ as Galois group. In particular, in order to recover the equation of the curve $\Y$, we propose to apply the procedure described in section 3 recursively. 
+such that any quotient $\G_{i+1}/\G_i$ in (\ref{jordan holder seq}) is cyclic. Let us denote $L_i := L^{\G_i}$ the fixed field by $\G_i$, for $0 \leq i \leq s$. Note that $L_0=L$ and $L_s=K$. From Galois connection (see \cite{Sti}, Annex A.12), the sequence (\ref{jordan holder seq}) leads to a tower of function fields
+\begin{equation} \label{tower}
+K := L_s \su L_{s-1} \su \cdots \su L_0 := L,
+\end{equation}
+such that for every $0\leq i\leq s-1$, the extension $L_i/L_{i+1}$ is cyclic, with Galois group equals $\G_{i+1}/\G_i$. In particular, the tower (\ref{tower}) corresponds to a sequence of cyclic covers of $\fqm$-curves.
+\begin{equation} \label{curve tower}
+\Y := \X_0 \longmapsto \X_1 \longmapsto \cdots \longmapsto \X_s := \X.
+\end{equation}
+Note that for every $0 \leq i \leq s-1$, the curve $\X_i$ is equipped with the action of the group $\G_{i+1}/\G_i$, and $\X_{i+1}$ is the corresponding quotient curve. 
 
- \s
- 
-For example, let us consider the normal subgroup $\G_{t-1} \su \G_t$. It is well-known from Galois theory that $L_{t-1}/\fqm(x)$ is Galois, with Galois group equals to the quotient $\G_t/\G_{t-1}$, that is supposed to be cyclic. Thus, there exist an integer $\ell_{t-1}$ such that 
-\[ \G_t/\G_{t-1} \simeq \Z/\ell_{t-1}\Z,\] 
-and the extension $L_{t-1}/\fqm(x)$ is cyclic of order $\ell_{n-1}$. 
-
+Now let us assume that we want to attack the secret structure of a public SSAG-code on the curve $\Y=\X_0$, that is the code 
+\[\C_0 := SSAG_q(\X_0,\PR_0,G_0),\]
+for some support $\PR_0$ and divisor $G_0$ on $\X_0$. In the context of Section 4, let us suppose that we know the secret structure of the invariant code 
+\[\C_s:= C_0^{\G} = SSAG_q(\X_s,\PR_s,G_s)\]
+on the smallest curve $\X_s=\X$. Then it is possible to attack the secret structure of $\C_0$ from the knowledge of $\C_s$, by applying the attack of Section 4 multiple times, each step allowing us to recover the secret structure of a subcode $\C_i=SSAG_q(\X_i,\PR_i,G_i)$ of $\C_0$ defined over one of the curve $\X_i$. In fact, depending on the order of the Galois group $\G_{i+1}/\G_i$, we are led to use section 5.2 or section 5.3. 
+To be more precise, let $n_i:= \#(\G_{i+1}/\G_i$) for $0 \leq i \leq s-1$, and suppose that we can write $n_i = p^{r_i}m_i$, with $(m_i,p)=1$ ($p=\rm char \it (\fqm)$). 
 \s
 
-Repeating this for every subgroup in the sequence $(8)$, we get the existence (and uniquness) of integers $\ell_0,\ell_1,...,\ell_{n-1}$, as well as a tower of function fields
-\begin{equation}
-\fqm(x) := L_t \su L_{t-1} \su \cdots \su L_0 := L
-\end{equation}
-such that extensions $L_i/L_{i+1}$ are cyclic of order $\ell_i$, for every $0 \leq i \leq t-1$. \\
+Now fix $0 \leq i \leq s-1$. If we know the structure of the code $\C_i = SSAG_q(\X_i,\PR_i,G_i)$ as well as a generator matrix of $\C_0$ and the corresponding automorphism acting on it, we can apply successively $r_i$-times the Artin-Schreier case (section 5.3) and one time the Kummer case (section 5.2) with degree $m_i$ in order to build an SSAG-code $\C_{i+1}$ defined over $\X_{i+1}$. 
 
-Let us know formulate the hypothesis before describing how to recover the equation of the curve $\Y$ (that is the defining equation of the function field $L$). As before, we are given an SSAG-code on $\Y$ that is stable under the action of $Gal(L/\fqm(x))$, and especially we know one of its parity check matrix. We also suppose that we know the structure of the its invariant code on the projective line. In particular, recall that the invariant support $\tilde{P}$ is a set of rational places on the projective line, and that the support $\PR \su \mathbb{P}_L$ correspond to all their extensions. In particular, places in $\tilde{\PR}$ are  totally split in $L/\fqm(x)$, and thus also in any sub-extension of the tower $(9)$. \\
-
-From this point, the plan is to ride up the tower $(9)$, and thus to recover step by step the curve that corresponds to the function field $L_i$, together with the extensions of the places in $\tilde{\PR}$ in it (for any $0\leq i \leq t-1$). The crucial point is that any sub-extension $L_i/L_{i+1}$ is cyclic, meaning that we will be able to apply section 5.3 if $\ell_i = p$ and section 5.2 otherwise. (see \cite{Sti}, annex A.13 for a caracterisation of cyclic extensions of function field).
+This way, we can ride up the sequence of curves (\ref{curve tower}) until we have rebuilt the public code $\C_0$. In fact, from the knowledge of $\C_s$ and the public key, we can reconstruct a sequence of codes $(\C_i)_i$ until we get the public one. 
 
 \s
 
 \begin{rq1} \rm
-The hypothesis that we know the action of $Gal(L/\fqm(x))$ on the support $\PR$ is really important in this context. In fact if we focus on the first step, one need to know the location in $\PR$ of the $\ell_{n-1}$ extensions of each place of $\tilde{\PR}$. This is mandatory because while constructing the system $(5)$, we  use a parity check matrix of a folded code of the big one (and not the code itself), and this require to know which columns one need to delete. 
+Notice that for every $0 \leq i \leq s-1$, $\C_i = \C_{i+1}^{\G_{i+1}/\G_i}$. 
 \end{rq1}
 
-\s
 
-As a more detailled example, let $\ell_1,\ell_2$ be two primes, that are coprime with $p=char(\fqm)$. Consider a curve $\Y$ over $\fqm$, with function field $L = \fqm(x,y)$, such that
-\[P(x,y) = 0 \ , \ P \in \fqm[X,Y] \ irreducible .\]
-Let us assume $L/\fqm(x)$ is Galois of order $\ell_1\ell_2$. In particular, its Galois group is solvable. Let us denote by $S \su Gal(L/\fqm(x))$ its unique $\ell_2$-Sylow (that is of course normal), and set $K = L^S$. We have :
+\begin{rq1} \rm \label{induced permutation} By hypotheses in Section 4, we know the action of $\G$ on the invariant support $\PR_s$ on $\X$. In particular, we are able to find the corresponding induced permutation at each step of the procedure, ie. for every $0 \leq i \leq s-1$, we know the permutation acting on the code $\C_{i+1}$ leading to the code $\C_i$ on the quotient curve. This allows use to get a parity check matrix of any code in the sequence $(\C_i)_i$ from the public generator matrix, which is necessary to build the linear systems we have to solve at each step. As a result, this shows that $\C_0$ admits several invariant codes, and one can build a generator matrix of anyone of them from the public data.
+\end{rq1}
+
+Let us conclude this section by presenting a toy example.
+
+\begin{expl} With previous notations, let us assume that $\G=\rm Gal(\it L/K)$ is solvable of order $\#\G = pm$, with $(p,m)=1$. Let us suppose that we are given the public key corresponding to the code $\C_0 = SSAG_q(\Y,\PR,G)$, as well as a full access to the invariant code $\C_2 := SSAG_q(\X,\tilde{\PR},\tilde{G})$. We then proceed as follow : 
 \begin{enumerate}
-\item  $\fqm(x) \su K=L^S \su L$;
-\item $L/K$ is cyclic of order $\ell_2$, and $Gal(L/K) = S \simeq \Z/\ell_2\Z$;
-\item $K/\fqm(x)$ is also cyclic, of order $\ell_1$, and $Gal(K/\fqm(x)) \simeq \Z/\ell_1\Z$.
+\item[1.] We start by applying section $5.3$ on $\C_2$ in order to build a subcode $\C_1 = SSAG_q(\X',\PR',G')$ of $\C_0$, obtaining during the process a model of a curve $\X'$ with function field $F$ such that both extentions $L/F$ and $F/K$ are cyclics, with respective order $m$ and $p$ (that is the first one is a Kummer extension, the second one is an Artin-Schreier one).
+\item[2.] From the knowledge of the code $\C_1$, we can now apply section $5.2$ in order to recover the secret structure of $\C_0$.
 \end{enumerate}
-
-Now, suppose we are given a parity check matrix of a code $\mathcal{C} = SSAG_q(\Y,\PR,G)$ that is stable under $Gal(L/\fqm(x))$, together with its invariant code $SSAG_q(\mathbb{P}^1,\tilde{\PR},\tilde{G})$. We also suppose that we now how $Gal(L/\fqm(x))$ acts on the support $\PR$. We then proceed as follow.
-
-
-
-\begin{enumerate}
-\item By assumption, the extension $K/\fqm(x)$ is cyclic of order $\ell_1$, with $(\ell_1,p)=1$. Thus, it is well-known that this is a Kummer extension. As a result, there exists a polynomial $b \in \fqm[x]$ such that $K = \fqm(x,\alpha)$, with
-\[ \alpha^k = b(x) \ , \ b \in \fqm[T].\] Let us denote by $m_1:=\rm{deg}\it (b)$, and suppose again that $m_1$ is prime to $k$ (as we did in the classical Kummer case, note that it allows the point at infinity in $\fqm(x)$ to be totally ramified in $K/\fqm(x)$). \\ Then , we can consider the divisor
-\[D_1 := \tilde{G} - \widetilde{(\alpha)^K_{\infty}} = \tilde{G} - \left\lceil\frac{m_1}{\ell_1}\right\rceil \cd R_{\infty} \in \mathbb{P}_{\fqm(x)},\]
-where $R_{\infty}$ is the pole of $x$ in $\fqm(x)$. It can be constructed from our hypothesis, and allows us to construct a linear system as $(5)$ in order to recover the evaluation vector $\boldsymbol{\alpha}$. However, note that in this case, we can't use the parity check matrix of the code $\mathcal{C}$ on $\Y$, since we are not reconstructing the curve $\Y$. In fact, this step allows us to recover the quotient curve $\X = \Y/S$ with function field $K$, and for this we need the parity check matrix of the subcode of $\mathcal{C}$ that is invariant under the subgroup $S \su Gal(L/\fqm(x))$ of order $\ell_2$ (ie. its unique $\ell_2$-Sylow). This matrix can be constructed from the one of \color{red}(TO DO : ref) \color{black}
-At this point, assume that we recovered the vector $\boldsymbol{\alpha}$ using section $5.2$.
-
-\item Using step 1 above, one can recover extensions of places in $\tilde{P}$, as elements in $K$. By interpolation, this gives the polynomial $b$ and thus the defining equation of the curve $\X$ (see section 5.2). In particular, we know at this point a set $\PR'$ that corresponds to extensions of places in $\tilde{\PR}$ in $K$, as well as the divisor $G' := \pi^*\tilde{G}$, where $\pi : \X \rightarrow \mathbb{P}^1(\fqm)$. Moreover, the subcode of $\mathcal{C}$ that is invariant under the $\ell_2$-Sylow $S$ of $Gal(L/\fqm(x))$ is given by 
-\[C_L(\X,\PR',G').\]
-
-\item The next step is to use that we know on the curve $\X$ to recover $\Y$. This corresponds to recover the extension $L$ using informations on its fixed field $K=L^S$. As $L/K$ is cyclic of order $\ell_2$, one need to assume that $\ell_2 \mid q^m-1$, in which case there exist a function $f \in K$, with $m_2:= \rm{deg}\it ((f)^K_{\infty})$, such that $L=K(y)$, with
-\[y^{\ell} = f(x,\alpha).\]   
-If $(m_2,\ell_2)=1$, the place $R_{\infty}$ (ie. the pole of $x$ in $\fqm(x)$) is totally ramified in $L/\fqm(x)$, and we can use the divisor 
-\[D_2 := G' - \widetilde{(y)^L_{\infty}} = G' - \left\lceil\frac{m_2}{\ell_2}\right\rceil \cd Q_{\infty} \in \mathbb{P}_{K},\]
-where $Q_{\infty}$ is the unique extension of $R_{\infty}$ in $K$, to build a linear system and thus recover the evaluation vector \textbf{y}, that gives the $y$-coordinates of the points in $\PR$. As in section 5.2, it allows us to recover the defining equation of $\Y$, as a cover of $\X$.
-
-\item Using previous steps, one can recover the minimal polynomial of $y$ over $\fqm(x)$ and thus conclude.
-\end{enumerate}
+\end{expl}
 
 \s
 
-\section{Perspectives}
+In the next section, we will propose a scheme based on quasi-cyclic SSAG code constructed from the Hermitian curve, and propose parameters to protect the corresponding invariant code from our attack.
 
 \s
-
-**** REVOIR CETTE SECTION, ET POTENTIELLEMENT LA DÉPLACER ****
-
-\s
-
-Let us put together our conclusions.
-
-\begin{enumerate}
-\item For solvable automorphism group, there are 2 cases for  each divisor $\ell$ of $\#Aut(L/\fqm(x))$ :
-\begin{itemize}
-\item[-] If $\ell$ is prime to $p=char(\fqm)$, thus it corresponds to a Kummer sub-extension. In this case, we need to have $\ell \mid q^m-1$ in order to have $\mu_{\ell}(\fqm) \neq \{1\}$. Moreover the equation of this Kummer sub-extension $L/K$ looks like 
-\[ z^{\ell} = f , \]
-where $f \in K$, $d:=\rm{deg}\it((f)^K_{\infty})$ and $L=K(z)$. We imposed above that $d$ should be prime to $\ell$. It allows to have a simple ramification of the point at infiny in each extension, but this is not mandatory. If this point had more that one extension, we would need to know any of them in order to construct the corresponding divisor D (cf. $(4)$).
-\item[-] If $l=p$, it corresponds to an Artin-Schreier sub-extension $L/K$, with 
-\[z^p-z = f, \]
-where $f \in K$, $d:=\rm{deg}\it((f)^K_{\infty})$ and $L=K(z)$. Here again, we imposed for the same reasons $(p,d)=1$, as it is more conveniant.
-\end{itemize}
-\item In both Kummer and Artin-Schreier cases, that turns out to be the elementary parts of the field of application of our procedure, we supposed before the attack that we knew the root of unity $\xi$ that defines $\sigma$ (resp. $\beta \in \mathbb{F}_p$ in Artin-Schreier cases). Actually it is not mandatory because when adding geometric (resp. arithmetic) progression to the system $(5)$ in order to recover the good evaluation vector, we can guess the good $\xi$ (resp. $\beta$) by solving a system for each until we get unicity of the solution. This cost at most $\ell$ (resp. $p$) tries, which is not so much in practical applications.
-
-\item At any step of the procedure(see $1.$ above), we asked to know the degree $d$ of the divisor of poles of the function $f \in K$. Actually we can also works by guessing it, ie. since $(d,[L:K])=1$ by assumption, we only want information about $\frac{d}{[L:K]}$ in order to construct $D$. So we can try a few values of this quotient until we get unicity of the solution at the end. Note however that this could raise the complexity too much.
-\end{enumerate}
-
-\s
-
-As a matter of perspective results, it could be intersting to focus on covers where the support of the divisor of poles of $y$ is more complicated, that is made of more that one point. In fact, if those are known, we can show that our procedure still works. The fact is that we have no reasons to know it (it actually is the point of the attack !), so at the moment it seems hard to generalize more. \\
-In a coding theoritic point of vue, our procedure gives "negatives" results, in the sense that is shows that for this kind of covers, the security of the public code (constructed as a structured SSAG-code on $\Y$) is reduced to those of its invariant subcode, which is smaller and thus easier to brute force. It then shows that cryptosystems constructed from it should focus on hidding the structure of the invariant code, which can sometimes break completely the system.
-
-\s
-
-***********************************
-
-
-\newpage
 
 \section{A McEliece scheme using quasi-cyclic SSAG-codes over the Hermitian curve}
 
@@ -1054,16 +965,16 @@ In a coding theoritic point of vue, our procedure gives "negatives" results, in 
 
 \s
 
-Let $q$ be the power of a prime $p$ and $m \geq 1$ refers to the extension degree of a field $\fqm$. Since the Hermitian curve is defined over a field with square cardinality, let us also denote $q_0:=p^s$ such that $m=2s$ and thus $q^m = q_0^2$. We consider the Hermitian function field $\mathcal{H} = \mathbb{F}_{q_0^2}(x,y)$ over $\mathbb{F}_{q_0^2}=\fqm$ defined by the equation
+Let $q$ be the power of a prime $p$ and $m \geq 1$ refering to the extension degree of the finite field $\fqm$. Since the Hermitian curve is defined over a field with square cardinality, let us also denote $q_0:=p^s$ such that $m=2s$ and thus $q^m = q_0^2$. We consider the Hermitian function field $\mathcal{H} = \mathbb{F}_{q_0^2}(x,y)$ over $\mathbb{F}_{q_0^2}=\fqm$ defined by the equation
 \[y^{q_0}+y=x^{q_0+1}.\]
-The idea is to construct a McEliece scheme using SSAG-code on the Hermitian curve, stable under the action of an automorphism of $\mathcal{H}$. There are two motivations to use this curve : first, it is a maximal curve, that it has the maximal number of rationnal points (that is $N(\mathcal{H})=q_0^3+1)$. It allows us to consider longs codes, and thus more flexibility. Moreover, the automorphism group of $\mathcal{H}$ is very large and has been well-studied (see for example \cite{Sti} or \cite{Gar}); which permits us to chose a good automorphism $\sigma$ acting on our code (it will turns to be really important later on, see section 7.4.2). 
+The idea is to construct a McEliece scheme using SSAG-code on the Hermitian curve, stable under the action of some automorphism of $\mathcal{H}$. There are two motivations to use this curve : first, it is a maximal curve, that it has the maximal number of rationnal points (ie. $N(\mathcal{H})=q_0^3+1)$. It allows us to consider longs codes, and thus more flexibility. Moreover, the automorphism group of $\mathcal{H}$ is very large and has been well-studied (see for example \cite{Sti} or \cite{Gar}); which permits us to chose a good automorphism $\sigma$ acting on our code (it will be really important later for the security of the scheme, see section 6.4.2). 
 
 \s
 
 We use the following notations : 
 \begin{enumerate}
-\item[$\bullet$] let $\sigma \in \mathcal{H}$ be an automorphism of order $\ell$ (we will describe later how to construct it);
-\item[$\bullet$] let $n_0 \in \N^* $ and $\PR := \bigsqcup\limits_{i=1}^{n_0} Orb_{\sigma}(P_i)$ be a support made of $n_0$ distincts orbites under the action of $\sigma$;
+\item[$\bullet$] let $\sigma \in \mathcal{H}$ be an automorphism of order $\ell \in \N^*$ (we will describe later how to chose it);
+\item[$\bullet$] let $n_0 \in \N^* $ and $\PR := \bigsqcup\limits_{i=1}^{n_0} Orb_{\sigma}(P_i)$ be a support made of $n_0$ distincts orbits under the action of $\sigma$;
 \item[$\bullet$] let $s \in \N^*$ and $G = \sum\limits_{i=1}^s t_i \sum\limits_{Q \in Orb_{\sigma}(Q_i)} Q$ be an invariant divisor, with $Q_i \in \mathbb{P}_{\mathcal{H}}$ and $t_i \in \Z$. We also suppose that supp($G$)$\cap \PR = \emptyset$.
 \end{enumerate}
 
@@ -1073,9 +984,9 @@ We now can describe the scheme :
 
 \underline{\bf{Key generation}} We consider the quasi-cyclic code 
 \[\mathcal{C}_{\rm pub} := SSAG_q(\mathcal{H},\PR,G)\]
-constructed on the Hermitian curve $\mathcal{H}$ with length $n=n_0 \cd \ell\leq N(\mathcal{H})$ and dimension $k$. Let $t$ be the correction capability of the code and $\rm G_{pub} = (I_k | M)$ be a systematic generator matrix of $\mathcal{C}_{\rm pub}$, where $M$ is an $\ell$-blocks-circulant matrix (possible since the code is QC). Thus $\rm G_{pub}$ can entirely be described by the set of rows
+constructed on the Hermitian curve $\mathcal{H}$, with length $n=n_0 \cd \ell\leq N(\mathcal{H})$ and dimension $k$. Let $t$ be the correction capability of the code and $\rm G_{pub} = (I_k | M)$ be a systematic generator matrix of $\mathcal{C}_{\rm pub}$, where $M$ is an $\ell$-blocks-circulant matrix (possible since the code is QC). Thus, $\rm G_{pub}$ can entirely be described by the set of rows
 \[\rho(\rm G_{pub}) \it := \{M_i \ | \ i \in \{1,\ell+1,2\ell+1,...,(n-k)-\ell+1\}\},\]
-$M_i$ being the $i$-th row of $M$. 
+$M_i$ representing the $i$-th row of $M$. 
 
 \begin{enumerate}
 \item[$\bullet$] \bf{Public key} : \rm the set of rows $\rho(\rm G_{pub})$ and the integer $t$.
@@ -1086,13 +997,15 @@ $M_i$ being the $i$-th row of $M$.
 
 \underline{\bf{Encryption}} A plain text $\bf{m} \rm \in \fq^k$ is encrypted by 
 \[ \bf{y} \rm = \bf{m} \it \rm G_{pub} \it + \bf{e} \ ,\]
-where $\bf{e} \rm \in \fq^n$ is a vector error such that $\w(e) \leq t$.
+where $\bf{e} \rm \in \fq^n$ is an error vector such that $\w(e) \leq t$ ($\w$ being the Hamming weight).
 
 \s
 
 \underline{\bf{Decryption}} Using a general decoding algorithm for algebraic geometry codes (see for example \cite{THRP}), we can find a codeword $\bf{c} \rm = \rm \bf{y - e} \rm \in \mathcal{C}_{\rm pub}$. From $\bf{c}$ and the knowledge of $\rm G_{pub}$, we can recover the message $\bf{m}$.
 
-Note that in this scheme, the automorphism itself and the curve $\mathcal{H}$ is considered as secret data, and only the order $\ell$ of $\sigma$ is known from the public key. In previous sections, we have shown that the knowledge of the full invariant code allows us to attack the system, recovering the secret elements. It means that in order to secure our scheme, we need to ensure that the invariant code can not be recovered easyly. 
+\s
+
+Note that in this scheme, the automorphism itself and the curve $\mathcal{H}$ is considered as secret data, and only the order $\ell$ of $\sigma$ is known from the public key. In previous sections, we have shown that the knowledge of the full invariant code allows us to attack the system, recovering the secret elements. It means that in order to secure our scheme, we need to ensure that the invariant code can not be recovered easily. 
 
 \s
 
@@ -1104,33 +1017,33 @@ In what follow, we will describe somes known attacks against the invariant SSAG-
 
 \s
 
-In the proposed scheme, the public code is a QC-SSAG-code constructed on the Hermitian curve,ie. 
-\[\mathcal{C}_{\rm pub} = SSAG_q(\mathcal{H},\PR,G),\]
-that is invariant under some order $\ell$ automorphism $\sigma \in Aut(\mathcal{H})$. As shown by corollary \ref{ssag}, the invariant subcode (say $\mathcal{C}_{\rm inv}$) is an SSAG-code on the quotient curve. Moreover, this code can be constructed in polynomial time \color{red} (TO DO : ref) \color{black} from the generator matrix of $\mathcal{C}_{\rm pub}$ and the action of the induced permutation on it (that is the public key). This means that a generator matrix of $C_{inv}$ must also be considered as a public data. From now on, let us denote by $\rm G_{inv}$ a generator matrix of $\mathcal{C}_{\rm inv}$.  
+In the proposed scheme, the public code is a QC-SSAG-code constructed on the Hermitian curve, ie. 
+\[\mathcal{C}_{\rm pub} = SSAG_q(\mathcal{H},\PR,G);\]
+that is invariant under some order $\ell$ automorphism $\sigma \in Aut(\mathcal{H})$. As shown by Corollary \ref{ssag}, the invariant subcode (say $\mathcal{C}_{\rm inv}$) is an SSAG-code on the quotient curve. Moreover, this code can be constructed in polynomial time (see Remark \ref{gen inv}) from the generator matrix of $\mathcal{C}_{\rm pub}$ and the action of the induced permutation on it (that is the public key). This means that a generator matrix of $\C_{\rm inv}$ must also be considered as public data. From now on, let us denote by $\rm G_{inv}$ a generator matrix of $\mathcal{C}_{\rm inv}$.  
 
 \s
 
-In the particular case where the quotient curve $\mathcal{H}/\langle\sigma\rangle$ is the projective line $\mathbb{P}^1(\fqm)$, it is possible to construct an algebraic system to recover the secret elements of $C_{inv}$. Using the attack of section 5., we can then recover the public code, breaking the system. The key ingredient that allows us to build such a system is the fact that $\mathbb{P}^1(\fqm)$ has genus $0$, and thus has a trivial divisor class group. 
+In the particular case where the quotient curve $\mathcal{H}/\langle\sigma\rangle$ is the projective line $\mathbb{P}^1(\fqm)$, it is possible to construct an algebraic system to recover the secret elements of $\C_{\rm inv}$. Using the attack of Section 4., we can then recover the public code, breaking the system. The key ingredient that allows us to build such a system is the fact that $\mathbb{P}^1(\fqm)$ has genus zero and thus has a trivial divisor class group. 
 
 \s
 
-From corollary \ref{ssag}, we know that the invariant code is given by 
+From Corollary \ref{ssag}, we know that the invariant code is given by 
 \[C_{\rm{inv}} := SSAG_q\left(\mathbb{P}^1(\fqm),\tilde{\PR},\tilde{G}\right),\]
 To construct an algebric system, we start from the inclusion 
 \[C_L(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp} \su SSAG_q(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp} \otimes \fqm,\]
-that is a direct consequences of definitions (in the right-hand side, we have extended the scalars to $\fqm$ since its the field definition of the AG-code). This means that for every codeword $\bf{c} \rm \in C_L(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp}$, we have 
+that is a direct consequence of definitions (in the right-hand side, we have extended the scalars to $\fqm$ since its the field definition of the AG-code). This means that for every codeword $\bf{c} \rm \in C_L(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp}$, we have 
 \begin{equation}
 \bf{c \cd G_{inv}}^{\rm{T}}  \rm {= 0}\ ,
 \end{equation}
-where $\bf{G_{inv}}$ is a generator matrix of the invariant code $\mathcal{C}_{pub}^{\sigma}$ (that can be computed in polynomial time from the public data). Moreover, we know from proposition \ref{dual} that there exist a divisor $G' \in Div(\mathbb{P}^1(\fqm)$ such that
+where $\bf{G_{inv}}$ is a generator matrix of the invariant code $\mathcal{C}_{\rm pub}^{\sigma}$ (that can be computed in polynomial time from the public data). Moreover, we know from proposition \ref{dual} that there exist a divisor $G' \in Div(\mathbb{P}^1(\fqm)$ such that
 \[ C_L(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp} = C_L(\mathbb{P}^1(\fqm),\tilde{\PR},G').\]
 As a consequence, the knowledge of a basis of the Riemann-Roch space $L(G')$ allows us to write formally codewords in $C_L(\mathbb{P}^1(\fqm),\tilde{\PR},G')$, without knowing the set $\tilde{\PR}$. The key part is that the projective line $\mathbb{P}^1(\fqm)$ has a trivial divisor class group. In particular, there exist a function $h$ in the rational function field $\fqm(x)$ such that
 \[ G' = (h)^{\fqm(x)} + deg(G') \cd P_{\infty},\]
-where $P_{\infty}$ is the usual notation for the pôle of $x$ in $\fqm(x)$. From the last equality, we get
+where $P_{\infty}$ is the unique pôle of $x$ in $\fqm(x)$. From the last equality, we get
 \[L(G') = \langle h(x)x^i \ | \ 0 \leq i \leq deg(G')-1\rangle_{\fqm},\]
 which is a dimension $r=deg(G')-1$ vector space over $\fqm$. \\
-Let us write the unknown support $\tilde{\PR} = (\tilde{P}_i)_{i=1}^{n_0}$, with $\tilde{P}_i=(x_i:1)$. The goal is to recover the $x_i's$. For that, we denote by  
-$\bf{X} \rm = (X_1,...,X_{n_0})$ and $\bf{Z} \rm = (Z_1,...,Z_{n_0})$ two sets of formal variables, respectively corresponding to $x_i's$ and $h(x_i)'s$. From equation $(10)$ above, we have the following system
+Let us write the unknown support $\tilde{\PR} = (\tilde{P}_i)_{i=1}^{n_0}$, with $\tilde{P}_i=(x_i:1)$ (here we made the analogy between rational points on a curve and degree one place on the function field). The goal is to recover the $x_i's$. For that, we denote by  
+$\bf{X} \rm = (X_1,...,X_{n_0})$ and $\bf{Z} \rm = (Z_1,...,Z_{n_0})$ two sets of formal variables, respectively corresponding to $x_i's$ and $h(x_i)'s$. From equation $(12)$ above, we have the following system
 \begin{equation*}
 \begin{pmatrix}
 Z_1 & \cdots & Z_{n_0} \\
@@ -1141,16 +1054,16 @@ Z_1X_1^r & \cdots & Z_{n_0}X_{n_0}^r
 \cd \bf{G_{inv}} \rm{^T} = 0.
 \end{equation*}
 
-The first row provides $k=dim(\mathcal{C}_{\rm{inv}})$ linear equations in the variables $\textbf{Z}$, and since $k < n_0$, one can eliminate some variables in the set $\bf{Z}$. On the other hand, the 2-transitivity of the affine group on $\fqm$ allows us to fix arbitrarily the unknows $x_1$ and $x_2$. Therefore, the above system consist in $kr$ equations in $n_0-2$ variables $\bf{X}$ and $n_0-k$ variables $\textbf{Z}$. \\
+The first row provides $k=\rm dim(\mathcal{C}_{\rm{inv}})$ linear equations in the variables $\textbf{Z}$, and since $k < n_0$, one can eliminate some variables in the set $\bf{Z}$. On the other hand, the 2-transitivity of the affine group on $\fqm$ allows us to fix arbitrarily 2 unknows, say $x_1$ and $x_2$. Therefore, the above system consist in $kr$ equations in $n_0-2$ variables $\bf{X}$ and $n_0-k$ variables $\textbf{Z}$. \\
 If we are able to solve this system, we recover the function $h$ (and thus $\tilde{G}$) as well as the support $\tilde{\PR}$; that is we have reconstructed the invariant code $\mathcal{C}_{\rm inv}$. Since the security of the whole system rely on it, we have broke the scheme.  
 
 \s
 
-\begin{rq1}
-The cost of solving the above system is hard to produce. It is possible to have an upper bound of the complexity in the case where the system has a specific form; which can be useful to estimate the security of schemes using SSAG-codes over the line. Thoses results can be found in \cite{FOP}, \cite{FOP1} and \cite{FOP2}. 
+\begin{rq1} \rm
+The cost of solving the above system is hard to produce. It is possible to have an upper bound on it in the case where the system has a specific form; which can be useful to estimate the security of schemes using SSAG-codes over the line. Thoses results can be found in \cite{FOP}, \cite{FOP1} and \cite{FOP2}. 
 \end{rq1}
 
-Actually, if the quotient curve is $\mathbb{P}^1(\fqm)$, the security is the same as the scheme using quasi cyclic Goppa codes, and thus there no advantages to use it. In particular, this means that the automorphisms $\sigma$ should be chosen such that $\mathcal{H}^{\sigma}$ is not rational. In the latter case, the fixed field has a more complex divisor class group and the above attack doesn't work. In the following section, we will describe the cost of an exhaustive search on the invariant code, depending on different parameters of the fixed field.
+Actually, if the quotient curve is $\mathbb{P}^1(\fqm)$, the security is the same as the scheme using quasi-cyclic classical Goppa codes, and thus there no advantages to use it. In particular, this means that the automorphism $\sigma$ should be chosen such that $\mathcal{H}^{\sigma}$ is not rational. In the latter case, the fixed field has a more complex divisor class group and the above attack doesn't work. In the following section, we will describe the cost of an exhaustive search on the invariant code, depending on different parameters of the fixed field.
 
 \s
 
@@ -1158,7 +1071,7 @@ Actually, if the quotient curve is $\mathbb{P}^1(\fqm)$, the security is the sam
 
 \s
 
-Let us recall that the security of the private key of the scheme proposed in section 7.1 relly on the security of the invariant code. Thus, this section will be dedicated to the cost of an exhaustive search on the quotient curve. This will allow us to understand how to choose the automorphism $\sigma$ in order to maximize the complexity of the exhaustive search. Let us rewrite 
+Let us recall that the security of the private key of the scheme proposed in Section 6.1 rely on the security of the invariant code. This section will be dedicated to the cost of an exhaustive search on it, allowing us to understand how to choose the automorphism $\sigma$ in order to maximize the complexity of the exhaustive search. Let us rewrite 
 \[C_{\rm inv} := SSAG_q\left(\mathcal{H}/\langle \sigma \rangle,\tilde{\PR},\tilde{G}\right)\]
 the invariant code. A brute force attack on it will consists in the three following steps :
 \begin{enumerate}
@@ -1182,16 +1095,16 @@ The first consists in an exhaustive search on all subset $S \su \mathcal{H}/\lan
 
 \s
 
-The second way is to solve a linear system as in section 7.2. In order to build it, we start be recalling that there exists (from proposition \ref{dual}) a divisor $G' \in \rm Div \it (\mathcal{H}/\langle \sigma \rangle)$ such that 
-\[ C_L(\mathbb{P}(\fqm),\tilde{\PR},\tilde{G})^{\perp} = C_L(\mathbb{P}^1(\fqm),\tilde{\PR},G').\]
+The second way is to solve a linear system as in Section 6.2. In order to build it, we start be recalling that there exists (from Proposition \ref{dual}) a divisor $G' \in \rm Div \it (\mathcal{H}/\langle \sigma \rangle)$ such that 
+\[ C_L(\mathcal{H}/\langle \sigma \rangle,\tilde{\PR},\tilde{G})^{\perp} = C_L(\mathcal{H}/\langle \sigma \rangle,\tilde{\PR},G').\]
 
 Here we don't know the quotient curve from our hypothesis. Nevertheless, let us suppose that the attacker found a way to recover it. It then becomes possible to compute the Riemann-Roch space $L(G') \su \fqm(\mathcal{H}/\langle \sigma \rangle)$;
-ie. we have $L(G') = \langle f_1,...,f_s \rangle_{\fqm}$. As in section 7.2, one gets 
+ie. we have $L(G') = \langle f_1,...,f_s \rangle_{\fqm}$. As in section 6.2, one gets 
 
 \begin{equation*}
 \forall \ 1 \leq i \leq s \ , \ (f_i(\tilde{P}_1),...,f_i(\tilde{P}_{n_0})) \cd \bf{G}\rm ^T_{inv} = 0,
 \end{equation*}
-where $\tilde{\PR} = \{\tilde{P}_1,...,\tilde{P}_s)$. In particular, les us introduce $2n_0$ formal variables $X_1,...,X_{n_0}$ and $Y_1,...,Y_{n_0}$ corresponding to to the evaluation in $x$ and $y$ on the places of $\tilde{\PR}$. Here, we supposed that the quotient curve is seen in a plane model. Thus this leads to the following system
+where $\tilde{\PR} = \{\tilde{P}_1,...,\tilde{P}_s)$. In particular, les us introduce $2n_0$ formal variables $X_1,...,X_{n_0}$ and $Y_1,...,Y_{n_0}$ corresponding to the evaluation in $x$ and $y$ on the places of $\tilde{\PR}$. Here, we supposed that the quotient curve is seen in a plane model. This leads to the following system
 
 \begin{equation*}
 \begin{pmatrix}
@@ -1203,7 +1116,7 @@ f_s(X_1,Y_1) & \cdots & f_s(X_{n_0},Y_{n_0}) \\
 \cd \bf{G_{inv}} \rm{^T} = 0.
 \end{equation*}
 
-Note that this method is nothing but a generalization of the method describe in 7.2, but this system is actually harder to solve since we cannot estimate the form of rational functions $f_i$. On the other hand, even if the system is polynomial, the complexity of solving it using Gröbner bases depend on the form and degree of the polynomials ans is thus difficult to forecast.
+Note that this method is nothing but a generalization of the method describe in 6.2, but this system is actually harder to solve since we cannot estimate the form of the rational functions $f_i's$. On the other hand, even if the system is polynomial, the complexity of solving it using Gröbner bases depend on the form and degree of the polynomials ans is thus difficult to forecast.
 
 \newpage
 
@@ -1211,17 +1124,17 @@ Note that this method is nothing but a generalization of the method describe in 
 
 \s
 
-Here, we will first explain why it is not necessary to enumerate all divisors in the quotient curve $\mathcal{H}\backslash \langle \sigma \rangle$ in order to find the correct one. In fact, if the support is fixed, two different divisors can produce the same code. This fact comes from the structure of SSAG-codes inherited from AG ones. In order to precise this, let us introduce the notion of diagonal equivalent codes.
+Here, we will first explain why it is not necessary to enumerate all divisors in the quotient curve $\mathcal{H}/ \langle \sigma \rangle$ in order to find the correct one. In fact, if the support is fixed, two different divisors can produce the same code. This fact comes from the specific structure of SSAG-codes, inherited from AG ones. In order to precise this, let us introduce the notion of diagonal equivalent codes.
 
 \s
 
 \begin{def1} \label{diag}
-Let $\C_1$,$\C_2 \su \fqm^n$ be two linear codes. We say they are diagonal equivalent, denoted $\C_1 \sim_{\rm diag} \C_2$, if there exist $n$ non zero scalars in $\fqm$, say $\lambda_1,...,\lambda_n$, such that 
+Let $\C_1$,$\C_2 \su \fqm^n$ be two linear codes. We say they are diagonal equivalent, denoted \ $\C_1 \sim_{\rm diag} \C_2$, if there exist $n$ non zero scalars in $\fqm$, say $\lambda_1,...,\lambda_n$, such that 
 \[\C_1 = (\lambda_1,...,\lambda_n) \star \C_2 := \{(\lambda_1c_1,...,\lambda_nc_n) \ | \ (c_1,...,c_n) \in \C_2\}.\]
 \end{def1} 
 
-Note that the diagonal equivalence between two codes $\C_1$ and $C_2$ can be check by solving yet another linear system. In fact, let $\bf{G}_{\rm \C_1}$ and $\bf{H}_{\rm \C_2}$ be respectively a generator matrix of $\C_1$ and a parity check matrix of $C_2$. Let also $W_1,...,W_n$ be $n$ formal variables, and consider the following system
-\begin{equation}
+Note that the diagonal equivalence between two codes $\C_1$ and $\C_2$ can be check by solving yet another linear system. In fact, let $\bf{G}_{\rm \C_1}$ and $\bf{H}_{\rm \C_2}$ be respectively a generator matrix of $\C_1$ and a parity check matrix of $C_2$. Let also $W_1,...,W_n$ be $n$ formal variables, and consider the following system
+\begin{equation} \label{equiv}
 \bf{G}_{\rm \C_1} \cd \begin{pmatrix}
 W_1 & \cdots & 0 \\
 \null & \ddots & \null \\
@@ -1229,14 +1142,14 @@ W_1 & \cdots & 0 \\
 \end{pmatrix} \cd \bf{H}_{\rm \C_2}^{\rm T}\rm = 0.
 \end{equation}
 
-By definition \ref{diag}, this system has at least one solution if and only if $\C_1 \sim_{\rm diag} \C_2$, that is we have an easy way to check if two codes are diagonal equivalent. \\
-Let us now explain why this property leads to a smarter brute force search on the divisor in the case on SSAG-codes. First, we deal with AG-codes which are easier to treat. The following result shows that the equivalence class of AG-codes depends only on the equivalence class of its divisor.
+By Definition \ref{diag}, this system has at least one solution if and only if $\C_1 \sim_{\rm diag} \C_2$, that is we have an easy way to check whever two codes are diagonal equivalent or not. \\
+Let us now explain why this property leads to a smarter brute force search on the divisor in the case of SSAG codes. First, we deal with AG codes which are easier to treat. The following result shows that the equivalence class of AG-codes depends only on the equivalence class of its divisor.
 
 
 \s
 
-\begin{thm} \label{thmequiv} \rm (\color{red}see \cite{CMRP}, Corollary 4.15 \color{black}). \it
-Let $\X$ be an algebraic curve of genus $g$ and $\PR$ be a set of $n>2g-2$ rationnal places on $\X$. If $G$ and $H$ are to divisors on $\X$ of same degree $r$ such that $2g-1 < r < n-1$, then we have 
+\begin{thm} \label{thmequiv} \rm (see \cite{CMRP}, Corollary 4.15). \it
+Let $\X$ be an algebraic curve of genus $g$ and $\PR$ be a set of $n>2g-2$ rationnal places on $\X$. If $G$ and $H$ are two divisors on $\X$ of same degree $r$ such that $2g-1 < r < n-1$, then we have 
 \[C_L(\X,\PR,G) \sim_{\rm diag} C_L(\X,\PR,H) \iff G \sim H.\]
 \end{thm}
 
@@ -1263,24 +1176,24 @@ Immediate consequence of Theorem \ref{thmequiv} and Proposition \ref{divclass}.
 The above estimation is sufficient if we want to perform a brute force search on an AG-code defined over a curve $\X$. In fact, we could proceed as follows.
 \begin{enumerate}
 \item Perform a brute force search among divisor classes of degree $r$ (corresponding to the public AG-code), that is choose a representative divisor $G'$ in the class.
-\item Guess the support $\PR'$ (see above) and attempt to solve the system (11) to check whether the code $C_L(\X,\PR',G')$ is diagonal equivalent to the public code.
-\item If (11) has a solution $(\lambda_1,...,\lambda_n) \in (\fqm^*)^n$, then we have recovered the public code $(\lambda_1,...,\lambda_n) \star C_L(\X,\PR',G')$.
+\item Guess the support $\PR'$ (see above) and attempt to solve the system (\ref{equiv}) to check whether the code $C_L(\X,\PR',G')$ is diagonal equivalent to the public code.
+\item If (\ref{equiv}) has a solution $(\lambda_1,...,\lambda_n) \in (\fqm^*)^n$, then we have recovered the public code $(\lambda_1,...,\lambda_n) \star C_L(\X,\PR',G')$.
 \end{enumerate}
 
-By Theorem \ref{thmequiv} and Corollary \ref{nbAGr} we could have an estimation of the cost of a rute force search amoug divisor classes. Unfortunately, both theses results cannot be applied on subfield subcodes directly.
+By Theorem \ref{thmequiv} and Corollary \ref{nbAGr}, we could have an estimation of the cost of a brute force search amoung divisor classes. Unfortunately, both theses results cannot be applied on subfield subcodes directly.
 
 \s
 
-In the case of SSAG-codes, the situation is more complicated, but one can use the followinf result to have a first estimation on the number of SSAG codes.
+In the case of SSAG-codes, the situation is more complicated, but one can use the following result to have a first estimation on the number of SSAG codes.
 
 \s
 
-\begin{prop1} \rm (\color{red}see \cite{CMRP}, Corollary 7.4 \color{black}). \it 
+\begin{prop1} \rm (see \cite{CMRP}, Corollary 7.4). \it 
 With above notations, if $n>2g+2$ and $2g-1<r<n$, then 
 \[\#AG_r(\X,\PR) = (q^m-1)^{n-1}h(\X).\]
 \end{prop1}
 
-Now let us denote by $SSAG_{q,r}(\X,\PR)$ the set of subfield subcodes on $\fq$ of AG codes on the curve $\X$, defined by the support $\PR$ ana a divisor of degree $r$. Since we are taking subcodes, it is clear from the previous proposition that 
+Now let us denote by $SSAG_{q,r}(\X,\PR)$ the set of subfield subcodes on $\fq$ of AG codes on the curve $\X$, defined by the support $\PR$ and a divisor of degree $r$. Since we are taking subcodes, it is clear from the previous proposition that 
 \[\#SSAG_{q,r}(\X,\PR) \leq \#AG_r(\X,\PR) = (q^m-1)^{n-1}h(\X).\]
 
 Actually, we can decrease a little the previous bound with the following remark.
@@ -1288,19 +1201,21 @@ Actually, we can decrease a little the previous bound with the following remark.
 \s
 
 \begin{rq1} \rm
-Let $\C_1$,$\C_2$ be two linear codes of lenght $n$ over $\fqm$, and suppose that there exist $\lambda_1,...,\lambda_n \in \fq^*$ such that $\C_1 = (\lambda_1,...,\lambda_n) \star \C_2$. Then their subfield subcodes on $\fq$ are equal, ie.
+Let $\C_1$,$\C_2$ be two linear codes of lenght $n$ over $\fqm$, and suppose that there exist $\lambda_1,...,\lambda_n \in (\fq^*)^n$ such that $\C_1 = (\lambda_1,...,\lambda_n) \star \C_2$. Then their subfield subcodes on $\fq$ are equal, ie.
 \[\C_1 \cap \fq^n = \C_2 \cap \fq^n.\]
 \end{rq1}
 
 \s
 
 This leads to the final upper bound 
-\[ \#SSAG_{q,r}(\X,\PR) \leq \dfrac{(q^m-1)^{n-1}}{(q-1)^{n-1}}h(\X).\]
+\begin{equation} \label{nb of sssag}
+ \#SSAG_{q,r}(\X,\PR) \leq \dfrac{(q^m-1)^{n-1}}{(q-1)^{n-1}}h(\X).
+\end{equation} 
 
 \s
 
 In annex B, we will formaly describe a brute search algorithm on the invariant SSAG-code and study its complexity. \\
-Note that from the above approximation, it is clear that the complexity of the exhaustive search lower bounded by the number of divisor classes on the quotient curve, that is $h(\mathcal{H}/\langle \sigma \rangle)$. In particular, this will lead to choose optimally the automorphism $\sigma \in Aut(\mathcal{H})$ in order this number to be high enough. In the next section, we will discuss the choice of parameters in our system.
+Note that from the above approximation, it is clear that the complexity of the exhaustive search is lower bounded by the number of divisor classes on the quotient curve, that is $h(\mathcal{H}/\langle \sigma \rangle)$. In particular, this will lead to choose optimally the automorphism $\sigma \in Aut(\mathcal{H})$ in order this number to be high enough. In the next section, we will discuss the choice of parameters for our system.
 
 \s
 
@@ -1312,20 +1227,20 @@ Note that from the above approximation, it is clear that the complexity of the e
 
 \s
 
-The main interest in using quasi-cyclic codes is that it allows us to reduce public key sizes. In particular, the large $\ell$ is, the smaller the public key is. This choice also influence the security of the scheme, as the security reduces to the security of the invariant code. In particular, if $\ell$ is too large, the invariant code will be rather small and probably less secured. Recall that it is always possible to build the invariant code from a public generator matrix and the permutation $\sigma$. Here we would like to choose $\ell$ such that it is not possible to construct any other intermediary code. We have two ways to avoid this.
+The main interest in using quasi-cyclic codes is that it allows us to reduce public key sizes. In particular, the larger $\ell$ is, the smaller the public key is. This choice also influence the security of the scheme, as the security reduces to the security of the invariant code. In particular, if $\ell$ is too large, the invariant code will be rather small and probably less secured. Recall that it is always possible to build the invariant code from a public generator matrix and the permutation $\sigma$. Here we would like to choose $\ell$ such that it is not possible to construct any other intermediary code. We have two ways to avoid this.
 
 \s
 
 \begin{enumerate}
-\item \bf{$\ell$ shoud be prime}. \rm If there exist a prime $s \mid \ell$, then the power permutation $\sigma^s$ also act on the public code. In particular, $\C_{\rm pub}$ is also $s$-quasi cyclic, that is one can construct another incariant code, ie. $\C_{\rm pub}^{\sigma^s}$. Since this is possible for every divisor of $\ell$, using Corollary \ref{ssag}, we are able to construct several SSAG codes smaller than the public code. Actually, we don't know if it makes the attack easier, but it is clear that every intermediary code provides information about the public support and divisor. As we wann to give the least information as possible, $\ell$ will be chosen as a prime.
+\item \bf{$\ell$ shoud be prime}. \rm If there exist a prime $s \mid \ell$, then the power permutation $\sigma^s$ also act on the public code. In particular, $\C_{\rm pub}$ is also $s$-quasi-cyclic, that is one can construct another invariant code, ie. $\C_{\rm pub}^{\sigma^s}$. Since this is possible for every divisor of $\ell$, we are able to construct several SSAG codes smaller than the public code (see Corollary \ref{ssag} for the structure of the invariant codes). Actually, we don't know if it makes the attack easier, but it is clear that every intermediary code could provides informations about the public support and divisor. As we want to give the least information possible, $\ell$ will be chosen as a prime.
 
-\item \bf{$\ell$ should be such that $q$ is in $\mu_{\ell -1}^*(\fqm)$}. \rm If this is satysfied, the polynomial $1+z+z^2+...+z^{\ell-1} \in \fq[z]$ is irreducible. In fact, there exist another intermediary code that can be constructed from the knowledge of a generator matrix and the automorphism $\sigma$, that is the \it{folded code} \rm (see \cite{FOP}). This code is the image of the public code $\C_{\rm pub}$ by the map $id+\sigma+...+\sigma^{\ell-1}$. Now, if the polynomial $1+z+z^2+...+z^{\ell-1}$ is reducible over $\fq$, then it is possible to construct another intermediary subcode of $\C_{\rm pub}$ by computing its image by the map $P(\sigma)$, where $P$ is a divisor of $1+z+z^2+...+z^{\ell-1}$. As in 1., we get another subcode of the public one that has a special structure related to the secret support and divisor. Actually we don't know if the knowledge of several folded code (note that we can always construct the full one) simplify an attack, but it could anyway be helpful for an attacker.
+\item \bf{$\ell$ should be such that $q$ is in $\mu_{\ell -1}^*(\fqm)$}. \rm If this is satysfied, the polynomial $1+z+z^2+...+z^{\ell-1} \in \fq[z]$ is irreducible. This is motivated by the fact that there exist another intermediary code that can be constructed from the knowledge of a generator matrix and the automorphism $\sigma$, that is the \it{folded code} \rm (see \cite{FOP}). This code is the image of the public code $\C_{\rm pub}$ by the map $\rm id \it +\sigma+...+\sigma^{\ell-1}$. Now, if the polynomial $1+z+z^2+...+z^{\ell-1}$ is reducible over $\fq$, then it is possible to construct another intermediary subcode of $\C_{\rm pub}$ by computing its image by the map $P(\sigma)$, where $P$ is a divisor of $1+z+z^2+...+z^{\ell-1}$. As in 1., we get another subcode of the public one that has a special structure related to the secret support and divisor. Actually we don't know if the knowledge of several folded code (note that we can always construct the full one) simplify an attack, but it could anyway be helpful for an attacker.
 \end{enumerate}
 
 \s
 
 \begin{rq1} \label{un seul subcode} \rm
-From the definition, it is clear that the folded code in $\sigma$-invariant, that is it is a subcode of $\C_{\rm pub \it}^{\sigma}$. Now let $p$ be the characteristic of $\fqm$. If $p \nmid \ell$, then those two codes are equal (see \cite{Bar1} , Lemma 3.2). In what follow, we will always have $p \nmid \ell$. Hence, if $\ell$ satisfies 1? and 2. above, then the only subcode of $\mathcal{C}_{\rm pub}$ that an attacker can construct is the invariant code. In particular, we can focus on the security of $\C_{\rm}^{\sigma}$ without having to worry about possible other subcodes.  
+From the definition, it is clear that the folded code in $\sigma$-invariant, that is it is a subcode of $\C_{\rm pub \it}^{\sigma}$. Now let $p$ be the characteristic of $\fqm$. If $p \nmid \ell$, then those two codes are equal (see \cite{Bar1} , Lemma 3.2). In what follow, we will always have $p \nmid \ell$. Hence, if $\ell$ satisfies 1. and 2. above, then the only subcode of $\mathcal{C}_{\rm pub}$ that an attacker can construct is the invariant code. In particular, we can focus on the security of $\C_{\rm}^{\sigma}$ without having to worry about possible other subcodes.  
 \end{rq1}
 
 \s
@@ -1334,7 +1249,7 @@ From the definition, it is clear that the folded code in $\sigma$-invariant, tha
 
 \s
 
-The complexity of the brute force attack on $\C_{\rm inv}$, described in 7.3, depends on the class number of the quotient curve $h(\mathcal{H}/\langle \sigma \rangle)$. In particular, from Theorem \ref{esti h(X)}, this number can be estimated using the genus $g(\mathcal{H}/\langle \sigma \rangle)$ of the quotient curve. In this section, we details how to construct an automorphism $\sigma \in Au(\h)$ of order $\ell$, with $\ell$ satisfying conditions 1. and 2. above. After, we will see the influence of this choice on the genus of the quotient curve. A complete study on the automorphism group of the Hermitian curve can be found in \cite{Gar}. In particular, they compute the class number as well as the genus of several quotient curve of the Hermitian curve, which will help us in choosing a good automorphism.
+The complexity of the brute force attack on $\C_{\rm inv}$, described in 7.3, depends on the class number of the quotient curve $h(\mathcal{H}/\langle \sigma \rangle)$. In particular, from Theorem \ref{esti h(X)}, this number can be estimated using the genus $g(\mathcal{H}/\langle \sigma \rangle)$. In this section, we details how to construct an automorphism $\sigma \in Au(\h)$ of order $\ell$, with $\ell$ satisfying conditions 1. and 2. above. After, we will see the influence of this choice on the genus of the quotient curve. A complete study on the automorphism group of the Hermitian curve can be found in \cite{Gar}. In particular, they compute the class number as well as the genus of several quotient curve of the Hermitian curve, which will help us in choosing a good automorphism.
 
 \s
 
@@ -1344,10 +1259,10 @@ The complexity of the brute force attack on $\C_{\rm inv}$, described in 7.3, de
 
 
 Let us denote by $\calA := \rm Aut(\calH)$ the automorphism group of the Hermitian function field. It is isomorphic to the projective unitary group $\rm PGU_3(\mathbb{F}_{q_0^2})$, and has order (see for example \cite{Sti})
-\[\rm ord \it (\calA) = q_0^3(q_0^2-1)(q_0^3+1).\]
-As we aim to find an automorphism $\sigma$ of order $\ell$ satysfying the conditions in 7.4.1, we introduice the subgroup
+\[\rm ord \it (\calA) =  q_0^{\rm 3}\it (q_0^{\rm 2}-1)(\it q_0^{\rm 3}+1).\]
+As we aim to find an automorphism $\sigma$ of order $\ell$ satysfying the conditions in 6.4.1, we introduice the subgroup
 \[\calA(P_{\infty}) := \{ \sigma \in \calA \ | \ \sigma(P_{\infty}) = P_{\infty}\} \su \calA ,\]
-consisting in all automorphisms fixing the point at infinity $P_{\infty}$ in $\calH(\mathbb{F}_{q_0^2})$. Let $F=\mathbb{F}_{q_0^2}(x,y)=\mathbb{F}_{q_0^2}(\calH)$ be the function field of $\calH$, it is proven in \cite{Gar} that such an automorphism acts as follows :
+consisting in all automorphisms fixing the point at infinity $P_{\infty}$ in $\calH(\mathbb{F}_{q_0^2})$. Let $F=\mathbb{F}_{q_0^2}(x,y)=\mathbb{F}_{q_0^2}(\calH)$ be the function field of $\calH$. It is proven in \cite{Gar} that such an automorphism acts as follows :
 \begin{equation} \label{sigma}
 \left\{ \begin{array}{ll}
 \sigma(x) = ax+b \\
@@ -1355,8 +1270,8 @@ consisting in all automorphisms fixing the point at infinity $P_{\infty}$ in $\c
 \end{array} \right.
 \end{equation}
 with $a \in \mathbb{F}_{q_0^2}^*$, $b \in \mathbb{F}_{q_0^2}$ and $b^{q_0+1} = c^{q_0}+c$ (see (2.2) in \cite{Gar}). We have 
-\[\rm ord \it (\calA(P_{\infty})) = q^3(q^2-1).\]
-From \ref{sigma}, any automorphism $\sigma \in \calA(P_{\infty})$ can be identified to a triple $a,b,c$, with $a \in \mathbb{F}_{q_0^2}^*$, $b \in \mathbb{F}_{q_0^2}$ and $b^{q_0+1} = c^{q_0}+c$. For convenience, this automorphism will be denoted $\sigma = [a,b,c]$. The order of such a $\sigma$ depends only on the order of $a$ and the choice of $c$.
+\[\rm ord \it (\calA(P_{\infty})) = q^{\rm 3}\it (q^{\rm 2}-1).\]
+From (\ref{sigma}), any automorphism $\sigma \in \calA(P_{\infty})$ can be identified to a triple $(a,b,c)$, with $a \in \mathbb{F}_{q_0^2}^*$, $b \in \mathbb{F}_{q_0^2}$ and $b^{q_0+1} = c^{q_0}+c$. For convenience, this automorphism will be denoted $\sigma = [a,b,c]$. The order of such a $\sigma$ depends only on the order of $a$ and the choice of $c$.
 
 \s
 
@@ -1376,7 +1291,7 @@ where $p=\rm char \it (\mathbb{F}_{q_0^2})$.
 \end{itemize}
 \end{lem1}
 
-Now, let $\ell$ be an integer satisfying conditions 1. and 2. in 7.4.1, which also devides $q_0^2-1$. We chose randomly an element $a \in \mathbb{F}_{q_0^2}^*$ of order $\ell$ and $b \in \mathbb{F}_{q_0^2}$. If $\ell \mid q_0+1$, we choose $c=\dfrac{ab^{q_0+1}}{a-1}$, else we chose any $c$ amoung the roots of $X^{q_0}+X-b^{q_0+1}$. From Lemma \ref{ordsigma}, we then gets an automorphism $\sigma = [a,b,c]$ of order $\ell$.
+Now, let $\ell$ be an integer satisfying conditions 1. and 2. in 6.4.1, which also devides $q_0^2-1$. We chose randomly an element $a \in \mathbb{F}_{q_0^2}^*$ of order $\ell$ and $b \in \mathbb{F}_{q_0^2}$. If $\ell \mid q_0+1$, we choose $c=\dfrac{ab^{q_0+1}}{a-1}$, else we chose any $c$ amoung the roots of $X^{q_0}+X-b^{q_0+1}$. From Lemma \ref{ordsigma}, we get an automorphism $\sigma = [a,b,c]$ of order $\ell$.
 
 \s
 
@@ -1392,7 +1307,7 @@ The authors in \cite{Gar} provide a formula to compute the genus of the curve $\
 Let $\sigma = [a,b,c] \in \calA(P_{\infty})$ be an automorphism of prime order $\ell > 2$. Then 
 \begin{itemize}
 \item[(i)] If $\ell \mid (q_0-1)$, then $g(\calH/\langle \sigma \rangle) = \dfrac{(q_0-1)q_0}{2\ell}$.
-\item[(ii)] If $\ell \mid (q_0+1)$ and $c = \dfrac{ab^{q_0+1}}{a-1}$, then $g(\calH/\langle \sigma \rangle) = \dfrac{(q_0-1)(q_0-(\ell-1))}{`2\ell}$.
+\item[(ii)] If $\ell \mid (q_0+1)$ and $c = \dfrac{ab^{q_0+1}}{a-1}$, then $g(\calH/\langle \sigma \rangle) = \dfrac{(q_0-1)(q_0-(\ell-1))}{2\ell}$.
 \end{itemize}
 \end{prop1}
 
@@ -1416,8 +1331,8 @@ Let $\sigma = [a,b,c] \in \calA(P_{\infty})$ be an automorphism of prime order $
 
 \s 
 
-We will see in annex B that the divisor class $h(\calH/\langle \sigma \rangle)$
-is an upper bound for the cost of the brute force algorithm. In our suggested parameters for the scheme (see section 7.4.4), this number will be large enough to reach a complexity larger than $2^{128}$ operations in $\fq$.
+We will see in Annex B that the divisor class $h(\calH/\langle \sigma \rangle)$
+is an upper bound for the cost of the brute force algorithm. In our suggested parameters for the scheme (see section 6.4.4), this number will be large enough to reach a complexity bigger than $2^{128}$ operations over the base field.
 
 \s
 
@@ -1425,17 +1340,85 @@ is an upper bound for the cost of the brute force algorithm. In our suggested pa
 
 \s
 
-In order to provide SSAG-codes over $\fq$, defined on the Hermitian function field, we have to choose and extension $\fq$ of $\fq$ such that $q^m$ is a square. Let us discuss the choice of $q$ and $m$, and the related $q_0$ such that $q^m=q_0^2$.
+In order to provide SSAG-codes over $\fq$, defined on the Hermitian function field, we have to choose and extension $\fqm$ of $\fq$ such that $q^m$ is a square. Let us discuss the choice of $q$ and $m$, and the related $q_0$ such that $q^m=q_0^2$.
 
 \begin{enumerate}
-\item[$\bullet$] $m$ should not be too large since it has a negative influence on the dimension of the code. In fact, for a fixed lenght $n$ and a fixed divisor $G$, the dimension of the SSAG-code is lower bounded by $n-m(n-\rm dim \it (G))$. As a result, if $m$ is too big, the rate (\color{red} $k/n$ \color{black}) of the SSAG might be too low.
-\item[$\bullet$] Actually, the same remark holds for the choice of $q_0$. In fact, recall that the genus of the Hermitian function fields is $g=\frac{q_0(q_0-1)}{2}$. Then the same estimation on the dimension $k$ of the SSAG code leads to 
+\item[$\bullet$] $m$ should not be too large since it has a negative influence on the dimension of the code. In fact, for a fixed lenght $n$ and divisor $G$, the dimension of the SSAG-code is lower bounded by $n-m(n-\rm dim \it (G))$. As a result, if $m$ is too big, the rate (ie. $k/n$) of the SSAG might be too low.
+\item[$\bullet$] The same remark holds for the choice of $q_0$. In fact, recall that the genus of the Hermitian function fields is $g=\frac{q_0(q_0-1)}{2}$. Then the same estimation on the dimension $k$ of the SSAG code leads to 
 \[k \geq n-m(n-\rm dim \it (G)) = n-m(n-\rm deg \it (G) +g-1),\]
 that is $q_0$ should not be too large as well.
-\item[$\bullet$] On the other hand, the choice $q=q_0$ and $m=2$, which could be a good choice about the two previous points, is not encouraged. The formal argument in this direction is that the smaller the dregree extension $m$ is, the closer the structure of the SSAG code is from the AG one. Since AG-codes have been broken in polynomial time (see \cite{Cou}), it might be possible to addapt this attack to SSAG-codes if they are too close to AG ones. In section 7.4.4, we will still give some parameters with $m=2$ because it provides the best key sizes. However, we warn the reader that it could be the weakest keys. 
+\item[$\bullet$] On the other hand, the choice $q=q_0$ and $m=2$, which could be a good choice about the two previous points, is not encouraged. The formal argument in this direction is that the smaller the dregree extension $m$ is, the closer the structure of the SSAG code is from the AG one. Since AG codes have been broken in polynomial time (see \cite{Cou}), it might be possible to addapt this attack to SSAG codes if they are too close to AG ones. In section 6.4.4, we will still give some parameters with $m=2$ because it provides the best key sizes. However, we warn the reader that it could be the weakest keys. 
 \end{enumerate}
 
-\s \color{red} \subsubsection{Parameters} \color{black}
+\s 
+
+ \subsubsection{Parameters} 
+
+\s
+
+Let us recall the notation we will use in the following tables.
+
+\begin{enumerate}
+\item[$\bullet$] $q$ is the power of a prime such that the SSAG code is defined over $\fq$.
+\item[$\bullet$] $m$ is the extension degree such that the underlying AG code is defined over $\fqm$.
+\item[$\bullet$] $q_0$ is a prime power such that $q_0^2=q^m$, such that the Hermitian curve is defined over the field $\mathbb{F}_{q_0^2}$ with square cardinality.
+\item[$\bullet$] $n$ and $k$ are respectively the length and the dimension of the SSAG-code.
+\item[$\bullet$] $\ell$ is the order of quasi-cyclicity of the SSAG code.  
+\item[$\bullet$] $g(\calH/\langle \sigma \rangle)$ and $h(\calH/\langle \sigma \rangle)$ are respectively the genus and the class number of the quotient curve.
+\item[$\bullet$] The Key sizes are given in bytes, using the formula $\left\lceil \dfrac{\rm log_{2}\it (q) \cd \frac{k}{l} \cd (n-k)}{8} \right\rceil,$ since the public key is a systematic and quasi-cyclic generator matrix of the SSAG code.
+\item[$\bullet$] $\w_{ISD}$ is the log$_2$ of the work factor for the ISD attack, computed using \bf{CaWoF} \rm library (see. \cite{CAWOF}).
+\end{enumerate}
+We will suggest paramaters for 128 bits of security, keeping in mind that the class number $h(\calH/\langle \sigma \rangle)$ is an upper bound for the brute force attack. 
+
+\s
+
+\begin{table}[htbp]
+\begin{equation*}
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+m & q & q_0 & n & k & \ell & Key \ sizes \ (bytes) & \w_{ISD} & g(\calH/\langle \sigma \rangle) & h(\calH/\langle \sigma \rangle) \\
+\hline
+8 & 2 & 2^4 & 4083 & 2307 & 3 & 170718 & 128 & 40 & \simeq 2^{326} \\
+\hline
+8 & 2 & 2^4 & 4085 & 2315 & 5 & 102438 & 129 & 24 & \simeq 2^{196} \\
+\hline \hline
+4 & 2^2 & 2^4 & 3000 & 1246 & 3 & 182123 & 128 & 40 & \simeq 2^{326} \\
+\hline
+4 & 2^2 & 2^4 & 3000 & 1252 & 5 & 109424 & 129 & 24 & \simeq 2^{196} \\
+\hline \hline
+3 & 3^2 & 3^3 & 2996 & 1277 & 7 & 124258 & 130 & 39 & \simeq 2^{374} \\
+\hline
+\end{array}
+\end{equation*}
+\caption{Suggested parameters for security 128, $m > 2$}
+\end{table}
+
+\s
+
+For some parameters with $m=2$ in the table below, one have $h(\calH/\langle \sigma \rangle) < 2^{128}$. In this case, we precise the number $\#SSAG_{q,r}(\mathcal{H},\PR)$ of SSAG-codes over $\fq$ with same support $\PR$ and a degree divisor equals to $r$.
+
+\s
+
+
+\begin{table}[htbp]
+\begin{equation*}
+\begin{array}{|c|c|c|c|c|c|c|c|c|c|}
+\hline
+m & q  & n & k & \ell & Key \ sizes \ (bytes) & \w_{ISD} & g(\calH/\langle \sigma \rangle) & h(\calH/\langle \sigma \rangle) & \#SSAG_{q,r}(\mathcal{H},\PR)  \\
+\hline
+2 & 11  & 900 & 613 & 3 & 25359 & 128 & 15 & \simeq 2^{107} & \simeq 2^{6316} \\
+\hline
+2 & 11  & 1200 & 740 & 5 & 29439 & 128 & 11 & \simeq 2^{78} & \simeq 2^{8360}\\
+\hline \hline
+2 & 13  & 1299 & 775 & 3 & 62614 & 128 & 26 & \simeq 2^{197} & \simeq 2^{9793}\\
+\hline
+2 & 13 & 994 & 659 & 7 & 14587 & 128 & 6 & \simeq 2^{45} & \simeq 2^{7386}\\
+\hline
+\end{array}
+\end{equation*}
+\caption{Suggested parameters for security 128, $m = 2$}
+\end{table}
+
 
 \newpage
 
@@ -1445,7 +1428,7 @@ that is $q_0$ should not be too large as well.
 
 \s
 
-In this first Annex, we will present a formal algorithm that describes the attack proposed in Section 5.2 in the special case of a Kummer covering of $\mathbb{P}^1$. Recall that in this special case, we are led to solve linear systems of the form :
+In this first Annex, we will present a formal algorithm that describes the attack proposed in Section 5.2 in the special case of a Kummer covering of $\mathbb{P}^1(\fqm)$. Recall that in this special case, we are led to solve linear systems of the form :
 \begin{equation} \tag{$\Delta(\xi)$}
 \begin{pmatrix}
 A(\xi) \\
@@ -1457,56 +1440,37 @@ H \cd \textbf{D}_s
 \end{equation}
 \s
 
-that is a system with $s(n-k)+n$ equations for $n$ unknows; where $s=dim(D)$ (see (4)) and $n$,$k$ are respectively the lenght and dimension of the public SSAG-code. Let us suppose that a plane model of the Kummer covering is given by 
-\[y^{\ell} = f(x) \ , \ f \in \fqm[T] \ , m=\rm{deg}(\it f).\]
+that is a system with $s(n-k)+n$ equations for $n$ unknows; where $s=\rm dim \it(D)$ (see Section 4) and $n$,$k$ are respectively the lenght and dimension of the public SSAG code. Let us suppose that a plane model of the Kummer covering is given by 
+\[y^{\ell} = f(x) \ , \ f \in \fqm[T] \ , d:=\rm{deg}(\it f).\]
 The following proposition gives the complexity of Algorithm 1 below
 
 \s
 
-\begin{prop1} Let $n,k$ be the lenght and the dimension of the public $SSAG$ code. Let $r := n/\ell$ be the number of orbits in $\PR$. If $r \geq m+1$, then Algorithm 1 find a equation of the cover, as well as the secret structure of the public $SSAG$-code in $\calO(\varphi(\ell)(n^{\w}+n^{\w-1}s(n-k))$ over $\fqm$. 
+\begin{prop1} Let $n,k$ be the lenght and the dimension of the public \rm{SSAG} \it code. Let $r := n/\ell$ be the number of orbits in $\PR$. If $r \geq d+1$, then Algorithm 1 finds an equation of the cover, as well as the secret structure of the public \rm SSAG \it code in $\calO(\varphi(\ell)(n^{\w}+n^{\w-1}s(n-k))$ operations over $\fqm$. 
 
 \end{prop1}
 
 \s
 
-\begin{proof} \color{red} [ref calcul formel ?] \cite{CF} \color{black} \\
-Recall that the complexity of solving a linear system with $k$ equations and $n$ unknowns is in $\calO(n^{\w-1}k)$ operations over the base field, where $\w$ is the exponent of linear algebra. As a result, the cost of line 9. is $\calO(n^{\w}+n^{\w-1}s(n-k))$ operations over $\fqm$. Since we have to seek for the correct root of unity $\xi$, this step might be repeated at most $\varphi(\ell)$-times, where $\varphi$ is the Euler totient function. Next, one have to realise one Lagrange's interpolation at line 13., in order to recover a defining equation of the Kummer cover. In particlicar, let $m$ denote the degree of the polynomial $f$ we have to build. At the step of the algorithm, we have recovered all the points in $\PR$, and thus if the number $r$ of orbits in $\PR$ is larger that $m+1$, Lagrange's interpolation find a unique polynomial $f$ of degree $m$ such that a plane model of the cover is given by $y^{\ell}=f(x)$ in $\calO(m^2)$ operations over $\fqm$. Note that this step is negligible compared to the cost of line 9. Finally, the last step we have to care about is the step 17. In fact, at this stage of the algorithm, the whole cover is known and it remains to compute the pullback of the invariant divisor. As for the support, we need to recover the $y$-coordinates of points in $\rm{Supp}(G)$. This can be done by finding roots of several polynomials. Indeed, from Kummer's theorem (see \cite{Sti}, Theore 3.3.7), if $x(Q)$ dénotes the $x$-coordinate of a point $Q \in \rm{Supp}(\tilde{G})$, then the $y$-coordinates of then extensions of $Q$ in $\rm{Supp}(G)$ are exactly the roots of the polynomial $P_Q(T)=T^{\ell}-f(x(Q)) \in \fqm[T]$. This step can be done by factorizing each polynomial $P_Q$ using Berlekamp algorithm, whose cost is $\calO(\ell^{\w}+q^m\ell^{2})$ operations over $\fqm$. In any practical cases, the Lenght of the public code is larger that the cardinality of the base field, that is $n > q^m$ and thus this step is also negligible. As a result, the total cost of algorithm 1 is in $\calO(\varphi(\ell)(n^{\w}+n^{\w-1}s(n-k))$ over $\fqm$.
+\begin{proof} see \cite{CF} for complexity analysis. \\
+Recall that the complexity of solving a linear system with $k$ equations and $n$ unknowns is in $\calO(n^{\w-1}k)$ operations over the base field, where $\w$ is the exponent of linear algebra. As a result, the cost of line 9. is $\calO(n^{\w}+n^{\w-1}s(n-k))$ operations over $\fqm$. Since we have to seek for the correct root of unity $\xi$, this step might be repeated at most $\varphi(\ell)$-times, where $\varphi$ is the Euler totient function. Next, one have to realise one Lagrange's interpolation at line 13., in order to recover a defining equation of the Kummer cover. In particular, let $d$ denote the degree of the polynomial $f$ we have to build. At this step of the algorithm, we have recovered all the points in $\PR$, and thus if the number $r$ of orbits in $\PR$ is larger that $d+1$, Lagrange's interpolation finds a unique polynomial $f$ of degree $d$ such that a plane model of the cover is given by $y^{\ell}=f(x)$ in $\calO(d^2)$ operations over $\fqm$. Note that this step is negligible compared to the cost of line 9. Finally, the last step we have to care about is at line 17. In fact, at this stage of the algorithm, the whole cover is known and it remains to compute the pullback of the invariant divisor. As for the support, we need to recover the $y$-coordinates of points in $\rm{Supp}(G)$. This can be done by finding roots of several polynomials. Indeed, from Kummer's theorem (see \cite{Sti}, Theore 3.3.7), if $x(Q)$ denotes the $x$-coordinate of a point $Q \in \rm{Supp}(\tilde{G})$, then the $y$-coordinates of the extensions of $Q$ in $\rm{Supp}(G)$ are exactly the roots of the polynomial $P_Q(T)=T^{\ell}-f(x(Q)) \in \fqm[T]$. This step can be done by factorizing each polynomial $P_Q$ using Berlekamp algorithm, whose cost is $\calO(\ell^{\w}+q^m\ell^{2})$ operations over $\fqm$. In any practical cases, the lenght of the public code is larger that the cardinality of the base field, that is $n > q^m$ and thus this step is also negligible. As a result, the total cost of Algorithm 1 is in $\calO(\varphi(\ell)(n^{\w}+n^{\w-1}s(n-k))$ over $\fqm$.
 \end{proof}
 
 \s
 
-Note that this algorithm can be used in the case of Artin-Schreier covers of the projective line, by only changing a few lines. In fact, in the Artin-Schreier setup, we have to solve at most $p = \#(\mathbb{F}_p)$ linear system of the form (7), whose total cost is in $\calO(p(n^{\w}+n^{\w-1}s(n-k))$ over $\fqm$. As in Algorithm 1, this is the total cost of the correponding algorithm since others steps are exactly the same.
+Note that this algorithm can be used in the case of Artin-Schreier covers of the projective line, by only changing a few lines. In fact, in the Artin-Schreier setup, we have to solve at most $p = \#(\mathbb{F}_p)$ linear system of the form (8), whose total cost is in $\calO(p(n^{\w}+n^{\w-1}s(n-k))$ over $\fqm$. As in Algorithm 1, this is the total cost of the correponding algorithm since others steps are the same.
 
 \s
 
-\begin{rq1} \rm \color{red} [si la courbe quotient n'est pas $P^1$] \color{black}
-
+\begin{rq1} \rm \color{black}
+In Algorithm 1, we describe our attack in the special case were the quotient curve is $\mathbb{P}^1(\fqm)$, as it is easier to produce a complexity analysis. However, note that this algorithm can be generalized to general Kummer or Artin-Schreier cover, the only difference being the interpolation step at the end. In fact, in the general case, the polynomial we have to recover is bivariate, thus the interpolation step might be harder. To be a bit more precise, it is possible to use a bivariate Lagrange's interpolation, and the complexity is the same as the classical case, exepted that we need more evaluation points, ie. at least $\binom{d+2}{d}$ of them. Another point that could be problematic is that the corresponding system might have more than one solution. \\
+This is the main counterpart of considering polynomial instead of rational functions in our settings. In fact, it could be possible to use Lagrange's interpolation in a function field of a curve insted of using it on polynomials, but this theory is not well-developed yet.
 \end{rq1}
 
-\s
-
-\begin{rq1} \rm \color{red} [cas Galoisien] \color{black}
-
-\end{rq1}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\newpage
 \vspace*{1cm}
 \begin{center}
 \fbox{ \begin{minipage}{10cm}
-\s
+\vspace*{0.1cm}
 \bf{\underline{Algorithm 1 : Security reduction in Kummer case}}
 
 \s
@@ -1548,29 +1512,67 @@ Note that this algorithm can be used in the case of Artin-Schreier covers of the
 }
 \end{center}
 
-\newpage
-
-
-
-
-
-
-
-
 \s
+
+
+\begin{rq1} \rm
+In section 5.4, we generalized our attack in the case of a solvable Galois covering, instead of just a cyclic one. We explained that in order to attack the corresponding public code, we could apply several times the Kummer or Artin-Schreier case. The total cost of the attack in this context is just the number of iterations we have to use Algorithm 1. In particular, if the corresponding solvable Galois group have order $p^s\lambda$, with $p=\rm char \it (\fqm)$ and $(p,\lambda)=1$. Then we can attack the public code by using $s+1$-times Algorithm 1.
+\end{rq1}
+
+\newpage
 
 \section{Brute force Algorithm on the invariant code}
 
+\s
 
+In section 6.3, we described a brute force attack against the invariant SSAG-code in our settings on the Hermitian curve. This section will be dedicated to a formal algorithm for this attack. 
+Let $r \geq 0$, and denote by $Cl^r(\mathcal{H}/\langle \sigma \rangle)$ the group of divisor class of degree $r$ in $\mathcal{H}/\langle \sigma \rangle$. For a divisor $G \in \rm Div \it (\mathcal{H}/\langle \sigma \rangle)$, we denote $[G]$ its class in $Cl^r(\mathcal{H}/\langle \sigma \rangle)$. In Algorithm 2 below, we plan to recover the good permutation amoung all subsets of lenght $n$, and then use the SSA algorithm (see \cite{SSA}). In order to find the good divisor amoung all classes of a given degree, we essentially use the estimation (\ref{nb of sssag}).
 
+\vspace*{1cm}
+\begin{center}
+\fbox{ \begin{minipage}{15cm}
+\vspace*{0.1cm}
+\bf{\underline{Algorithm 2 : Brute force on SSAG}}
 
+\s
 
+\bf{\underline{Inputs}} \rm 
+\begin{enumerate}
+\item[-] A generator matrix \bf{G} \rm of the invariant SSAG-code $\mathcal{C}$;
+\item[-] The degree $r$ of the divisor associated to $\mathcal{C}$.
+\end{enumerate}
 
+\bf{\underline{Outputs}} \rm
+\begin{enumerate}
+\item[-] A couple $(\PR,G)$ such that $\mathcal{C}=SSAG_q(\mathcal{H}/\langle \sigma \rangle,\PR,G).$
+\end{enumerate}
 
+\begin{enumerate}
+\item[1.] $S \longleftarrow \{P \in \calH \ | \ \rm deg \it (P)=1\}$ \quad // The lenght is fixed
+\item[2.] for $[G] \in Cl^r(\calH)$ do
+\item[3.] $\quad \mathcal{C}' \longleftarrow SSAG_q(\calH,S,G)$
+\item[4.] $\quad$ for $[\bf w \it] \in \fqm^n/\fq^n$ do  $\quad$ // \bf{w} \rm representative of [\bf{w}\rm]
+\item[5.] $\quad \quad $ for $\mathcal{I} \su \{1,...,N(\calH)-1\}$ with $|\mathcal{I}|=n$ do
+\item[6.] $\quad \quad \quad$ $\mathcal{C}'_{\mathcal{I}} \longleftarrow \rm Punct_{\mathcal{I}}(\mathcal{C}')$ 
+\item[7.] $\quad \quad \quad \pi \longleftarrow \rm SSA \it (\bf{w} \star \mathcal{C}'_{\mathcal{I}},\mathcal{C})$ $\quad$ // SSA return a permutation or '?'
+\item[8.] $\quad \quad \quad$ If $\pi \in \Theta_n$ then
+\item[9.] $\quad \quad \quad \quad S_{\mathcal{I}} \longleftarrow \{P_i \in S \ | \ i \in \mathcal{I}\}$
+\item[10.] $\quad \quad \quad \quad$ return $\pi(S_{\mathcal{I}}),G$ and \bf{w} 
+\end{enumerate}
+\end{minipage}
+}
+\end{center}
 
+\s
 
+As it is complicated to provide a complexity analysis for the support recovering, we can at least say that the complexity of Algorithm 2 is at least the cost of the exhaustive search on $G$ and \bf{w} \rm, that is at least (see (\ref{nb of sssag}))
+\[ ((q^m-1)^{n-1}-(q-1)^{n-1})h(\mathcal{H}/\langle \sigma \rangle) \rm \ operations \ over \ \it \fq.\]
+By Theorem \ref{esti h(X)}, we know that 
+\[(\sqrt{q^m}-1)^{2g(\mathcal{H}/\langle \sigma \rangle)} \leq h(\mathcal{H}/\langle \sigma \rangle) \leq (\sqrt{q^m}-1)^{2g(\mathcal{H}/\langle \sigma \rangle)}.\] 
+Then we can write $h(\mathcal{H}/\langle \sigma \rangle) \in \mathcal{O}(q^{mg(\mathcal{H}/\langle \sigma \rangle)})$ and the cost of the enumeration of divisors $G$ in $Cl^r(\mathcal{H}/\langle \sigma \rangle)$ ans vectors in $\fqm/\fq$ is in $\mathcal{O}(q^{m(n-1)+mg(\mathcal{H}/\langle \sigma \rangle)})$. 
+To conclude, note that this complixity can be precised in our context for our choice of $\sigma$ (see Proposition \ref{genus} and Corollary \ref{lastcorollary}).
 
-
+Our suggested parameters for this scheme (see section 6.4.4) are chosen specifically in order $h(\calH/\langle \sigma \rangle)$ to be high enough to block the brute force attack.
 
 
 

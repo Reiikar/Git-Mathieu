@@ -3,52 +3,46 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Attack against quasi-cyclic AG-codes.aux
 The style file: alpha.bst
 Database file #1: bib.bib
-Warning--I didn't find a database entry for "Tsf"
-Warning--I didn't find a database entry for "Gar"
-Warning--I didn't find a database entry for "SSA"
-Warning--I didn't find a database entry for "CMRP"
-Warning--I didn't find a database entry for "Bar1"
-Warning--I didn't find a database entry for "Cou"
-Warning--I didn't find a database entry for "CF"
-You've used 9 entries,
+Warning--empty journal in CAWOF
+You've used 17 entries,
             2543 wiz_defined-function locations,
-            632 strings with 5871 characters,
-and the built_in function-call counts, 4247 in all, are:
-= -- 433
-> -- 177
-< -- 11
-+ -- 64
-- -- 61
-* -- 270
-:= -- 665
-add.period$ -- 27
-call.type$ -- 9
-change.case$ -- 58
-chr.to.int$ -- 8
-cite$ -- 9
-duplicate$ -- 192
-empty$ -- 289
-format.name$ -- 72
-if$ -- 920
+            665 strings with 7027 characters,
+and the built_in function-call counts, 7882 in all, are:
+= -- 801
+> -- 334
+< -- 19
++ -- 117
+- -- 114
+* -- 498
+:= -- 1224
+add.period$ -- 51
+call.type$ -- 17
+change.case$ -- 108
+chr.to.int$ -- 16
+cite$ -- 18
+duplicate$ -- 359
+empty$ -- 543
+format.name$ -- 135
+if$ -- 1709
 int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 9
-newline$ -- 49
-num.names$ -- 27
-pop$ -- 56
+missing$ -- 19
+newline$ -- 89
+num.names$ -- 51
+pop$ -- 112
 preamble$ -- 1
-purify$ -- 68
+purify$ -- 128
 quote$ -- 0
-skip$ -- 181
+skip$ -- 342
 stack$ -- 0
-substring$ -- 264
-swap$ -- 72
-text.length$ -- 11
-text.prefix$ -- 4
+substring$ -- 484
+swap$ -- 130
+text.length$ -- 19
+text.prefix$ -- 7
 top$ -- 0
-type$ -- 68
-warning$ -- 0
-while$ -- 37
-width$ -- 13
-write$ -- 120
-(There were 7 warnings)
+type$ -- 124
+warning$ -- 1
+while$ -- 68
+width$ -- 21
+write$ -- 221
+(There was 1 warning)

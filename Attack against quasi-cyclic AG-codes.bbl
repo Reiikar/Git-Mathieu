@@ -1,11 +1,22 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
 \begin{thebibliography}{FOP{\etalchar{+}}16b}
 
+\bibitem[Bar17]{Bar1}
+Elise Barelli.
+\newblock On the security of some compact keys for mceliece scheme.
+\newblock {\em WCC Workshop on Coding and Cryptography}, September 2017.
+
 \bibitem[Bar18]{Bar}
 Elise Barelli.
 \newblock {\em On the security of short McEliece keys from algebraic and
   algebraic geometry codes with automorphisms}.
 \newblock PhD thesis, universite Paris-Saclay, 2018.
+
+\bibitem[BCG{\etalchar{+}}17]{CF}
+Alin Bostan, Frédéric Chyzak, Marc Giusti, Romain Lebreton, Grégoire Lecerf,
+  Bruno Salvy, and Éric Schost.
+\newblock {\em Algorithmes Efficaces en Calcul Formel}.
+\newblock Frédéric Chyzak (auto-édit.), Palaiseau, September 2017.
 
 \bibitem[CMCP14]{CMP}
 Alain Couvreur, Irene Marquez-Corbella, and Ruud Pellikaan.
@@ -13,6 +24,12 @@ Alain Couvreur, Irene Marquez-Corbella, and Ruud Pellikaan.
   public key cryptosystems.
 \newblock {\em Proc. IEEE Int. Symposium Inf. Theory- ISIT}, pages 1446--1450,
   2014.
+
+\bibitem[CMCP17]{Cou}
+Alain Couvreur, Irene Marquez-Corbella, and Ruud Pellikaan.
+\newblock Cryptanalysis of mceliece cryptosystem based on algebraic geometry
+  codes ans their subcodes.
+\newblock {\em IEEE Trans. Inform. Theory \bf{63}}, pages 5404--5418, 2017.
 
 \bibitem[FOP{\etalchar{+}}16a]{FOP}
 Jean-Charles Faugere, Ayoub Otmani, Ludovic Perret, Frederic de~Portzamparc,
@@ -33,6 +50,11 @@ Jean-Charles Faugere, Ayoub Otmani, Ludovic Perret, and Jean-Pierre Tillich.
 \newblock {\em Advances in Cryptology - EURO-CRYPT 2010, LNCS}, pages 279--298,
   2010.
 
+\bibitem[GSX00]{Gar}
+Arnaldo Garci, Henning Stichtenoch, and Chao-Ping Xing.
+\newblock On subfields of the hermitian function field.
+\newblock {\em Compositio Mathematica \bf{120}}, pages 137--170, 2000.
+
 \bibitem[HP95]{THRP}
 Tom Høholft and Ruud Pellikaan.
 \newblock On the decoding of algebraic-geometric codes.
@@ -49,9 +71,33 @@ Robert~J. McEliece.
 \newblock A public-key cryptosystem based on algebraic coding theory.
 \newblock {\em DSN Progress Report 44}, pages 114--116, 1978.
 
+\bibitem[MP93]{CMRP}
+Carlos Munuera and Ruud Pellikaan.
+\newblock Equality of geometric goppa codes and equivalence of divisors.
+\newblock {\em Journal of Pure and Applied Algebra \bf{90}}, pages 229--252,
+  1993.
+
+\bibitem[Sen00]{SSA}
+Nicolas Sendrier.
+\newblock Finding the permutation between equivalent linear codes: The support
+  splitting algorithm.
+\newblock {\em IEEE Transactions on Information Theory \bf{46}}, pages
+  1193--1203, 2000.
+
 \bibitem[Sti09]{Sti}
 Henning Stichtenoch.
 \newblock {\em Algebraic Function Fields and Codes}.
 \newblock Springer, 2nd edition edition, 2009.
+
+\bibitem[TaDN07]{Tsf}
+Michael~A. Tsfasman and Serge G.~Vladut annd Dmitry~Nogin.
+\newblock {\em Algebraic geometric codes : basic notions}.
+\newblock no.139, American Mathematical Soc., 2007.
+
+\bibitem[Tor16]{CAWOF}
+Rodolfo~Cantos Torres.
+\newblock Cawof, c library for computing asymptotic exponents of generic
+  decoding work factors.
+\newblock pages 5404--5418, 2016.
 
 \end{thebibliography}
