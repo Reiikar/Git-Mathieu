@@ -84,7 +84,7 @@
 \maketitle
 
 \begin{abstract} 
-\it In this paper, we present a structural attack on quasi-cyclic SSAG-code-based McEliece cryptosystems, by showing that the knowledge of the invariant code allow us to recover the secret data. In particular, this shows that the security of such systems must rely on the security of the invariant code. We then propose a McEliece's like scheme based on quasi-cyclic Hermitian codes, and describe knowns attacks against the invariant code. We conclude by providing some parameters that resist those attacks.   
+\it In this paper, we present a structural attack on quasi-cyclic SSAG-code-based McEliece cryptosystems, by showing that the knowledge of the invariant code allow us to recover the secret data. In particular, this shows that the security of such systems must rely on the security of the invariant code. We then propose a McEliece-like scheme based on quasi-cyclic Hermitian codes, and describe known attacks against the invariant code. We conclude by providing some parameters that resist those attacks.   
 \end{abstract}
 
 \newpage
@@ -94,15 +94,15 @@
 \section{Introduction}
 
 \s
-In the area of post-quantum cryptography, public key cryptosystem using linear codes looks promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public keys (that is generating matrices of codes) is to large for practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, e.g. quasi-cyclic codes. Moreover, replacing classical Goppa codes (defined over the projective line) by their natural generalization, AG-codes on curves, can also help in providing more flexibility. 
+In the area of post-quantum cryptography, public-key cryptosystems using linear codes look promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public keys (that is generating matrices of codes) is too large for practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, e.g. quasi-cyclic codes. Moreover, replacing classical Goppa codes (defined over the projective line) by their natural generalization, AG-codes on curves, can also help in providing more flexibility. 
 
 \s
 
-However, recent works from Couvreur, Marquez-Corbella ans Pellikaan \cite{CMP} broke McELiece cryptosystems based on raw AG-codes on arbitrary genus curves. So, in the same way that classical Goppa codes can be seen as subfield subcodes of GRS codes, this leads to more specifically consider subfield subcodes of AG-codes (SSAG in short), for which there are only few propositions to date.
+However, recent works from Couvreur, Marquez-Corbella and Pellikaan \cite{CMP} broke McEliece cryptosystems based on raw AG-codes on arbitrary genus curves. So, in the same way that classical Goppa codes can be seen as subfield subcodes of GRS codes, this leads to more specifically consider subfield subcodes of AG-codes (SSAG in short), for which there are only few propositions to date.
 
 \s
 
-The present work describes a structural attack on McEliece's like scheme based on structured SSAG-codes. In fact, we show that the security of those system can be reduced to the security of the so-called invariant code, which can be constructed from the public key. Depending on the assumption of the scheme, this subcode, which was first introduced by \cite{LOI}, leaks too much informations on the secret data about the public codes which can be recovered from it. As a consequence, the parameters of the underlying scheme must be chosen carefully in order to keep a good security level.
+The present work describes a structural attack on McEliece-like scheme based on structured SSAG-codes. In fact, we show that the security of these systems can be reduced to the security of the so-called invariant code, which can be constructed from the public key. Depending on the assumption of the scheme, this subcode, which was first introduced by \cite{LOI}, leaks too much information on the secret data about the public codes, which can be recovered from it. As a consequence, the parameters of the underlying scheme must be chosen carefully in order to keep a good security level.
 
 \s
 
@@ -110,7 +110,7 @@ As a contremeasure to this atteck, we also propose a scheme based on SSAG-codes 
 
 \s
 
-In Section 2, we will give some classical notations and definitions what will be useful, both in algebraic and coding theory. Section 3 will be devoted to the invariant code. In Section 4, we detail our attack in a general framework. Section 5 gives some applications, such that Kummer or Artin-Schreier cases. Section 6 will discuss the generalization of the attack to any cover with solvable Galois group. Finally, we will propose in section 7 a scheme using QC-SSAG codes on the Hermitian curve which resists our attack, and describe knowns attacks against the invariant code and counter-measures.
+In Section 2, we will give some classical notations and definitions what will be useful, both in algebraic and coding theory. Section 3 will be devoted to the invariant code. In Section 4, we detail our attack in a general framework. Section 5 gives some applications, such that Kummer or Artin-Schreier cases. Section 6 will discuss the generalization of the attack to any cover with solvable Galois group. Finally, we will propose in Section 7 a scheme using QC-SSAG codes on the Hermitian curve which resists our attack, and describe knowns attacks against the invariant code and counter-measures.
 
 
 \s
