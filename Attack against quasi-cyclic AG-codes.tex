@@ -20,8 +20,6 @@
 %-----Theorems------%
 
 \newtheorem{thm}{Theorem}
-\theoremstyle{definition}
-\newtheorem{def1}[thm]{Definition}
 \newtheorem{prop1}[thm]{Proposition}
 \newtheorem{coro1}[thm]{Corollary}
 \newtheorem{lem1}[thm]{Lemma}
@@ -32,6 +30,8 @@
 \newtheorem{rq1}[thm]{Remark}
 \theoremstyle{definition}
 \newtheorem{expl}[thm]{Example}
+\theoremstyle{definition}
+\newtheorem{def1}[thm]{Definition}
 
 
 
@@ -147,11 +147,11 @@ The present work describes a structural attack on McEliece-like scheme based on 
 
 \s
 
-As a contremeasure to this attack, we also propose a scheme based on SSAG-codes from the Hermitian curve, and provide a set of parameters to secure the corresponding invariant code.
+As a countermeasure to this attack, we also propose a scheme based on SSAG-codes from the Hermitian curve, and provide a set of parameters to secure the corresponding invariant code.
 
 \s
 
-In Section 2, we will give some classical notations and definitions what will be useful, both in algebraic and coding theory. Section 3 will be devoted to the invariant code. In Section 4, we detail our attack in a general framework. Section 5 gives some applications, such that Kummer or Artin-Schreier cases. Section 6 will discuss the generalization of the attack to any cover with solvable Galois group. Finally, we will propose in Section 7 a scheme using QC-SSAG codes on the Hermitian curve which resists our attack, and describe known attacks against the invariant code and counter-measures.
+In Section 2, we will give some classical notations and definitions what will be useful, both in algebraic and coding theory. Section 3 will be devoted to the invariant code. In Section 4, we detail our attack in a general framework. Section 5 gives some applications, such that Kummer or Artin-Schreier cases. Section 6 will discuss the generalization of the attack to any cover with solvable Galois group. Finally, we will propose in Section 7 a scheme using QC-SSAG codes on the Hermitian curve which resists our attack, and describe known attacks against the invariant code and countermeasures.
 
 
 \s
@@ -165,21 +165,20 @@ In Section 2, we will give some classical notations and definitions what will be
 \s
 
 
-Let $\fqm$ be the finite field with $q^m$ elements, were $q=p^s$ is a power of a prime $p$ and $m \geq 1$. A function field of one variable over $\fqm$ is a field $K$ such that there exists an element $x\in K$ such that $K/\fqm(x)$ is an algebraic and separable extension. 
+Let $\fqm$ be the finite field with $q^m$ elements, were $q=p^s$ is a power of a prime $p$ and $m \geq 1$. A function field of one variable over $\fqm$ is a field $K$ with the property that there exists an element $x\in K$ such that $K/\fqm(x)$ is a finite separable extension. 
 
 In our context, an algebraic function field $K$ over $\fqm$ will always be seen as the field of rational functions of an algebraic curve $\Y$ defined over $\fqm$, that is, with classical notations, $K = \fqm(\Y)$.
 
-Denote by $\PP_K$ the set of places of $K$. Any place $P \in \PP_K$ comes with its valuation ring $O_P$ and its discrete valuation $\nu_P : K \rightarrow \Z \cup \{\infty\}$ . The degree of the place $P$, denoted $\deg(P)$ is defined as the finite integer $\deg(P) :=  [O_P/P:\fqm] < \infty$.
+Denote by $\PP_K$ the set of places of $K$. Any place $P \in \PP_K$ comes with its valuation ring $O_P$ and its discrete valuation $\nu_P : K \rightarrow \Z \cup \{\infty\}$ . The degree of the place $P$, denoted by $\deg(P)$ is defined as the  integer $\deg(P) :=  [O_P/P:\fqm] < \infty$.
 The divisor group of $K$, denoted $\Div(K)$, is the set of formal sums 
 \[A = \sum\limits_{P \in \Supp(A)} \nu_P(A) \cd P,\]
-where $\Supp(A)$ is a finite subset of $\PP_K$, called the support of $A$, whose elements are places such that $\nu_{P}(A) \neq 0$. \\ A place  $P \in \Supp(A)$ is called a zero of $A$ if $\nu_P(A) >0$ (resp. a pole of $A$ if $\nu_P(A) < 0$). For a function $z \in K$, we denote by $(z)^K$, $(z)^K_0$ and $(z)^K_{\infty}$ its principal divisor, divisor of zeros and divisor of poles respectively, that is $(z)^K = (z)^K_0 - (z)^K_{\infty}$, where 
+where $\Supp(A)$ is a finite subset of $\PP_K$, called the support of $A$, whose elements are places such that $\nu_{P}(A) \neq 0$. \\ A place  $P \in \Supp(A)$ is called a zero of $A$ if $\nu_P(A) >0$ (resp. a pole of $A$ if $\nu_P(A) < 0$). For a function $z \in K$, we denote by $(z)^K$, $(z)^K_0$ and $(z)^K_{\infty}$ its assiciated divisor, divisor of its zeros and divisor of its poles respectively, that is $(z)^K = (z)^K_0 - (z)^K_{\infty}$, where 
 \[(z)^K_0 = \sum\limits_{\nu_P(A) > 0}\nu_P(A) \cd P \quad \textrm{and}  \quad (z)^K_{\infty} = \sum\limits_{\nu_P(A) < 0}-\nu_P(A) \cd P.\]
 The degree of a divisor is naturally defined by the formula
 \[\deg(A) = \sum\limits_{P \in \Supp(A)} \nu_P(A) \cd \deg( P).\]
 \s
 We will denote $\Princ(K)$ the subgroup of $\Div(K)$ made of principal divisors and $\Div^0(K)$ the subgroup of degree zero divisors. The divisor class group of $K$ is defined by $\Cl(K):=\Div(K)/\Princ(K)$ and the group of divisor classes of degree zero by $\Cl^0(K):=\Div^0(K)/\Princ(K)$. 
-
-We then let $h(K):= \# \Cl^0(K)$ be the \emph{class number} of $K$. Then for any $r \geq 1$, the number of divisor classes in $\Cl(K)$ of degree $r$ does not depend on $r$, and is equal to $h(K)$.
+Let $h(K):= \# \Cl^0(K)$ be the \emph{class number} of $K$. Then for any $r \geq 1$, the number of divisor classes in $\Cl(K)$ of degree $r$ does not depend on $r$, and is equal to $h(K)$. The degree map is a surjective map from $\mathrm{Cl(K)} \rightarrow \Z \rightarrow \{0\}$. Finally, the Weil bound implies
 
 \s
 
@@ -190,12 +189,12 @@ Let $K$ be an algebraic function field over $\fqm$ with genus $g(K)$. Then the c
 \s
 
 Given a divisor $A \in \Div(K)$, its Riemann-Roch space is defined as the $\fq$-vector space
-\[\mathcal{L}(A) = \{z \in L \ | \ (z)^L \geq -A\} \cup \{0\},\]
-of dimension $l(A):= \dim_{\fq}(\mathcal{L}(A))$.
+\[L(A) = \{z \in K \ | \ (z)^L \geq -A\} \cup \{0\},\]
+of dimension $l(A):= \dim_{\fq}(L(A))$.
 
 \s
 
-Given a tower of $\fqm(x) \su K \su L$ of function fields over $\fqm$, let us consider a place  $P \in \PP_K$ and one of its extension $Q \in \PP_L$, denoted $Q|P$. The ramification index will as usual be denoted $e(Q|P)$. \\
+Given a tower of $\fqm(x) \su K \su L$ of function fields over $\fqm$, let us consider a place  $P \in \PP_K$ and one of its extension $Q \in \PP_L$, denoted by $Q|P$. The ramification index will as usual be denoted by $e(Q|P)$. \\
 If $L := \fqm(\Y)$ and $K:=\fqm(\X)$ are the function fields of two curves and if $\pi : \Y \rightarrow \X$ is the corresponding separable morphism, we will consider the pullback of a place $P \in \PP_K$ as the divisor
 \[\pi^{*}P = \sum\limits_{Q|P} e(Q|P) \cd Q \in \Div(L).\]
 Note that this definition generalizes to pullback of divisors by linearity. \\
@@ -225,7 +224,7 @@ As explained in the introduction, we will be dealing with SSAG-code, that is our
 \s
 
 \begin{def1} \label{defagcode}
-Let $\Y$ be a smooth projective curve over $\fqm$ with function field $L = \fqm(\Y)$, $\QR = \{Q_1,...,Q_n\}$ be a set of $n$ distinct places of degree one in $L$  and $G \in \Div(L)$ be a divisor such that $\Supp(G) \cap \QR = \emptyset$. Let us also suppose that $\deg(G)<n$. Then we define the AG-code associated to the triple $(\Y,\QR,G)$ as the $\fqm$-vector space
+Let $\Y$ be a smooth projective curve over $\fqm$ with function field $L = \fqm(\Y)$, $\QR = \{Q_1,...,Q_n\}$ be a set of $n$ distinct places of degree one in $L$  and $G \in \Div(L)$ be a divisor such that $\Supp(G) \cap \QR = \emptyset$. Suppose that $\deg(G)<n$. Then the AG-code associated to the triple $(\Y,\QR,G)$ is defined  as the $\fqm$-vector space
 \[C_L(\Y,\QR,G) = \{ (f(Q_1),...,f(Q_n)) \ | \ f \in L(G)\} \su \fqm^n.\]
 \end{def1}
 
@@ -238,7 +237,7 @@ With notation as above, we define the subfield subcode of $C_L(\Y,\QR,G)$ over $
 
 \s
 
-In particular, we will be interested in "structured" codes, that is codes with non trivial permutation group. To be concrete, consider an automorphism subgroup $\Sigma \su \Aut(L)$, and denote by $Orb_{\Sigma}(Q)$ the orbit of a place $Q \in \PP_L$ under the action of this automorphism group. If $\Sigma(\QR) = \QR$ and $\Sigma(G)=G$, then $\Sigma$ induces a permutation $\tilde{\Sigma}$ on the code $C_L(\Y,\QR,G)$. In order to satisfy this property, the support $\QR$ and the divisor $G$ will be constructed in the follwing way: $\QR$ will be a union, and $G$ a sum, of orbits under the action of $\Sigma$. With this satisfied, it is clear that they both are $\Sigma$-invariant since each orbit of places in $L$ is. Note that as a subfield subcode, the permutation $\tilde{\Sigma}$ also acts on the subfield subcode $\ssag_q(\Y,\QR,G)$ over $\fq$. \\
+In particular, we will be interested in "structured" codes, that is codes with non trivial permutation group. To be concrete, consider an automorphism subgroup $\Sigma \su \Aut(L)$, and denote by $Orb_{\Sigma}(Q)$ the orbit of a place $Q \in \PP_L$ under the action of this automorphism group. If $\Sigma(\QR) = \QR$ and $\Sigma(G)=G$, then $\Sigma$ induces a permutation $\tilde{\Sigma}$ on the code $C_L(\Y,\QR,G)$. In order to satisfy this property, the support $\QR$ and the divisor $G$ will be constructed in the follwing way: $\QR$ will be a union, and $G$ a sum, of orbits under the action of $\Sigma$. With this satisfied, it is clear that they both are $\Sigma$-invariant since each orbit of places in $L$ is. Note that as a subfield subcode, the permutation $\tilde{\Sigma}$ also acts on the subfield subcode $\ssag_q(\Y,\QR,G):= C_L(\Y,\QR,G) \cap \fq^n$.\\
 \color{purple}
 Throughout the rest of the paper, we will only consider the case where $\Sigma$ is the Galois group of some extension of function fields $L/K$. In this case, $K$ will be the function field of the quotient curve $\Y/\Sigma$. This settings will be detailed in Section~\ref{sectionfour}
 \color{black}. 
@@ -271,6 +270,7 @@ Finally, we will also need a result using duality of AG-codes.
 \begin{prop1} \label{dual}
 Let $C_L(\Y,\QR,G)$ be an $\mathrm{AG}$-code defined on a curve $\Y$. Then there exist a divisor $G' \in \Div(\Y)$ such that 
 \[C_L(\Y,\QR,G)^{\perp} = C_L(\Y,\QR,G').\]
+\color{purple} Préciser la forme de $G'$ ? \color{black}
 \end{prop1}
 
 \s
@@ -283,7 +283,7 @@ See \cite{Sti}, Proposition 2.2.10.
 
 \s
 
-\begin{def1} Given an $\ag$-code $\mathcal{C} = C_L(\Y,\QR,G)$ on a curve $\Y$ with function field $L$, that is invariant under the action of $\Sigma \su \Aut(L)$, we define its invariant code as the subcode 
+\begin{def1} Given an $\ag$-code $\mathcal{C} = C_L(\Y,\QR,G)$ on a curve $\Y$ with function field $L$, such that $\QR$ and $G$ are invariant under the action of $\Sigma \su \Aut(L)$, we define its invariant code as the subcode 
 
 \[\mathcal{C}^{\Sigma} := \{c \in \mathcal{C} \ | \ \tilde{\Sigma}(c)=c\},\]
 where $\tilde{\Sigma}$ is the permutation induced by $\Sigma$ on the code.
@@ -304,7 +304,7 @@ As a consequence, it is possible to build in polynomial time in the parameters o
 \end{rq1}
 
 
-In what follows, we will study the structure of the invariant code, which will be our main tool in the next parts. In particular, we will show that this subcode is nothing but an $\ag$-code itself, defined on the quotient curve $\Y/\Sigma$. Note that the function field of the quotient curve is precisly the fixed field $K:=L^{\Sigma}$ of $L$. Let us start with the following lemma.
+In what follows, we will study the structure of the invariant code, which will be a important result for the next parts. In particular, we will show that this subcode is nothing but an $\ag$-code itself, defined on the quotient curve $\Y/\Sigma$, whose function field is precisly the fixed field $K:=L^{\Sigma}$ of $L$. Let us start with the following lemma.
 
 \s
 
@@ -348,7 +348,7 @@ If $A \in \Div(K)$, we have
 \begin{prop1} \label{invrr}
 Let $L/K$ be as above and $\sigma \in \Aut(L)$ an automorphism. Let also $G \in \Div(L)$ be a $\sigma$-invariant divisor, that is there exists $s \in \N^*$ and places $S_1,...,S_s \in \PP_L$ such that 
 \[G = \sum\limits_{i=1}^s t_i \sum\limits_{S \in \mathrm{Orb}_{\sigma}(S_i)} S,\]
-for some $t_i \in \Z$. Then
+for some $t_i \in \Z \backslash \{0\}$. Then
 \begin{itemize}
 \item[(i)] The divisor $\tilde{G}$ associated to $G$ (see Definition~\ref{pousseavant}) is given by
 \[\tilde{G}:= \sum\limits_{i=1}^s \left\lfloor\dfrac{t_i}{e(S_i|R_i)}\right\rfloor  R_i \in \Div(K),\]
@@ -364,7 +364,7 @@ where $S_i|R_i$ for all $1 \leq i \leq s$;
 \item[(i)] By definition of the pullback of a divisor, we have
 \[\pi^*\tilde{G} = \sum\limits_{i=1}^s e(S_i|R_i) \cd \left\lfloor\dfrac{t_i}{e(S_i|R_i)}\right\rfloor \sum\limits_{S \in \mathrm{Orb}_{\sigma}(S_i)} S \leq G,\]
 which gives the result. 
-\item[(ii)] Let $g \in L(G) \su L$ be such that $g \circ \sigma = g$ (e.g $g \in L(G)^{\sigma} \su L^{\sigma}=K$). For each $i \in \{1,...,s\}$, consider a place $R_i \in \PP_{L^{\sigma}}$ be such that $S_i|R_i$. It is well known that for every $S \in \mathrm{Orb}_{\sigma}(S_i)$, one also have $S|R_i$ and $e(S|R_i)=e(S_i|R_i)$. Since $g \in L(G)$, we know by definition that
+\item[(ii)] Let $g \in L(G) \su L$ be such that $g \circ \sigma = g$ (that is $g \in L(G)^{\sigma} \su L^{\sigma}=K$). For each $i \in \{1,...,s\}$, consider a place $R_i \in \PP_{L^{\sigma}}$ be such that $S_i|R_i$. It is well known that for every $S \in \mathrm{Orb}_{\sigma}(S_i)$, one also have $S|R_i$ and $e(S|R_i)=e(S_i|R_i)$. Since $g \in L(G)$, we know by definition that
 \[(g)_L \geq -G=- \sum\limits_{i=1}^s t_i \sum\limits_{S \in \mathrm{Orb}_{\sigma}(S_i)} S\]
 Note that for every $i \in \{1,...,s\}$, we have $e(S_i|R_i) \cd \nu_{R_i}(g) = \nu_{S_i}(g)$, so we have 
 \[(g)_{L^{\sigma}} \geq - \sum\limits_{i=1}^s \dfrac{t_i}{e(S_i|R_i)}  R_i \geq - \tilde{G},\]
@@ -392,7 +392,7 @@ Straightforward consequence of Lemma~\ref{inv} and Proposition~\ref{invrr}.
 
 
 \begin{rq1} \label{rqq}
-The above theorem can be made a bit more precise, since we can make $\PR$ and $\tilde{G}$ explicit. Indeed, the divisor $\tilde{G}$ is nothing but the one introduced  Proposition~\ref{invrr} $(ii)$, and \[\PR := \\ \{P' \in \PP_{L^{\Sigma}} \ ; \ P|P'\}.\] In particular, they can be described by using the ramification in the cover of curves $\Y \longmapsto \Y/\Sigma$.
+The above theorem can be made a bit more precise, since we can make $\PR$ and $\tilde{G}$ explicit. Indeed, the divisor $\tilde{G}$ is nothing but the one introduced  Proposition~\ref{invrr} $(ii)$, and \color{purple} \[\PR := \\ \{P \in \PP_{L^{\Sigma}} \ ; \ Q|P\} = \{Q \cap L^{\Sigma} \ , Q \in \QR\} \] \color{black}In particular, they can be described by using the ramification in the cover of curves $\Y \longmapsto \Y/\Sigma$.
 \end{rq1}
 
 \s

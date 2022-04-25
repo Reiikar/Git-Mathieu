@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.6)  16 APR 2022 20:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2020.10.6)  25 APR 2022 12:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -729,7 +729,7 @@ LaTeX Font Info:    Trying to load font information for U+ifsym on input line 1
 Here is how much of TeX's memory you used:
  17515 strings out of 483065
  316606 string characters out of 5963550
- 582563 words of memory out of 5000000
+ 582566 words of memory out of 5000000
  32197 multiletter control sequences out of 15000+600000
  545285 words of font info for 76 fonts, out of 8000000 for 9000
  81 hyphenation exceptions out of 8191
@@ -756,7 +756,7 @@ lic/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmti10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 symbols/msbm10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/s
 ymbols/msbm7.pfb>
-Output written on "Attack against quasi-cyclic AG-codes.pdf" (29 pages, 371315 
+Output written on "Attack against quasi-cyclic AG-codes.pdf" (29 pages, 375650 
 bytes).
 PDF statistics:
  196 PDF objects out of 1000 (max. 8388607)
