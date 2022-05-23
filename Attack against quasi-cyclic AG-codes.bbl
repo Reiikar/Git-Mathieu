@@ -6,12 +6,6 @@ Elise Barelli.
 \newblock On the security of some compact keys for mceliece scheme.
 \newblock {\em WCC Workshop on Coding and Cryptography}, September 2017.
 
-\bibitem[Bar18]{Bar}
-Elise Barelli.
-\newblock {\em On the security of short McEliece keys from algebraic and
-  algebraic geometry codes with automorphisms}.
-\newblock PhD thesis, universite Paris-Saclay, 2018.
-
 \bibitem[BCG{\etalchar{+}}17]{CF}
 Alin Bostan, Frédéric Chyzak, Marc Giusti, Romain Lebreton, Grégoire Lecerf,
   Bruno Salvy, and Éric Schost.
@@ -71,11 +65,28 @@ Robert~J. McEliece.
 \newblock A public-key cryptosystem based on algebraic coding theory.
 \newblock {\em DSN Progress Report 44}, pages 114--116, 1978.
 
+\bibitem[Mor93]{MOR}
+Carlos Moreno.
+\newblock Algebraic curves over finite fields.
+\newblock {\em Cambridge university Press}, 1993.
+
 \bibitem[MP93]{CMRP}
 Carlos Munuera and Ruud Pellikaan.
 \newblock Equality of geometric goppa codes and equivalence of divisors.
 \newblock {\em Journal of Pure and Applied Algebra \bf{90}}, pages 229--252,
   1993.
+
+\bibitem[Pet10]{PET}
+Christiane Peters.
+\newblock Information-set decoding for linear codes over {${\mathbf F}_q$}.
+\newblock In {\em Post-Quantum Cryptography 2010}, volume 6061, pages 81--94.
+  Springer, 2010.
+
+\bibitem[Pra62]{PR62}
+Eugène Prange.
+\newblock The use of information sets in decoding cyclic codes.
+\newblock {\em IRE Transactions on Information Theory \textbf{8}}, pages 5--9,
+  1962.
 
 \bibitem[Sen00]{SSA}
 Nicolas Sendrier.

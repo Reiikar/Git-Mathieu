@@ -3,47 +3,48 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: Attack against quasi-cyclic AG-codes.aux
 The style file: alpha.bst
 Database file #1: bib.bib
-Warning--I didn't find a database entry for "FOPT"
+Warning--string name "lncs" is undefined
+--line 281 of file bib.bib
 Warning--empty journal in CAWOF
-You've used 17 entries,
+You've used 19 entries,
             2543 wiz_defined-function locations,
-            667 strings with 7035 characters,
-and the built_in function-call counts, 7882 in all, are:
-= -- 801
-> -- 334
-< -- 19
-+ -- 117
-- -- 114
-* -- 498
-:= -- 1224
-add.period$ -- 51
-call.type$ -- 17
-change.case$ -- 108
-chr.to.int$ -- 16
-cite$ -- 18
-duplicate$ -- 359
-empty$ -- 543
-format.name$ -- 135
-if$ -- 1709
+            679 strings with 7231 characters,
+and the built_in function-call counts, 8713 in all, are:
+= -- 888
+> -- 350
+< -- 24
++ -- 122
+- -- 118
+* -- 543
+:= -- 1341
+add.period$ -- 58
+call.type$ -- 19
+change.case$ -- 119
+chr.to.int$ -- 18
+cite$ -- 20
+duplicate$ -- 405
+empty$ -- 616
+format.name$ -- 143
+if$ -- 1900
 int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 19
-newline$ -- 89
-num.names$ -- 51
-pop$ -- 112
+missing$ -- 22
+newline$ -- 99
+num.names$ -- 57
+pop$ -- 124
 preamble$ -- 1
-purify$ -- 128
+purify$ -- 140
 quote$ -- 0
-skip$ -- 342
+skip$ -- 381
 stack$ -- 0
-substring$ -- 484
-swap$ -- 130
-text.length$ -- 19
-text.prefix$ -- 7
+substring$ -- 535
+swap$ -- 146
+text.length$ -- 24
+text.prefix$ -- 9
 top$ -- 0
-type$ -- 124
+type$ -- 140
 warning$ -- 1
-while$ -- 68
-width$ -- 21
-write$ -- 221
+while$ -- 77
+width$ -- 23
+write$ -- 248
 (There were 2 warnings)
