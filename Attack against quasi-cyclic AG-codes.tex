@@ -104,12 +104,12 @@
 %--------Title page-----%
 
 
-\title{Structural attack on quasi-cyclic SSAG code-based McEliece cryptosystems}
+\title{Structural attack on structured-SSAG-code-based McEliece cryptosystems}
 \author{
-Elise Barelli\footnote{}\\
-(Philippe Lebacque?)\\
-Mathieu Lhotel\footnote{Laboratoire de Mathématiques de Besançon, UMR 6623 CNRS, Université de Bourgogne Franche-Comté, France} \textsuperscript{(\Letter)}\\
-Hugues Randriam\footnote{ANSSI, Laboratoire de Cryptographie \& LTCI, Télécom Paris}
+Elise Barelli\\
+Philippe Lebacque\footnote{Laboratoire de Mathématiques de Besançon, UMR 6623 CNRS, Université de Bourgogne Franche-Comté, France}\\
+Mathieu Lhotel\footnote{Laboratoire de Mathématiques de Besançon, UMR 6623 CNRS, Université de Bourgogne Franche-Comté, France}\\
+Hugues Randriam\footnote{ANSSI, Laboratoire de Cryptographie \& LTCI équipe C2, Télécom Paris}
 }
 \date{\today}        
 
@@ -121,7 +121,10 @@ Hugues Randriam\footnote{ANSSI, Laboratoire de Cryptographie \& LTCI, Télécom 
 \maketitle
 
 \begin{abs} 
-In this paper, we study the security of special case of McEliece cryptosystems, which are based on quasi-cyclic subfield-subcode of algebraic geometry codes $(\mathrm{SSAG})$. In particular, we show that the security of the scheme reduces to the security of a subcode of the public one, named the invariant code. As this code also have the $\mathrm{SSAG}$ structure, it becomes relevant to describe known attacks against this class of codes. We finally propose a McElice-like scheme based on structured $\mathrm{SSAG}$ Hermitian codes, and provide a set of parameters that resit these attacks.
+  In this paper, we study the security of variants of McEliece's cryptosystem, which are based on structured (\textit{e.g.} quasi-cyclic) subfield-subcodes of algebraic geometry codes (SSAG codes).
+  More precisely, we show that the underlying secret structure of the public SSAG code can be recovered from that of its invariant subcode, which is also a SSAG code but with smaller parameters.
+  
+  After reviewing known attacks against this class of codes, we then finally propose a McElice-like scheme based on quasi-cyclic SSAG Hermitian codes, together with a set of parameters that seem to resist these attacks.
 \end{abs}
 
 \newpage
@@ -130,11 +133,11 @@ In this paper, we study the security of special case of McEliece cryptosystems, 
 \section{Introduction}
 
 
-In the area of post-quantum cryptography, public-key cryptosystems using linear codes look promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public keys (\textit{ie.} generator matrices of codes) is too large for practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, \textit{e.g.} quasi-cyclic codes. Moreover, replacing classical Goppa codes (defined over the projective line) by their natural generalization, AG codes on curves, can also help in providing more flexibility. 
+In the area of post-quantum cryptography, public-key cryptosystems using linear codes look promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public key (\textit{i.e.} a generator matrix of the code) is too large for most practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, \textit{e.g.} quasi-cyclic codes. Moreover, replacing classical Goppa codes, defined over the projective line, by their natural generalization, defined on curves of higher genus, can also help in providing more flexibility. 
 
 \vspace*{0.2cm}
 
-\noindent However, recent works from Couvreur, Marquez-Corbella and Pellikaan \cite{CMP} broke McEliece cryptosystems based on raw AG codes on arbitrary genus curves. So, in the same way that classical Goppa codes can be seen as subfield subcodes of GRS codes, this leads to more specifically consider subfield subcodes of AG codes ($\ssag$ in short), for which there are only few propositions to date. 
+\noindent Actually, recent works from Couvreur, Marquez-Corbella and Pellikaan \cite{CMP} broke McEliece cryptosystems based on raw AG codes on arbitrary genus curves. So, in the same way that classical Goppa codes can be seen as subfield subcodes of GRS codes, this leads to more specifically consider subfield subcodes of AG codes ($\ssag$ in short), for which there are only few propositions to date. 
 
 \vspace*{0.2cm}
 
