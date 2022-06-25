@@ -122,9 +122,9 @@ Hugues Randriam\footnote{ANSSI, Laboratoire de Cryptographie \& LTCI équipe C2,
 
 \begin{abs} 
   In this paper, we study the security of variants of McEliece's cryptosystem, which are based on structured (\textit{e.g.} quasi-cyclic) subfield-subcodes of algebraic geometry codes (SSAG codes).
-  More precisely, we show that the underlying secret structure of the public SSAG code can be recovered from that of its invariant subcode, which is also a SSAG code but with smaller parameters.
+  More precisely, we show that the underlying secret structure of the public SSAG code can be recovered from that of its invariant subcode, which is also an SSAG code but with smaller parameters.
   
-  After reviewing known attacks against this class of codes, we then finally propose a McElice-like scheme based on quasi-cyclic SSAG Hermitian codes, together with a set of parameters that seem to resist these attacks.
+  After reviewing known attacks against this class of codes, we then finally propose a McEliece-like scheme based on quasi-cyclic SSAG Hermitian codes, together with a set of parameters that seem to resist these attacks.
 \end{abs}
 
 \newpage
@@ -133,19 +133,48 @@ Hugues Randriam\footnote{ANSSI, Laboratoire de Cryptographie \& LTCI équipe C2,
 \section{Introduction}
 
 
-In the area of post-quantum cryptography, public-key cryptosystems using linear codes look promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public key (\textit{i.e.} a generator matrix of the code) is too large for most practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, \textit{e.g.} quasi-cyclic codes. Moreover, replacing classical Goppa codes, defined over the projective line, by their natural generalization, defined on curves of higher genus, can also help in providing more flexibility. 
+In the area of post-quantum cryptography, public-key cryptosystems using linear codes look promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public key, \textit{i.e.} a generator matrix of the code, is too large for most practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, \textit{e.g.} quasi-cyclic codes.
+Indeed this makes the public key more compact, since in order to specify a generating matrix of the code, it then suffices to give its first row only.
 
 \vspace*{0.2cm}
 
-\noindent Actually, recent works from Couvreur, Marquez-Corbella and Pellikaan \cite{CMP} broke McEliece cryptosystems based on raw AG codes on arbitrary genus curves. So, in the same way that classical Goppa codes can be seen as subfield subcodes of GRS codes, this leads to more specifically consider subfield subcodes of AG codes ($\ssag$ in short), for which there are only few propositions to date. 
+\noindent Moreover, replacing classical Goppa codes, defined over the projective line, by their natural generalization, defined on curves of higher genus, should also help in providing more flexibility. 
+However, recent works from Couvreur, Marquez-Corbella and Pellikaan \cite{CMP} broke McEliece cryptosystems based on raw AG codes on arbitrary genus curves. So, in the same way that classical Goppa codes can be seen as subfield subcodes of GRS codes, this leads to more specifically consider subfield subcodes of AG codes ($\ssag$ in short), for which there are only few propositions to date. 
 
 \vspace*{0.2cm}
 
-\noindent The present work describes a structural attack on McEliece-like scheme based on structured SSAG codes. In fact, we show that the security of these systems can be reduced to the security of the so-called invariant code, which can be constructed from the public key. Depending on the assumptions of the scheme, this subcode, which was first introduced by \cite{LOI}, leaks too much information on the secret data, which can be recovered from it. As a consequence, the parameters of the underlying scheme must be chosen carefully in order to keep a good security level. In our framework, we also show  that the invariant code of an SSAG also has the SSAG-structure, which is the reason why we describe known attacks against this class of codes. We finally propose a scheme based on quasi-cyclic SSAG Hermitian codes, and provide a set of parameters to secure the corresponding invariant code. 
+\noindent The present work describes a structural attack on McEliece-like schemes based on structured SSAG codes.
+The security of such a scheme relies on the fact that, given a random generator matrix of an SSAG code, it should be hard to recover the geometric data from which the code was defined, or more generally to find any geometric data giving an equivalent definition.
+However, in our setting where we have an additional structure (\textit{e.g.} quasi-cyclicity), we show that the structural recovery of the public SSAG code reduces to that of its invariant subcode.
+This invariant subcode is also an SSAG code, of which a generator matrix is easily derived from the public data, and it has smaller parameters.
+As a consequence, the parameters of the scheme must be chosen carefully in order to keep this invariant SSAG subcode immune against structural recovery attacks.
+This leads us to review known attacks of this sort, after which we can finally propose a scheme based on quasi-cyclic SSAG Hermitian codes, and provide a set of parameters that seem to secure the corresponding invariant code. 
 
 \vspace*{0.2cm}
 
-\noindent In section 2, we give some classical notations and definitions that will be useful, both in algebraic and coding theory. Section 3 is dedicated to the invariant code, where we espacially study its structure. In section 4, we detail our attack in a general framework, and some applications are given in section 5 such as Kummer or Artin-Schreier cases. We describes attacks against SSAG codes in section 6, such as the brute force search. We conclude with a proposition of scheme based on the Hermitian codes in section 7.
+\noindent Besides structural recovery attacks, it is also interesting to discuss message recovery attacks.
+Essentially the only approach for message recovery is via decoding algorithms for generic linear codes.
+All these algorithms, most of which are variants of Prange's algorithm \cite{PR62}, have exponential complexity. Moreover they do not seem to benefit from the additional quasi-cyclic structure.
+More precisely, given a received word, the additional structure provides other words with a same weight error, on which one could apply Sendrier's Decoding-One-Out-of-Many Algorithm \cite{DOOM}.
+But ultimately this only gives a negligible advantage.
+As a consequence, we see that although the structured SSAG code is equivalent to its invariant subcode from the point of view of structural recovery, then from the point of view of message recovery, it remains more secure.
+
+\vspace*{0.2cm}
+
+\noindent \textbf{Organization of the paper.}
+In section 2, we give some classical notations and definitions that will be useful, both in algebraic geometry and coding theory. Section 3 is dedicated to the invariant code, with a focus on its geometric structure. In section 4, we present our attack in a general framework, while specific instances such as the Kummer and Artin-Schreier cases are given in section 5. General attacks against SSAG codes are discussed in section 6, such as the brute force search. We conclude with the proposition of a scheme based on SSAG Hermitian codes in section 7.
+
+\vspace*{0.2cm}
+
+\noindent\textbf{Genesis of this work.}
+This work can be seen as an extension of Chapter~5 of the first author's PhD memoir \cite{Bar} and of her unpublished manuscript \cite{Bar2}.
+The general method introduced in \cite{Bar} was slightly simplified, avoiding an unnecessary appeal to the dual code in the security reduction, and it was also widely generalized, making it work with arbitrary solvable coverings of curves.
+On the other hand, the proposed scheme based on quasi-cyclic SSAG Hermitian code was left essentially unchanged.
+
+\vspace*{0.2cm}
+
+\noindent\textbf{Acknowledgements.}
+The authors benefited from the support of ANR-21-CE39-0009 Barracuda.
 
 
 \section{Notations and properties}
@@ -981,7 +1010,7 @@ y^{q_0}+y=x^{q_0+1}.
 \end{equation}
 
 
-The idea is to construct a McEliece scheme based on a SSAG code defined over $\calH$, stable under the action of some cyclic automorphism. There are two motivations to use this curve: first, it is a maximal curve,  meaning that it atteins the Hasse-Weil bound. More precisly, this curve has genus $g(\calH)= \frac{q_0(q_0-1)}{2}$ and $N(\calH)=q_0^3+1$ rational points. It allows us to consider longs codes, and thus more flexibility. Moreover, the automorphism group $\mathrm{Aut}(\mathcal{H})$ is very large and has been well-studied (see \cite{Sti} or \cite{Gar}); which gives us a large choice for our automorphism $\sigma$ (it will be important for the security of the scheme, see section~\ref{choice_of_sigma}). 
+The idea is to construct a McEliece scheme based on an SSAG code defined over $\calH$, stable under the action of some cyclic automorphism. There are two motivations to use this curve: first, it is a maximal curve,  meaning that it atteins the Hasse-Weil bound. More precisly, this curve has genus $g(\calH)= \frac{q_0(q_0-1)}{2}$ and $N(\calH)=q_0^3+1$ rational points. It allows us to consider longs codes, and thus more flexibility. Moreover, the automorphism group $\mathrm{Aut}(\mathcal{H})$ is very large and has been well-studied (see \cite{Sti} or \cite{Gar}); which gives us a large choice for our automorphism $\sigma$ (it will be important for the security of the scheme, see section~\ref{choice_of_sigma}). 
 
 \vspace*{0.2cm}
 
