@@ -48,6 +48,7 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
+\newcommand{\F}{\mathbb{F}}
 \newcommand{\PP}{\mathbb{P}}
 \newcommand{\D}{\Delta}
 \newcommand{\calA}{\mathcal{A}}
@@ -59,12 +60,12 @@
 \newcommand{\al}{\alpha}
 \newcommand{\cw}{C_{\Omega}(D,G)}
 \newcommand{\cg}{C_{\la}(D,G)}
-\newcommand{\fqm}{\mathbb{F}_{q^m}}
-\newcommand{\fqn}{\mathbb{F}_{q^n}}
-\newcommand{\fq}{\mathbb{F}_q}
-\newcommand{\fqd}{\mathbb{F}_{q^2}}
-\newcommand{\fqo}{\mathbb{F}_{q_0}}
-\newcommand{\fqr}{\mathbb{F}_{q^r}}
+\newcommand{\Fqm}{\mathbb{F}_{q^m}}
+\newcommand{\Fqn}{\mathbb{F}_{q^n}}
+\newcommand{\Fq}{\mathbb{F}_q}
+\newcommand{\Fqd}{\mathbb{F}_{q^2}}
+\newcommand{\Fqo}{\mathbb{F}_{q_0}}
+\newcommand{\Fqr}{\mathbb{F}_{q^r}}
 \newcommand{\w}{\omega}
 \newcommand{\vp}{\nu_P}
 \newcommand{\la}{\mathfrak{L}}
@@ -133,7 +134,7 @@ Hugues Randriam\footnote{ANSSI, Laboratoire de Cryptographie \& LTCI équipe C2,
 \section{Introduction}
 
 
-In the area of post-quantum cryptography, public-key cryptosystems using linear codes look promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public key, \textit{i.e.} a generator matrix of the code, is too large for most practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, \textit{e.g.} quasi-cyclic codes.
+In the area of post-quantum cryptography, public-key cryptosystems using linear codes look promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public key, \textit{i.e.} a generator matrix of the code, is too large for most practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, \textit{e.g.} quasi-cyclic codes \cite{BQ}.
 Indeed this makes the public key more compact, since in order to specify a generating matrix of the code, it then suffices to give its first row only.
 
 \vspace*{0.2cm}
@@ -180,20 +181,30 @@ The authors benefited from the support of ANR-21-CE39-0009 Barracuda.
 \section{Notations and properties}
 
 
-\subsection{Algebraic function fields}
+\subsection{Algebraic function fields and curves}
 
 
-Let $\fqm$ be the finite field with $q^m$ elements, were $q=p^s$ is a power of a prime $p$ and $m \geq 1$. A function field of one variable over $\fqm$ is a field $K$ with the property that there exists an element $x\in K$ such that $K/\fqm(x)$ is a finite separable extension. The following theorem makes the link between algebraic function fields and curves.
+Let $\F$ be a finite field. A function field (of one variable) over $\F$ is a field $K$ that is finitely generated and of transcendance degree one over $\F$.
+Our main reference for function fields will be \cite{Sti}.
+It is well known that the theory of function fields over $\F$ is equivalent to that of algebraic curves over $\F$. More precisely:
 
-\begin{thm} [\cite{MOR}, Theorem 1.1]\label{lien curve-function field}
-Let $K$ be a function field in one variable over $\fqm$, then there exist a smooth irreducible projective curve $\X$ whose function field $\fqm(\X)$ is isomorphic (as an extension of $\fqm$) to $K$. The converse is also true.
+\begin{thm}\label{lien curve-function field}
+There is an anti-equivalence of categories between smooth, irreducible, projective curves over $\F$, with non-constant morphisms of curves over $\F$, and function fields over $\F$, with field morphisms over $\F$, which to a curve $X$ associates its function field $K=\F(X)$.
 \end{thm}
 
-Throughout this paper, all our curves will be \textit{smooth, irreducible} and \textit{projective}, and we will often make the analogy with their function field. 
+\noindent Throughout this paper, the word ``curve'' will be a shorthand for ``smooth, irreducible, projective curve''. Moreover, in accordance with \cite[sec.~1.4~ff.]{Sti}, when speaking about a function field $K$ over $\F$, we will always implicitly assume that the field of constants of $K$ is reduced to $\F$. Alternatively, that means that we will always implcitly assume that our curves are \emph{geometrically irreducible}.
 
 \vspace*{0.2cm}
 
-\noindent Let $\PP_K$ be the set of places of $K$. Any place $P \in \PP_K$ comes with its valuation ring $O_P$ and its discrete valuation $\nu_P : K \rightarrow \Z \cup \{\infty\}$ . The degree of the place $P$, denoted by $\deg(P)$, is defined as the  integer $\deg(P) :=  [O_P/P:\fqm] < \infty$.
+\noindent A function field $K$ over $\F$ can always be described as $K=\F(x)[y]$ where $x$ is transcendental over $\F$ and $y$ is a primitive element for $K$ over $\F(x)$.
+There is then an (absolutely) irreducible polynomial $f$ in two variables over $\F$, unique up to multiplication by a constant, such that $f(x,y)=0$. This description might be convenient for computations.
+Observe that the zero locus $V(f)$ of $f$ in the affine plane, and also its closure in the projective plane, might be singular.
+In order to recover the (smooth) curve $X$ associated to $K$, we have to consider the normalization of the projective closure of $V(f)$.
+Occasionally we will say that $V(f)$ is a (possibly singular) \emph{plane model} of $X$.
+
+\vspace*{0.2cm}
+
+\noindent Let $\PP_K$ be the set of places of $K$. Any place $P \in \PP_K$ comes with its valuation ring $O_P$ and its discrete valuation $\nu_P : K \rightarrow \Z \cup \{\infty\}$ . The degree of the place $P$, denoted by $\deg(P)$, is defined as the  integer $\deg(P) :=  [O_P/P:\F] < \infty$.
 The divisor group of $K$, denoted $\Div(K)$, is the free abelian group on $\mathbb{P}_K$ generated by the sums
 \[A = \sum\limits_{P \in \Supp(A)} \nu_P(A) \cd P,\]
 where $\Supp(A)$ is a finite subset of $\PP_K$, called the support of $A$, whose elements are places such that $\nu_{P}(A) \in \Z \backslash \{0\}$. \\ 
@@ -205,15 +216,15 @@ We denote by $\Princ(K)$ the subgroup of $\Div(K)$ made of principal divisors an
 Let $h(K):= \# \Cl^0(K)$ be the \emph{class number} of $K$. Then for any $r \geq 1$, the number of divisor classes in $\Cl(K)$ of degree $r$ does not depend on $r$, and is equal to $h(K)$. Finally, the Weil bound implies
 
 \begin{thm}[see \cite{Tsf}, Proposition 3.1.23]\label{esti h(X)}
-Let $K$ be an algebraic function field over $\fqm$ with genus $g(K)$. Then the class number $h(K)$ satisfies
-\[ (\sqrt{q^m}-1)^{2g(K)} \leq h(K) \leq (\sqrt{q^m}+1)^{2g(K)}.\]
+Let $K$ be an algebraic function field over $\F$ with genus $g(K)$. Then the class number $h(K)$ satisfies
+\[ (\sqrt{|\F|}-1)^{2g(K)} \leq h(K) \leq (\sqrt{|\F|}+1)^{2g(K)}.\]
 \end{thm}
 
-Given a divisor $A \in \Div(K)$, its Riemann-Roch space is defined as the $\fqm$-vector space
+Given a divisor $A \in \Div(K)$, its Riemann-Roch space is defined as the $\F$-vector space
 \[\calL_K(A) = \{z \in K \ | \ (z)^L \geq -A\} \cup \{0\},\]
-of dimension $\ell(A):= \dim_{\fqm}(\calL_K(A))$. If there is no ambiguity with the function field, we just write $\calL(A)$. \\
-Given a tower $\fqm(x) \su K \su L$ of function fields over $\fqm$, let us consider a place  $P \in \PP_K$ and one of its extension $Q \in \PP_L$ (noted by $Q|P$). The ramification index is as usual denoted by $e(Q|P)$. \\
-Let $\pi : \Y \rightarrow \X$ be a separable morphism between two curves $\X$ and $\Y$ over $\fqm$, whose function fields are given by $L := \fqm(\Y)$ and $K:=\fqm(\X)$. We define the pullback of $P \in \PP_K$ as the divisor
+of dimension $\ell(A):= \dim_{\F}(\calL_K(A))$. If there is no ambiguity with the function field, we just write $\calL(A)$. \\
+Given a tower $\F(x) \su K \su L$ of function fields over $\F$, let us consider a place  $P \in \PP_K$ and one of its extension $Q \in \PP_L$ (noted by $Q|P$). The ramification index is as usual denoted by $e(Q|P)$. \\
+Let $\pi : \Y \rightarrow \X$ be a separable morphism between two curves $\X$ and $\Y$ over $\F$, whose function fields are given by $L := \F(\Y)$ and $K:=\F(\X)$. We define the pullback of $P \in \PP_K$ as the divisor
 \[\pi^{*}P = \sum\limits_{Q|P} e(Q|P) \cd Q \in \Div(L).\]
 Note that this definition extends to pullback of divisors by linearity. \\
 Throughout the paper, we will make great use of the following lemma, which shows that pullbacks preserve the notion of principal divisors.
@@ -231,16 +242,17 @@ see \cite{Sti}, Proposition 3.1.9.
 \subsection{Coding theory}
 
 
-As explained in the introduction, we will be dealing with SSAG codes, meaning that we start by defining AG codes over an extension $\fqm$ of $\fq$, where $q=p^s$ be a prime power, and $m \geq 1$ is an integer.
+As explained in the introduction, we will be dealing with SSAG codes, meaning that we start by defining AG codes over an extension $\Fqm$ of $\Fq$, where $q=p^s$ be a prime power, and $m \geq 1$ is an integer
+and then we get codes over $\Fq$ using the subfield-subcode construction.
 
 \begin{def1} \label{defagcode}
-Let $\Y$ be a smooth irreducible projective curve over $\fqm$ with function field $L = \fqm(\Y)$, $\QR = \{Q_1,...,Q_n\}$ a set of $n$ distinct places of degree one in $L$  and $G \in \Div(L)$ a divisor such that $\Supp(G) \cap \QR = \emptyset$. Suppose that $\deg(G)<n$. Then the AG code associated to the triple $(\Y,\QR,G)$ is defined by
-\[C_{\calL}(\Y,\QR,G) = \{ (f(Q_1),...,f(Q_n)) \ | \ f \in \calL(G)\} \su \fqm^n.\]
+Let $\Y$ be a smooth irreducible projective curve over $\Fqm$ with function field $L = \Fqm(\Y)$, $\QR = \{Q_1,...,Q_n\}$ a set of $n$ distinct places of degree one in $L$  and $G \in \Div(L)$ a divisor such that $\Supp(G) \cap \QR = \emptyset$. Suppose that $\deg(G)<n$. Then the AG code associated to the triple $(\Y,\QR,G)$ is defined by
+\[C_{\calL}(\Y,\QR,G) = \{ (f(Q_1),...,f(Q_n)) \ | \ f \in \calL(G)\} \su \Fqm^n.\]
 \end{def1}
 
 \begin{def1}
-With notations as above, we define the subfield subcode of $C_{\calL}(\Y,\QR,G)$ over $\fq$, denoted $\ssag_q(\Y,\QR,G)$, as follows
-\[ \ssag_q(\Y,\QR,G) = C_{\calL}(\Y,\QR,G) \cap \fq^n.\]
+With notations as above, we define the subfield subcode of $C_{\calL}(\Y,\QR,G)$ over $\Fq$, denoted $\ssag_q(\Y,\QR,G)$, as follows
+\[ \ssag_q(\Y,\QR,G) = C_{\calL}(\Y,\QR,G) \cap \Fq^n.\]
 \end{def1}
 
 In particular, we will be interested in "structured" codes, which are codes with a non trivial permutation group. To be concrete, let $\Sigma \su \Aut(L)$ be a subgroup, and denote by $\mathrm{Orb}_{\Sigma}(Q)$ the orbit of $Q \in \PP_L$ under its action. If $\Sigma(\QR) = \QR$ and $\Sigma(G)=G$, then $\Sigma$ induces a permutation $\tilde{\Sigma}$ on the code $C_{\calL}(\Y,\QR,G)$. In order to satisfy this property, the support $\QR$ and the divisor $G$ will be constructed in the follwing way: $\QR$ will be a union, and $G$ a sum, of orbits under the action of $\Sigma$. With this satisfied, it is clear that they both are $\Sigma$-invariant since each orbit of places in $L$ is. Note that as a subfield subcode, the permutation $\tilde{\Sigma}$ also acts on code $\ssag_q(\Y,\QR,G)$.\\
@@ -248,10 +260,10 @@ Throughout the rest of the paper, we will only consider the case where $\Sigma$ 
 
 
 \begin{def1}
-Let $\mathcal{C}$ be a $[n,k]$-linear code over a finite field $\fqm$. Its dual code is defined by 
-\[\mathcal{C}^{\perp} := \{ y \in \fqm^n \ | \ xy^T = 0 \ , \ \forall \ x \in \mathcal{C}\}.\]
+Let $\mathcal{C}$ be a $[n,k]$-linear code over a finite field $\Fqm$. Its dual code is defined by 
+\[\mathcal{C}^{\perp} := \{ y \in \Fqm^n \ | \ xy^T = 0 \ , \ \forall \ x \in \mathcal{C}\}.\]
 \end{def1}
-It is easy to see that any generator matrix of $\mathcal{C}^{\perp}$ is a parity check matrix of $\mathcal{C}$. In particular, $\mathcal{C}^{\perp}$ is a $[n,n-k]$-code over $\fqm$.
+It is easy to see that any generator matrix of $\mathcal{C}^{\perp}$ is a parity check matrix of $\mathcal{C}$. In particular, $\mathcal{C}^{\perp}$ is a $[n,n-k]$-code over $\Fqm$.
 
 
 \begin{prop1} \label{dual}
@@ -279,7 +291,7 @@ Note that this code has repeated entries (\textit{ie.} all its words are equal o
 Suppose $\Sigma = \langle \sigma \rangle$ is cyclic of order $\ell$, and denote by $\sigma_{\mathcal{C}}$ the $\ell$-quasi-cyclic shift restricted to $\mathcal{C}$. Let also $I_{\ell} := \{1,...,n\}\backslash \{1,\ell+1,...,n-\ell+1\}$, where $n=\operatorname{Length}(\mathcal{C})$. Then the punctered invariant code can also be defined as
 \[ \overline{\mathcal{C}}^{\Sigma} := \operatorname{Punct}_{I_{\ell}}(\mathcal{C}^{\Sigma}) = \operatorname{Punct}_{ I_{\ell}}(\ker (\sigma_{\mathcal{C}}-id)),\]
 
-\noindent where for any linear code $\mathcal{C} \su \fqm^n$, $\mathrm{Punct}_I(\mathcal{C}):= \{(c_i)_{i \in \{1,...,n\}\backslash I} \ | \ \mathbf{c} \in \mathcal{C}\}$. 
+\noindent where for any linear code $\mathcal{C} \su \Fqm^n$, $\mathrm{Punct}_I(\mathcal{C}):= \{(c_i)_{i \in \{1,...,n\}\backslash I} \ | \ \mathbf{c} \in \mathcal{C}\}$. 
 As a consequence, it is possible to build in polynomial time in the parameters of $\mathcal{C}$, a generator matrix of the invariant code from the knowledge of a generator matrix of $\mathcal{C}$ and the induced permutation. 
 \end{rq1}
 
@@ -353,7 +365,7 @@ The above theorem can be precised, since we can make $\PR$ and $\tilde{G}$ expli
 
 \begin{rq1} \label{commute}
 Let $\mathcal{C}$ be an AG code on a curve $\Y$ with function field $L$, invariant under $\Sigma \su \Aut(L)$, then
-\[(\mathcal{C}\cap \fq^n)^{\Sigma} = \{c \in \mathcal{C} \ | \ c \in \fq^n \ \textrm{and} \ \sigma(c)=c \ , \ \forall \sigma \in \Sigma\} = \mathcal{C}^{\Sigma} \cap \fq^n,\]
+\[(\mathcal{C}\cap \Fq^n)^{\Sigma} = \{c \in \mathcal{C} \ | \ c \in \Fq^n \ \textrm{and} \ \sigma(c)=c \ , \ \forall \sigma \in \Sigma\} = \mathcal{C}^{\Sigma} \cap \Fq^n,\]
 that is invariant and subfield subcode operations commute.
 \end{rq1}
 
@@ -371,10 +383,10 @@ Immediate consequence of Theorem~\ref{invstruct} and Remark~\ref{commute}.
 \section{Recovering the equation of a Galois cover} \label{sectionfour}
 
 
-Throughout all this section, we work in the finite field $\fqm$, with $m \geq 1$ and $q=p^s$ a prime power. Let us consider a Galois cover 
+Throughout all this section, we work in the finite field $\Fqm$, with $m \geq 1$ and $q=p^s$ a prime power. Let us consider a Galois cover 
 \[\pi : \Y \longrightarrow \X\]
-between smooth, irreducible and projective curves defined over $\fqm$. It corresponds to a Galois extension of function fields $K \su L$,
-where $K=\fqm(\X)$ and $L=\fqm(\Y)$. In particular, there exists a primitive element $y \in L$ such that $L=K(y)$ and
+between smooth, irreducible and projective curves defined over $\Fqm$. It corresponds to a Galois extension of function fields $K \su L$,
+where $K=\Fqm(\X)$ and $L=\Fqm(\Y)$. In particular, there exists a primitive element $y \in L$ such that $L=K(y)$ and
 \[ H(y)=0 \ , \ H \in K[T] \ \mathrm{irreducible \ polynomial.}\]
 In order to recover an equation of $\Y$, we need to find the minimal polynomial $H$ of $y$ over $K$. Denote by $\ell=[L:K]$ the degree of the extension $L/K$ (\textit{ie.} the order of its Galois group) and suppose that we are given a set of $r$ places of degree one in $K$, say $\PR = \{P_1,...,P_r\}$, that totally split in $L/K$. For any $1 \leq i \leq r$, we then have
 \[\pi^*P_i = Q_{i,1} + ... + Q_{i,\ell},\]
@@ -409,7 +421,7 @@ For this purpose, we construst a linear system of which it is solution: recall t
 Moreover, we know that a codeword $\mathbf{c} \in \mathcal{C}$ comes from evaluation of functions in the Riemann-Roch space of $G$. In particular, given $\mathbf{c} \in \C$ there exists a function $f \in \calL_L(G)$ such that  
 \[\mathbf{c} = (f(Q_{i,j}))_{i,j}.\]
 Of course, $\calL_L(G)$ is unknown since the divisor $G$ is as well. But we actually do not need the whole space $\calL_L(G)$ to recover $\mathbf{y}$. In fact, we are searching for a subspace $\mathcal{L} \su \calL_L(G)$, big enough (we will explain it later), and made of functions that specifically have the form $g \cd y$, where $g \in K$ and $y$ is such that $L=K(y)$. Once such a space is found, we have 
-\[\{\mathbf{c}= (g(Q_{i,j}) \cd y(Q_{i,j})) \ , \ 1 \leq i \leq r \ , \ 1 \leq j \leq \ell \ \textrm{and} \ g\cd y \in \mathcal{L}\} \cap \fq^n \su \mathcal{C}.\] 
+\[\{\mathbf{c}= (g(Q_{i,j}) \cd y(Q_{i,j})) \ , \ 1 \leq i \leq r \ , \ 1 \leq j \leq \ell \ \textrm{and} \ g\cd y \in \mathcal{L}\} \cap \Fq^n \su \mathcal{C}.\] 
 In particular, since $g \in K$, the numbers $g(Q_{i,j})$ are known for all $i,j$ ($g$ does not depend on $y$), the right-hand side of \eqref{two} gives a system of linear equations where everything is known exept for the $y(Q_{i,j})$. \\
 Since we know the quotient curve (\textit{ie.} its function field $K$) as well as the morphism $\pi : \Y \rightarrow \X$, we construct the space $\mathcal{L}$ as a set of pullbacks of functions in $K$. To be concrete, we are searching for a space of functions $\mathcal{F} \su K$, as big as possible, such that for all $f \in \mathcal{F}$, we have
 \begin{equation} \label{three}
@@ -444,7 +456,7 @@ In our situation, the space $\mathcal{F}$ in Lemma~\ref{constructionD} can be ex
 D := \tilde{G} - \widetilde{(y)^L_{\infty}} \in \Div(K)
 \end{equation}
 is known from now on. In particular, we can find a basis $f_1,...,f_s \in K$ of its Riemann-Roch space, meaning that $\mathcal{F}$ is given by
-\[\mathcal{F} := \calL_K(D) = \langle f_1,...,f_s \rangle_{\fqm},\]
+\[\mathcal{F} := \calL_K(D) = \langle f_1,...,f_s \rangle_{\Fqm},\]
 where $s := \dim(D)$. \\
 Now let us consider the row vectors, for every $1 \leq k \leq s$ :
 \begin{center}
@@ -488,8 +500,8 @@ $
 the above matrix. By the above discussion, $\mathbf{y}$ is in the kernel of $\mathbf{A}$, but since it is the only vector we are searching for, we have to study a bit more the vector space $\mathrm{Ker}(\mathbf{A})$. In order this space to have dimension one (meaning that $\mathbf{y}$ is the unique solution up to scalar multiplication), we would like to have as many equations as possible. In the discussion below, we study how the parameters impact the structure of $\mathrm{Ker}(\mathbf{A})$.
 If $S$ denotes the number of equations in the linear system \eqref{system}, we have 
 \[S = \#\operatorname{Rows}(\mathbf{H}) \times s,\]
-where $s := \ell( D)$. By definition, the number of rows of $\mathbf{H}$ equals $n-\dim_{\fq}(\mathcal{C})$. Using Delsarte's theorem, we have
-\[\dim_{\fq}(\mathcal{C}) \geq n-m\dim_{\fq}(C_{\mathcal{L}}(\Y,\QR,G)),\]
+where $s := \ell( D)$. By definition, the number of rows of $\mathbf{H}$ equals $n-\dim_{\Fq}(\mathcal{C})$. Using Delsarte's theorem, we have
+\[\dim_{\Fq}(\mathcal{C}) \geq n-m\dim_{\Fq}(C_{\mathcal{L}}(\Y,\QR,G)),\]
 so applying twice the Riemann-Roch theorem show that the number of equations in~\eqref{system} is closely related to the degree of $G$ (since $\deg(\tilde{G}) \leq \lfloor \frac{\deg(G)}{\ell} \rfloor$) and both genera of $L$ and $K$, provided that the code length is fixed. \\
 Nevertheless, in all our computing experiments, we noticed that thes do not impact the structure of $\mathrm{Ker}(\mathbf{A})$ and thus the solutions of \eqref{system}. The upcoming Proposition tells us that it is not really surprising: in fact, it is possible to describe other solutions independently of theses parameters.
 \color{black}
@@ -517,7 +529,7 @@ We will see in some examples later that we can explicitely decide whenever a fun
 
 \subsection{About the quotient curve}
 
-As we saw in section~\ref{sectionfour}, our method allows us to recover a defining equation of a smooth irreducible projective curve $\Y$, provided that we are given enough information about one of its quotient curves $\X$. We can wonder for which kind of curve $\X$ we can apply the attack described in section~\ref{sectionfour}: a first idea could be to take $\X$ equals to the projective line $\PP^1$ over $\fqm$.
+As we saw in section~\ref{sectionfour}, our method allows us to recover a defining equation of a smooth irreducible projective curve $\Y$, provided that we are given enough information about one of its quotient curves $\X$. We can wonder for which kind of curve $\X$ we can apply the attack described in section~\ref{sectionfour}: a first idea could be to take $\X$ equals to the projective line $\PP^1$ over $\Fqm$.
 In this situation, the AG code we are looking for is a Generalized Reed-Solomon code (GRS in short). As the dual of a GRS-code is also a GRS-code, the corresponding invariant SSAG code turns out to be an alternant code. Note that is easy to pass from the description of an SSAG code over $\PP^1$ to a description of an alternant code (see~\cite{Sti}, Chapter 2). \\
 In~\cite{FOP2}, the authors proposed a new method to break cryptographic schemes based on alternant codes, called \emph{algebraic attacks}. In particular, they show that the secret structure of these codes satisfy a system of polynomial equations (we give more explanations in section~\ref{bruteforce}). Despite the fact that the cost of solving such systems might be hard to estimate, it seems reasonable to consider a more general class of curves for the choice of $\X$ in order to protect future schemes from this attack.
 
@@ -527,57 +539,57 @@ From hypothesis $4$ (see section~\ref{sectionfour}), we would like to control th
 
 
 \begin{def1} \label{courbes a variables separees}
-Let $K$ be a function field of one variable over $\fqm$. We say it has separated variables if there exist two functions $x,\alpha$ such that $K=\fqm(x,\alpha)$, with
+Let $K$ be a function field of one variable over $\Fqm$. We say it has separated variables if there exist two functions $x,\alpha$ such that $K=\Fqm(x,\alpha)$, with
 \[F_1(\alpha) = F_2(x),\]
-where $F_1,F_2 \in \fqm[T]$ and $[K:\fqm(x)] = \deg({F_1})$.
-Naturally, we say that a smooth irreducible projective curve $\X$ over $\fqm$ has separated variables if its function field $\fqm(\X)$ has separated variables.
+where $F_1,F_2 \in \Fqm[T]$ and $[K:\Fqm(x)] = \deg({F_1})$.
+Naturally, we say that a smooth irreducible projective curve $\X$ over $\Fqm$ has separated variables if its function field $\Fqm(\X)$ has separated variables.
 \end{def1}
 
 Notice that the above definition hightly rely on the choice of $x$ and $\alpha$. The following lemma explains why these curves are interesting in our case.
 
 \begin{lem1} \label{lemdegre}
-Let $\X$ be a curve with separated variables, whose function field $K=\fqm(x,\alpha)$ is given by the equation
+Let $\X$ be a curve with separated variables, whose function field $K=\Fqm(x,\alpha)$ is given by the equation
 \[F_1(\alpha) = F_2(x),\]
-where $F_1,F_2 \in \fqm[T]$ are two univariate polynomials with coprime degrees, and denote by $\pi : \X \longrightarrow \PP^1$  the corresponding morphism of curves. If $\infty$ is the pole of $x$ in $\fqm(x)$, then it totally ramifies in $K/\fqm(x)$, and its extension $P_{\infty} \in K$ is the unique pole of $\alpha \in \PP_K$. Moreover, we have 
+where $F_1,F_2 \in \Fqm[T]$ are two univariate polynomials with coprime degrees, and denote by $\pi : \X \longrightarrow \PP^1$  the corresponding morphism of curves. If $\infty$ is the pole of $x$ in $\Fqm(x)$, then it totally ramifies in $K/\Fqm(x)$, and its extension $P_{\infty} \in K$ is the unique pole of $\alpha \in \PP_K$. Moreover, we have 
 \[(\alpha)^K_{\infty} = \deg{(F_2) \cd P_{\infty}}.\]
 \end{lem1}
 
 \begin{proof}
 Let $P_{\infty}$ be some extension of $\infty$ in $K$. Obviously, we have
-\[e(P_{\infty}|\infty) \leq \deg(F_1)=[K:\fqm(x)].\]
+\[e(P_{\infty}|\infty) \leq \deg(F_1)=[K:\Fqm(x)].\]
 On the other side, from the defining equation of $K$, we get
 \[F_1(\alpha) = F_2(x) \Rightarrow \deg(F_1) \cd \nu_{P_{\infty}}(\alpha) = e(P_{\infty}|\infty) \cd \deg(F_2) \cd \underbrace{\nu_{R_{\infty}}(x)}_{=-1}.\]
 Since $\gcd(\deg(F_1),\deg( F_2))=1$, we get $\deg(F_1)|e(P_{\infty}|\infty)$, and thus $e(P_{\infty}|\infty)=\deg(F_1)$. Moreover, we have 
 \begin{align*}
-\deg(F_1) \cd (\alpha)^K_{\infty} &= \deg(F_2) \cd \pi^*(x)^{\fq(x)}_{\infty} \\
+\deg(F_1) \cd (\alpha)^K_{\infty} &= \deg(F_2) \cd \pi^*(x)^{\Fq(x)}_{\infty} \\
 &= \deg(F_2) \cd \pi^*\infty \\
 &= \deg(F_2) \cd e(P_{\infty}|\infty) \cd P_{\infty},
 \end{align*}
 which gives the result.
 \end{proof}
 
-The main point in this type of curves is that we keep track of the place at infinity (namely $\infty$) in the corresponding extension of function fields. This will later allows us to look at the ramification of $\infty$ in the tower $\fqm(x) \su K \su L$, giving us a good way to describe the divisor $\widetilde{(y)_{\infty}^L} \in \Div(K)$.
+The main point in this type of curves is that we keep track of the place at infinity (namely $\infty$) in the corresponding extension of function fields. This will later allows us to look at the ramification of $\infty$ in the tower $\Fqm(x) \su K \su L$, giving us a good way to describe the divisor $\widetilde{(y)_{\infty}^L} \in \Div(K)$.
 
 
 \subsection{Kummer covering} \label{sectionkummer}
 
 
-Let $\X$ be a curve over $\fqm$ with separated variables (see. Definition~\ref{courbes a variables separees}), whose function field is given by $K=\fqm(x,\alpha)$, with
+Let $\X$ be a curve over $\Fqm$ with separated variables (see. Definition~\ref{courbes a variables separees}), whose function field is given by $K=\Fqm(x,\alpha)$, with
 \[F_1(\alpha) = F_2(x),\] 
-such that $F_1,F_2 \in \fqm[T]$ and $\gcd(\deg(F_1),\deg(F_2))=1$. 
+such that $F_1,F_2 \in \Fqm[T]$ and $\gcd(\deg(F_1),\deg(F_2))=1$. 
 
 Let $\ell \mid q^m-1$ be an integer (not necessarly a prime), and consider the extension $L=K(y)$, with
 \begin{equation} \label{kummer}
-y^{\ell} = f(x,\alpha) \ , \ f \in \fqm[X,T]. 
+y^{\ell} = f(x,\alpha) \ , \ f \in \Fqm[X,T]. 
 \end{equation}
 Set $d:=\deg\left((f)^L_{\infty}\right)$, and suppose also that $\gcd(d,\ell)=1$. Then $L/K$ is a Kummer extension (see~\cite{Sti} Annex A.13), cyclic of order $\ell=[L:K]$ and 
-\[\Gal(L/K) = \{ \sigma : y \mapsto \xi \cd y \ | \ \xi \in \mu^*_{\ell}(\fqm)\}.\] 
+\[\Gal(L/K) = \{ \sigma : y \mapsto \xi \cd y \ | \ \xi \in \mu^*_{\ell}(\Fqm)\}.\] 
 
 \begin{rq1} \label{pk des polynomes}
 This special case of cyclic extensions have been extensively studied and are well-known. With Artin-Schreier extensions, they caracterize in a sense all cyclic extensions (see \cite{Sti} Annex A.13). In particular, the element $f$ in \eqref{kummer} should be an element in $K$, that is potentially a rational function. Above, we supposed that $f$ is a polynomial, since we can always reduce to this case using a change of variables.
 \end{rq1}
 
-Let us explain the hypotheses given in section~\ref{sectionfour}) in this famework. Denote by $\pi : \Y \longrightarrow \X$ a morphism of algebraic curves that corresponds to a Kummer extension of function fields $L/K$. Suppose we are given an $\ssag$ code $\mathcal{C}$ on $\Y$, that is invariant under the action of $\Gal(L/K)$. This group being well-known, the corresponding action is completely determined by the choice of an $\ell^{th}$-root of unity $\xi \in \mu^*_{\ell}(\fqm)$. Our hypotheses are then the following:
+Let us explain the hypotheses given in section~\ref{sectionfour}) in this famework. Denote by $\pi : \Y \longrightarrow \X$ a morphism of algebraic curves that corresponds to a Kummer extension of function fields $L/K$. Suppose we are given an $\ssag$ code $\mathcal{C}$ on $\Y$, that is invariant under the action of $\Gal(L/K)$. This group being well-known, the corresponding action is completely determined by the choice of an $\ell^{th}$-root of unity $\xi \in \mu^*_{\ell}(\Fqm)$. Our hypotheses are then the following:
 
 \begin{enumerate}
 \item We know a parity check matrix $\mathbf{H}$ of the code $\mathcal{C} = \ssag_q(\Y,\QR,G)$;
@@ -604,7 +616,7 @@ and
 \end{prop1}
 
 \begin{proof}
-Let $\infty$ be the simple pole of $x$ in $\fqm(x)$. It is totally ramified in $K/\fqm(x)$ (see Lemma~\ref{lemdegre}), so $(x)^K = \deg(F_1) \cd P_{\infty}$. We also know the divisor of poles of $\alpha$ in $K$, so using Lemma~\ref{tirarr} yields
+Let $\infty$ be the simple pole of $x$ in $\Fqm(x)$. It is totally ramified in $K/\Fqm(x)$ (see Lemma~\ref{lemdegre}), so $(x)^K = \deg(F_1) \cd P_{\infty}$. We also know the divisor of poles of $\alpha$ in $K$, so using Lemma~\ref{tirarr} yields
 \[(x)^L_{\infty} = \pi^*(x)^K_{\infty} = \deg(F_1) \cd \pi^*P_{\infty} = \ell \cd \deg(F_1) \cd Q_{\infty},\]
 and
 \[(\alpha)^L_{\infty} = \deg(F_2) \cd \pi^*P_{\infty} = \ell \cd \deg(F_2) \cd Q_{\infty}.\]
@@ -614,7 +626,7 @@ Next, by hypothesis we have $(f)^K_{\infty} = d \cd P_{\infty}$ (recall that $P_
 \end{align*}
 \end{proof}
 
-\begin{rq1} The pole divisor of $y$ we are interested in is particularly simple here because it is only supported by one place, which is the unique extension of the point at infinity $\infty$ in the tower $\fqm(x) \su K \su L$.
+\begin{rq1} The pole divisor of $y$ we are interested in is particularly simple here because it is only supported by one place, which is the unique extension of the point at infinity $\infty$ in the tower $\Fqm(x) \su K \su L$.
 \end{rq1}
 
 Proposition~\ref{propcle} above allows us to give the precise structure of the divisor $D$ defined in \eqref{four}, section 4.
@@ -649,7 +661,7 @@ As a result, $\mathbf{h}$ is also a solution of the system~\eqref{system}, provi
 
 Since we have found other potential solutions, we need to choose the vector $\mathbf{y}$ among them. This can be done by adding other equations to the system, that are only satisfied by $\mathbf{y}$. Indeed, since the action of the automorphism group $\Sigma = \langle\sigma\rangle$ that acts on the support $\QR$ of the code $\mathcal{C}$ is given by 
 \[\sigma : y \longrightarrow \xi \cd y,\]
-with $\xi \in \mu^*_{\ell}(\fqm)$, the components of $\mathbf{y}$ satisfy a geometric progression by orbit: recall that the set $\QR$ is made of $r$ orbits of length $\ell$, and to simplify the notations, suppose its elements are ordered orbit by orbit. To be concrete, if $\PR = \{P_1,...,P_r\} \su \PP_K$, then elements of $\QR$ at indices $(i-1)\ell+1,...,i\ell$ correspond to the $\ell$ extensions of $P_{i}$ in $L$ (for every $1\leq i \leq r$). Let us now consider the following block matrices
+with $\xi \in \mu^*_{\ell}(\Fqm)$, the components of $\mathbf{y}$ satisfy a geometric progression by orbit: recall that the set $\QR$ is made of $r$ orbits of length $\ell$, and to simplify the notations, suppose its elements are ordered orbit by orbit. To be concrete, if $\PR = \{P_1,...,P_r\} \su \PP_K$, then elements of $\QR$ at indices $(i-1)\ell+1,...,i\ell$ correspond to the $\ell$ extensions of $P_{i}$ in $L$ (for every $1\leq i \leq r$). Let us now consider the following block matrices
 \begin{equation*} 
 \mathbf{A}(\xi) := 
 \begin{pmatrix}
@@ -667,7 +679,7 @@ with $\xi \in \mu^*_{\ell}(\fqm)$, the components of $\mathbf{y}$ satisfy a geom
 -1 & 0 & \cdots & \cdots & \xi
 \end{pmatrix}
 \end{equation*}
-and $\xi$ is the root of unity that defines $\sigma$, and $\mathbf{A}(\xi) \in M_{n}(\fqm)$. We have
+and $\xi$ is the root of unity that defines $\sigma$, and $\mathbf{A}(\xi) \in M_{n}(\Fqm)$. We have
 \begin{equation*}
 \mathbf{A}(\xi) \cd \textbf{y}^T
 = 0,
@@ -687,23 +699,23 @@ and thus
 
 The system \eqref{system kummer} is enough to recover $\mathbf{y}$ since the other solutions of $(5)$ do not satisfy this geometric progression structure, because it is clear by construction that the evaluation vectors $\mathbf{x}$ and $\boldsymbol{\alpha}$ are equal on each orbit of length $\ell$, since $\sigma$ only acts on $y$-coordinates.
 
-\begin{rq1} Since, $\sigma$ (and so $\xi$) is supposed to be unknown at the beginning of the attack, one may have to test all the possibilities for $\xi$ in order to find the correct one. This leads to solve at most $\#\mu^*_{\ell}(\fq) = \varphi(\ell)$ linear systems like \eqref{system kummer}, which remains feasable since $\varphi(\ell)$ is rather small.
+\begin{rq1} Since, $\sigma$ (and so $\xi$) is supposed to be unknown at the beginning of the attack, one may have to test all the possibilities for $\xi$ in order to find the correct one. This leads to solve at most $\#\mu^*_{\ell}(\Fq) = \varphi(\ell)$ linear systems like \eqref{system kummer}, which remains feasable since $\varphi(\ell)$ is rather small.
 \end{rq1}
 
 In all our computing experiences, system \eqref{system kummer} allows us to recover the desired vector \textbf{y}. To finish the attack, we only have to recover the polynomial $f$ that defines the extension $L/K$ by using a bivariate polynomial interpolation method. A detailed algorithm for this attack can be found in Annex~\ref{annexA}, as well as a complexity analysis.
 
 \subsection{Artin-Schreier covering} \label{sectionas}
 
-As in section~\ref{sectionkummer}, the quotient curve $\X$ is taken as a curve over $\fqm$ with separated variables, whose function field $K = \fq(x,\alpha)$ satisfies 
+As in section~\ref{sectionkummer}, the quotient curve $\X$ is taken as a curve over $\Fqm$ with separated variables, whose function field $K = \Fq(x,\alpha)$ satisfies 
 \[F_1(\alpha) = F_2(x),\] 
-with $F_1,F_2 \in \fqm[T]$ and $\gcd(\deg(F_1),\deg(F_2))=1$. \\ 
-Let $p:=\mathrm{char}(\fqm)$ and consider the extension $L=K(y)$ of $K$ defined by
+with $F_1,F_2 \in \Fqm[T]$ and $\gcd(\deg(F_1),\deg(F_2))=1$. \\ 
+Let $p:=\mathrm{char}(\Fqm)$ and consider the extension $L=K(y)$ of $K$ defined by
 \[y^p-y = f(x,\alpha),\]
-with $\ f \in \fqm[X,T]$. Set $d:=\deg\left((f)^L_{\infty}\right)$ and suppose $\gcd(d,p)=1$. Then the extension $L/K$ is an Artin-Schreier extension, cyclic of order $p$ and 
+with $\ f \in \Fqm[X,T]$. Set $d:=\deg\left((f)^L_{\infty}\right)$ and suppose $\gcd(d,p)=1$. Then the extension $L/K$ is an Artin-Schreier extension, cyclic of order $p$ and 
 \[\Gal(L/K) = \{ \sigma : y \mapsto y + \beta \ , \ \beta \in \{0,...,p-1\}\}.\]
 Once again, we took $f$ as a polynomial instead of a potential rational function for the same reasons as in section 5.2 (see. Remark~\ref{pk des polynomes}).
 
-In this case, the hypotheses of our procedure are the same as in section 5.2, knowing that this time the automorphism is completely determined by the choice of an element $\beta \in \mathbb{F}_p$. Here again, our goal is to recover $f \in \fqm[X,T]$. Using the defining equation of the function field $L$ and the fact that $d$ is prime to $p$, we can show that the place $Q_{\infty} \in \PP_K$ (same notations as in Lemma~\ref{ramification}) is totally ramified in $L/K$. As usual, we denote by $P_{\infty}$ its unique extension in $L$. With our choice of parameters and hypotheses, we can prove:
+In this case, the hypotheses of our procedure are the same as in section 5.2, knowing that this time the automorphism is completely determined by the choice of an element $\beta \in \mathbb{F}_p$. Here again, our goal is to recover $f \in \Fqm[X,T]$. Using the defining equation of the function field $L$ and the fact that $d$ is prime to $p$, we can show that the place $Q_{\infty} \in \PP_K$ (same notations as in Lemma~\ref{ramification}) is totally ramified in $L/K$. As usual, we denote by $P_{\infty}$ its unique extension in $L$. With our choice of parameters and hypotheses, we can prove:
 
 \begin{prop1} \label{propcle2}
 We have
@@ -783,7 +795,7 @@ The new system \eqref{a-s system} allows us to isolate \textbf{y}, since the oth
 In Sections~\ref{sectionkummer} and~\ref{sectionas}, we applied our attack in the special case of Kummer and Artin-Schreier covers. These cases are especially interesting since they are the elementary blocks of cyclic covers (see \cite{Sti}, Annex A.13 for a characterization of cyclic extensions of function fields). Our aim in this section is to generalize the attack in the case of a solvable Galois covering.
 
 \begin{rq1} \label{racinesdel'unite}
-We warn the reader about the definition of Kummer extensions. In fact, let $L/K$ be an order $\ell$ cyclic extension of function fields over $\fqm$. If $\gcd(\ell,\mathrm{char}(\fqm))=1$, then $L/K$ is a Kummer extension if and only if the primitive $\ell$-th roots of unity are in $\fqm$, which is given by the condition $\ell \mid q^m-1$. As we aim to apply several times the attack described in section \ref{sectionkummer} in our generalization, this condition needs to be satisfied at each iteration.
+We warn the reader about the definition of Kummer extensions. In fact, let $L/K$ be an order $\ell$ cyclic extension of function fields over $\Fqm$. If $\gcd(\ell,\mathrm{char}(\Fqm))=1$, then $L/K$ is a Kummer extension if and only if the primitive $\ell$-th roots of unity are in $\Fqm$, which is given by the condition $\ell \mid q^m-1$. As we aim to apply several times the attack described in section \ref{sectionkummer} in our generalization, this condition needs to be satisfied at each iteration.
 \end{rq1}
 
 Throughout all this section, we keep the same notations as in section~\ref{sectionfour}, and we add the assumption that the Galois group $\G := \mathrm{Gal}(L/K)$ is solvable,   meaning that there exist a sequence of normal subgroups 
@@ -791,7 +803,7 @@ Throughout all this section, we keep the same notations as in section~\ref{secti
  \{Id\} := \G_0 \triangleright \G_1 \triangleright \cdots \triangleright \G_s := \G, 
 \end{equation} 
 such that any quotient $\G_{i+1}/\G_i$ in~\eqref{jordan holder seq} is cyclic of degree $n_i \in \N$. 
-More precisly, let $p := \mathrm{char}(\fqm)$ and write $n_i = p^{r_i}m_i$, with $(m_i,\mathrm{char}(\fqm))=1$. According to Remark~\ref{racinesdel'unite}, we also suppose that $m_i \mid q^m-1$ for all $0\leq i\leq s-1$, meaning that $\fqm$ contains all the $m_i's$ primitive roots of unity. 
+More precisly, let $p := \mathrm{char}(\Fqm)$ and write $n_i = p^{r_i}m_i$, with $(m_i,\mathrm{char}(\Fqm))=1$. According to Remark~\ref{racinesdel'unite}, we also suppose that $m_i \mid q^m-1$ for all $0\leq i\leq s-1$, meaning that $\Fqm$ contains all the $m_i's$ primitive roots of unity. 
 
 \begin{rq1} \label{base_filed_extension}
 The above conditions on roots of unity is not mandatory since we could extend the base field. Nevertheless, considering bigger base field would increase the complexity of our algorithms, as we will see later in Annex B. For simplicity, we will stick with these assumptions for the remaining of this section, even it weakens our generalization.  
@@ -801,7 +813,7 @@ Let us denote $L_i := L^{\G_i}$ the fixed field by $\G_i$, for all $0 \leq i \le
 \begin{equation} \label{tower}
 K := L_s \su L_{s-1} \su \cdots \su L_0 := L
 \end{equation}
-such that for every $0\leq i\leq s-1$, the extension $L_i/L_{i+1}$ is cyclic, with Galois group $\G_{i+1}/\G_i$. In particular, the tower \eqref{tower} corresponds to a sequence of cyclic covers of $\fqm$-curves:
+such that for every $0\leq i\leq s-1$, the extension $L_i/L_{i+1}$ is cyclic, with Galois group $\G_{i+1}/\G_i$. In particular, the tower \eqref{tower} corresponds to a sequence of cyclic covers of $\Fqm$-curves:
 \begin{equation} \label{curve tower}
 \Y := \X_0 \longrightarrow \X_1 \longrightarrow \cdots \longrightarrow \X_s := \X.
 \end{equation}
@@ -844,7 +856,7 @@ In this section, we focus more on the coding theory point of view. In particular
 
 \vspace*{0.2cm}
 
-\noindent Keeping usual notations, consider a Galois cover $\Y \longrightarrow X$ of smooth irreductible projective curves over $\fqm$, and let us denote by 
+\noindent Keeping usual notations, consider a Galois cover $\Y \longrightarrow X$ of smooth irreductible projective curves over $\Fqm$, and let us denote by 
 \[\mathcal{C}_{\mathrm{pub}} = \ssag_q(\Y,\QR,G)\]
 the public $\ell$-quasi-cyclic SSAG code of a McEliece's scheme.
 As shown by Corollary~\ref{ssag}, the invariant subcode $\mathcal{C}_{\mathrm{inv}}$ is an SSAG code on the quotient curve $\X$, say
@@ -859,17 +871,17 @@ In the particular case where the quotient curve $\X$ is the projective line $\PP
 From Corollary~\ref{ssag}, the invariant code is given by 
 \[C_{\mathrm{inv}} := \ssag_q(\PP^1,\PR,\tilde{G}).\]
 To construct an algebric system, we start from the inclusion 
-\[C_{\calL}(\PP^1,\PR,\tilde{G})^{\perp} \su \ssag_q(\PP^1,\PR,\tilde{G})^{\perp} \otimes \fqm,\]
-that is a direct consequence of definitions (in the right-hand side, we have extended the scalars to $\fqm$ since it is the field definition of the AG code). This means that for every codeword $\mathbf{c} \in C_{\calL}(\PP^1,\PR,\tilde{G})^{\perp}$, we have 
+\[C_{\calL}(\PP^1,\PR,\tilde{G})^{\perp} \su \ssag_q(\PP^1,\PR,\tilde{G})^{\perp} \otimes \Fqm,\]
+that is a direct consequence of definitions (in the right-hand side, we have extended the scalars to $\Fqm$ since it is the field definition of the AG code). This means that for every codeword $\mathbf{c} \in C_{\calL}(\PP^1,\PR,\tilde{G})^{\perp}$, we have 
 \begin{equation} \label{eq12}
 \mathbf{c} \cd \mathbf{G}_{\mathrm{inv}}^T = 0.
 \end{equation} 
 Moreover, we know from Proposition~\ref{dual} that there exists a divisor $G' \in \Div(\PP^1)$ such that
 \[ C_{\calL}(\PP^1,\PR,\tilde{G})^{\perp} = C_{\calL}(\PP^1,\PR,G').\]
-As a consequence, the knowledge of a basis of the Riemann-Roch space $\calL_{\mathbb{P}^1}(G')$ allows us to write formally codewords in $C_{\calL}(\PP^1,\tilde{\PR},G')$, without knowing the support $\PR$. Since $\PP^1$ has a trivial divisor class group, there exists a function $h$ in the rational function field $\fqm(x) = \fqm(\PP^1)$ such that
-\[ G' = (h)^{\fqm(x)} + \deg(G') \cd \infty,\]
-where $\infty$ is the unique pole of $x$ in $\fqm(x)$. From the last equality, we get
-\[\calL_{\mathbb{P}^1}(G') = \langle h(x)x^i \ | \ 0 \leq i \leq \deg(G')\rangle_{\fqm},\]
+As a consequence, the knowledge of a basis of the Riemann-Roch space $\calL_{\mathbb{P}^1}(G')$ allows us to write formally codewords in $C_{\calL}(\PP^1,\tilde{\PR},G')$, without knowing the support $\PR$. Since $\PP^1$ has a trivial divisor class group, there exists a function $h$ in the rational function field $\Fqm(x) = \Fqm(\PP^1)$ such that
+\[ G' = (h)^{\Fqm(x)} + \deg(G') \cd \infty,\]
+where $\infty$ is the unique pole of $x$ in $\Fqm(x)$. From the last equality, we get
+\[\calL_{\mathbb{P}^1}(G') = \langle h(x)x^i \ | \ 0 \leq i \leq \deg(G')\rangle_{\Fqm},\]
 which has dimension $k:=\deg(G')+1$ (consequence of the Riemann-Roch theorem and the fact that the projective line has genus $0$). \\
 Let us write the unknown support $\PR = (P_1,\cdots,P_r)$, with $P_i := (x_i:1)$ (here we made the analogy between projective points and rational places). The goal is to recover the $x_i's$, which are the evaluations of the rational function $x$ at the places $P_i's$. For that, we denote by  
 $\mathbf{X} = (X_1,\cdots,X_r)$ and $\mathbf{Z} = (Z_1,\cdots,Z_r)$ two sets of formal variables, respectively corresponding to $x_i's$ and $h(x_i)'s$. From~\eqref{eq12}, we have
@@ -883,7 +895,7 @@ Z_rX_r^{k} & \cdots & Z_{r}X_{r}^k
 \cd \mathbf{G}_{\mathrm{inv}}^T= 0.
 \end{equation}
 
-\noindent The first row provides $k=\dim_{\fq}(\mathcal{C}_{\mathrm{inv}})$ linear equations in the variables $\mathbf{Z}$, and since $k < r$, we can eliminate some variables in the set $\mathbf{Z}$. On the other hand, the 2-transitivity of the affine group on $\fqm$ allows us to fix arbitrarily 2 unknows, say $x_1$ and $x_2$. Therefore, the above system consist in $kr$ equations in $r-2$ variables $\mathbf{X}$ and $r-k$ variables $\mathbf{Z}$. \\
+\noindent The first row provides $k=\dim_{\Fq}(\mathcal{C}_{\mathrm{inv}})$ linear equations in the variables $\mathbf{Z}$, and since $k < r$, we can eliminate some variables in the set $\mathbf{Z}$. On the other hand, the 2-transitivity of the affine group on $\Fqm$ allows us to fix arbitrarily 2 unknows, say $x_1$ and $x_2$. Therefore, the above system consist in $kr$ equations in $r-2$ variables $\mathbf{X}$ and $r-k$ variables $\mathbf{Z}$. \\
 If we are able to solve it, we recover the function $h$ (and thus the invariant divisor $\tilde{G}$) as well as the support $\PR$; \textit{ie.} the full structure of the invariant code. Since the security of the whole system rely on it, we have broke the scheme.  
 
 \begin{rq1} 
@@ -913,14 +925,14 @@ We start by discussing the third step, which is the easiest to formalize.
 
 \vspace*{0.2cm}
 
-\noindent The first consists in an exhaustive search on all subset $S \su \X(\fqm)$ of length $r$, then we recover the good permutation using the SSA algorithm (see \cite{SSA} for more details). 
+\noindent The first consists in an exhaustive search on all subset $S \su \X(\Fqm)$ of length $r$, then we recover the good permutation using the SSA algorithm (see \cite{SSA} for more details). 
 
 \vspace*{0.2cm}
 
 \noindent The second is to solve a linear system as in section~\ref{section6.1}. In order to build it, we start by recalling that there exists (from Proposition~\ref{dual}) a divisor $G' \in  \Div(\X)$ such that 
 \[ C_{\calL}(\X,\PR,\tilde{G})^{\perp} = C_{\calL}(\X,\PR,G').\]
 
-\noindent The main difference with the attack of section~\ref{section6.1} is that we do not know the curve $\X$ from our hypotheses. Nevertheless, let us suppose that the attacker found a way to recover it, meaning that it is possible to find a basis of the Riemann-Roch space $\calL_K(G') \su K:=\fqm(\X)$, \textit{ie.} we have $\calL_K(G') = \langle f_1,...,f_r \rangle_{\fqm}$, where $r = \dim(G')$. If $\PR := \{P_1,\cdots,P_r\}$, we get 
+\noindent The main difference with the attack of section~\ref{section6.1} is that we do not know the curve $\X$ from our hypotheses. Nevertheless, let us suppose that the attacker found a way to recover it, meaning that it is possible to find a basis of the Riemann-Roch space $\calL_K(G') \su K:=\Fqm(\X)$, \textit{ie.} we have $\calL_K(G') = \langle f_1,...,f_r \rangle_{\Fqm}$, where $r = \dim(G')$. If $\PR := \{P_1,\cdots,P_r\}$, we get 
 \begin{equation*}
 \forall \ 1 \leq i \leq r \ , \ (f_i(P_1),\cdots,f_i(P_r)) \cd \mathbf{G}_{\mathrm{inv}}^T = 0.
 \end{equation*}
@@ -932,7 +944,7 @@ Note however that this system is even harder to solve than~\eqref{system_over_P1
 \noindent \textbf{Enumeration of divisor classes.} We start by explaining why it is not necessary to enumerate all divisors in to find the correct one. In fact, if the support is fixed, two different divisors can produce the same code. This fact comes from the specific structure of SSAG codes, inherited from AG ones. To precise this, we introduce the notion of diagonal equivalent codes.
 
 \begin{def1} \label{diag}
-Let $\C_1$,$\C_2 \su \fqm^n$ be two linear codes. We say they are diagonal equivalent, denoted \ $\C_1 \sim_{\mathrm{diag}} \C_2$, if there exist $n$ non zero scalars $\lambda_1,...,\lambda_n$ in $\fqm$ such that 
+Let $\C_1$,$\C_2 \su \Fqm^n$ be two linear codes. We say they are diagonal equivalent, denoted \ $\C_1 \sim_{\mathrm{diag}} \C_2$, if there exist $n$ non zero scalars $\lambda_1,...,\lambda_n$ in $\Fqm$ such that 
 \[\C_1 = (\lambda_1,...,\lambda_n) \star \C_2 := \{(\lambda_1c_1,...,\lambda_nc_n) \ | \ (c_1,...,c_n) \in \C_2\}.\]
 \end{def1} 
 
@@ -956,7 +968,7 @@ Let $\X$ be a smooth irreducible projective curve of genus $g(\X)$ and $\PR$ be 
 Let us denote by $\mathrm{AG}_r(\X,\PR)$ the set of AG codes on $\X$, defined by a fixed support $\PR$ and any divisor of degree $r$. The above theorem implies
 
 \begin{coro1} \label{nbAGr}
-Let $\PR \su \X(\fqm)$ be a support of lenght $n > 2g(\X)+2$ and $r \in \N$ be such that $2g(\X)-1 < r < n-1$. Then 
+Let $\PR \su \X(\Fqm)$ be a support of lenght $n > 2g(\X)+2$ and $r \in \N$ be such that $2g(\X)-1 < r < n-1$. Then 
 \[ \#\left(\mathrm{AG}_r(\X,\PR)/ \sim_{\mathrm{diag}}\right)= h(\X),\]
 where $h(\X)$ is the number of divisor classes.
 \end{coro1}
@@ -965,7 +977,7 @@ The above estimation is sufficient if we want to perform a brute force search on
 \begin{enumerate}
 \item Perform a brute force search among divisor classes of degree $r$, \textit{ie.} choose a representative divisor $G'$ in the class.
 \item Guess a support $\PR'$ (see above) and attempt to solve the system \eqref{equiv} to check whether \\ $C_{\calL}(\X,\PR',G')$ is diagonal equivalent to the public code or not.
-\item If \eqref{equiv} has a non zero solution $(\lambda_1,...,\lambda_n) \in (\fqm^*)^n$, then we have recovered~the public code $(\lambda_1,...,\lambda_n) \star$ $C_{\calL}(\X,\PR',G')$.
+\item If \eqref{equiv} has a non zero solution $(\lambda_1,...,\lambda_n) \in (\Fqm^*)^n$, then we have recovered~the public code $(\lambda_1,...,\lambda_n) \star$ $C_{\calL}(\X,\PR',G')$.
 \end{enumerate}
 
 Both Theorem~\ref{thmequiv} and Corollary~\ref{nbAGr} provide an estimation of the cost of a brute force search amoung divisor classes in the case of AG codes. Unfortunately,  theses results do not hold with SSAG codes. In the latter case, the situation is more complicated but we can have a first estimation by using the following proposition.
@@ -975,14 +987,14 @@ With notations of Corollary~\ref{nbAGr}, if $n>2g(\X)+2$ and $2g(\X)-1<r<n$, the
 \[\#\mathrm{AG}_r(\X,\PR) = (q^m-1)^{n-1}h(\X).\]
 \end{prop1}
 
-Now let us denote by $\ssag_{q,r}(\X,\PR)$ the set of subfield subcodes over $\fq$ of AG codes on the curve $\X$, defined by the support $\PR$ and a degree $r$ divisor. Since we are taking subcodes, it is clear from the previous proposition that 
+Now let us denote by $\ssag_{q,r}(\X,\PR)$ the set of subfield subcodes over $\Fq$ of AG codes on the curve $\X$, defined by the support $\PR$ and a degree $r$ divisor. Since we are taking subcodes, it is clear from the previous proposition that 
 \[\#\ssag_{q,r}(\X,\PR) \leq \#\mathrm{AG}_r(\X,\PR) = (q^m-1)^{n-1}h(\X).\]
 
 We can decrease the previous bound thanks to the following remark.
 
 \begin{rq1}
-Let $\C_1$,$\C_2$ be two linear codes of lenght $n$ over $\fqm$, and suppose that there exist $\lambda_1,...,\lambda_n \in (\fq^*)^n$ such that $\C_1 = (\lambda_1,...,\lambda_n) \star \C_2$. Then their subfield subcodes over $\fq$ are equal, ie.
-\[\C_1 \cap \fq^n = \C_2 \cap \fq^n.\]
+Let $\C_1$,$\C_2$ be two linear codes of lenght $n$ over $\Fqm$, and suppose that there exist $\lambda_1,...,\lambda_n \in (\Fq^*)^n$ such that $\C_1 = (\lambda_1,...,\lambda_n) \star \C_2$. Then their subfield subcodes over $\Fq$ are equal, ie.
+\[\C_1 \cap \Fq^n = \C_2 \cap \Fq^n.\]
 \end{rq1}
 
 This leads to the final upper bound 
@@ -1003,8 +1015,8 @@ In the next section, we propose a McEliece scheme based on a quasi-cyclic SSAG c
 \subsection{The proposed scheme}
 
 
-We recall that $q$ is the power of a prime $p$, and that we work with the finite field $\fqm$. Since the Hermitian curve is defined over a field with square cardinality, we assume that $q^m = p^{2s}$ is a square. To avoid missunderstanding with the field $\fq$  where the subfield subcode is defined, we introduce an intermediary field $\mathbb{F}_{q_0}$ with $q_0 = p^s$ elements.   
-We define the Hermitian curve $\calH$ over the $\fqm = \mathbb{F}_{q_0^2}$ by \\ $\fqm(\calH):=\mathbb{F}_{q_0^2}(x,y)$,with 
+We recall that $q$ is the power of a prime $p$, and that we work with the finite field $\Fqm$. Since the Hermitian curve is defined over a field with square cardinality, we assume that $q^m = p^{2s}$ is a square. To avoid missunderstanding with the field $\Fq$  where the subfield subcode is defined, we introduce an intermediary field $\mathbb{F}_{q_0}$ with $q_0 = p^s$ elements.   
+We define the Hermitian curve $\calH$ over the $\Fqm = \mathbb{F}_{q_0^2}$ by \\ $\Fqm(\calH):=\mathbb{F}_{q_0^2}(x,y)$,with 
 \begin{equation} \label{hermi}
 y^{q_0}+y=x^{q_0+1}.
 \end{equation}
@@ -1052,9 +1064,9 @@ where $M_i$ is the $i$-th row of $\mathbf{M}$.
 \item[$\bullet$] \textbf{Secret key:} the support $\QR$ and the divisor $G$.
 \end{enumerate}
 
-\noindent \textbf{Encryption.} A plain text $\mathbf{m} \in \fq^k$ is encrypted by 
+\noindent \textbf{Encryption.} A plain text $\mathbf{m} \in \Fq^k$ is encrypted by 
 \[ \mathbf{y}  = \mathbf{m}\mathbf{G}_{\mathrm{pub}} + \mathbf{e} \ ,\]
-where $\mathbf{e} \in \fq^n$ is an error vector such that $\w(\mathbf{e}) \leq t$ ($\w$ being the Hamming weight). 
+where $\mathbf{e} \in \Fq^n$ is an error vector such that $\w(\mathbf{e}) \leq t$ ($\w$ being the Hamming weight). 
 
 \vspace*{0.2cm}
 
@@ -1076,7 +1088,7 @@ The main interest in using quasi-cyclic codes is that it allows us to reduce pub
 \begin{enumerate}
 \item \textbf{$\ell$ shoud be prime}. In fact, if there exists a prime $s \mid \ell$, then the power permutation $\sigma^s$ also acts on the public code. In particular, $\C_{\textrm{pub}}$ is also $s$-quasi-cyclic, and thus we can construct another invariant code, \textit{ie.} $\C_{\textrm{pub}}^{\sigma^s}$. Since this is possible for every divisor of $\ell$, we are able to construct several SSAG-subcodes of the public code. Actually, we don't know if it makes the attack easier, but it is clear that every intermediary code could provides informations about the secret support and divisor. As we want to give the least information possible, $\ell$ will be chosen as a prime.
 
-\item \textbf{$\ell$ should be such that $q$ is in $\mu_{\ell -1}^*(\fqm)$}. If this is satysfied, the polynomial $1+z+z^2++z^{\ell-1} \in \fq[z]$ is irreducible. This is motivated by the fact that there exists another intermediary code that can be constructed from the knowledge of a generator matrix and the induced permutation, namely the \textit{folded code} (see \cite{FOP}). It is defined as the image of $\C_{\textrm{pub}}$ by the map $\mathrm{id} +\sigma+...+\sigma^{\ell-1}$. Now, if the polynomial $1+z+z^2+...+z^{\ell-1}$ is reducible over $\fq$, then it is possible to construct another intermediary subcode by computing the image by the map $P(\sigma)$, where $P$ is a divisor of $1+z+z^2+...+z^{\ell-1}$. Again, we get another subcode that has a special structure related to the secrets of the scheme. We don't know if the knowledge of several folded codes simplify an attack, but it is a safer choice to make this assumption.
+\item \textbf{$\ell$ should be such that $q$ is in $\mu_{\ell -1}^*(\Fqm)$}. If this is satysfied, the polynomial $1+z+z^2++z^{\ell-1} \in \Fq[z]$ is irreducible. This is motivated by the fact that there exists another intermediary code that can be constructed from the knowledge of a generator matrix and the induced permutation, namely the \textit{folded code} (see \cite{FOP}). It is defined as the image of $\C_{\textrm{pub}}$ by the map $\mathrm{id} +\sigma+...+\sigma^{\ell-1}$. Now, if the polynomial $1+z+z^2+...+z^{\ell-1}$ is reducible over $\Fq$, then it is possible to construct another intermediary subcode by computing the image by the map $P(\sigma)$, where $P$ is a divisor of $1+z+z^2+...+z^{\ell-1}$. Again, we get another subcode that has a special structure related to the secrets of the scheme. We don't know if the knowledge of several folded codes simplify an attack, but it is a safer choice to make this assumption.
 \end{enumerate}
 
 \begin{rq1} \label{un seul subcode} 
@@ -1157,7 +1169,7 @@ As we have seen in section~\ref{bruteforce}, the complexity of the brute force a
 \subsubsection{Choice of the base field}
 
 
-To provide SSAG codes over the base field $\fq$, we have to choose an extension $\fqm$ of $\fq$ such that $q^m$ is a square. Let us discuss the choice of $q$,$m$ and $q_0$ such that $q^m=q_0^2$.
+To provide SSAG codes over the base field $\Fq$, we have to choose an extension $\Fqm$ of $\Fq$ such that $q^m$ is a square. Let us discuss the choice of $q$,$m$ and $q_0$ such that $q^m=q_0^2$.
 
 \begin{enumerate}
 \item[$\bullet$] $m$ should not be too large since it has a negative influence on the dimension of the code. In fact, for a fixed lenght $n$ and divisor $G$, the dimension of the SSAG code is lower bounded by $n-m(n-\dim(G))$ (consequence of Delsarte's theorem). As a result, if $m$ is too big, the rate (\textit{ie.} $k/n$) of the code might be too low, which is not desired in practice.
@@ -1174,8 +1186,8 @@ so $q_0$ should not be too large as well.
 Let us fix the notations used in the following tables:
 
 \begin{enumerate}
-\item[$\bullet$] $q$ is the power of a prime such that the SSAG code is defined over $\fq$.
-\item[$\bullet$] $m$ is the extension degree such that the underlying AG code is defined over $\fqm$.
+\item[$\bullet$] $q$ is the power of a prime such that the SSAG code is defined over $\Fq$.
+\item[$\bullet$] $m$ is the extension degree such that the underlying AG code is defined over $\Fqm$.
 \item[$\bullet$] $q_0$ is a prime power such that $q_0^2=q^m$.
 \item[$\bullet$] $n$ and $k$ are respectively the length and the dimension of the public code.
 \item[$\bullet$] $\ell$ is the quasi-cyclicity order (\textit{ie.} the order of the automorphism $\sigma$).  
@@ -1206,7 +1218,7 @@ m & q & q_0 & n & k & \ell & \mathrm{Key} \ \mathrm{sizes} \ (\mathrm{bytes}) & 
 \caption{Suggested parameters for security 128, $m > 2$}
 \end{table}
 
-For some parameters with $m=2$ in the table below, we have $h(\calH/\langle \sigma \rangle) < 2^{128}$, in which case we precise the number $\#\ssag_{q,r}(\calH/\langle \sigma \rangle,\PR)$ of SSAG codes over $\fq$ with same support $\PR$ and a degree $r$ divisor.
+For some parameters with $m=2$ in the table below, we have $h(\calH/\langle \sigma \rangle) < 2^{128}$, in which case we precise the number $\#\ssag_{q,r}(\calH/\langle \sigma \rangle,\PR)$ of SSAG codes over $\Fq$ with same support $\PR$ and a degree $r$ divisor.
 
 \begin{table}[htbp]
 \begin{equation*}
@@ -1246,9 +1258,9 @@ In this section, we present a formal algorithm that describes the attack propose
 \end{pmatrix}
 \cd \textbf{y}^T = 0,
 \end{equation}
-which consist in $s(n-k)+n$ equations and $n$ unknows, where $s=\dim(D)$ (see section 4 for the definition of the divisor $D$), $n$ and $k$ are respectively the lenght and dimension of the public SSAG code and $\xi \in \mu_{\ell}^*(\fqm)$. Suppose the function field $\fqm(x,y)$ of our Kummer curve is defined by
+which consist in $s(n-k)+n$ equations and $n$ unknows, where $s=\dim(D)$ (see section 4 for the definition of the divisor $D$), $n$ and $k$ are respectively the lenght and dimension of the public SSAG code and $\xi \in \mu_{\ell}^*(\Fqm)$. Suppose the function field $\Fqm(x,y)$ of our Kummer curve is defined by
 \[y^{\ell} = f(x),\]
-with $f \in \fqm[T]$ and $d:=\deg(f)$ (note that $d$ is both the degree of the pole divisor of $f$ and its degree as a polynomial). In this framework, we describe in Algorithm 1 the attack of section~\ref{sectionkummer} to recover the polynomial $f$, as well as the secret structure of the public SSAG code.
+with $f \in \Fqm[T]$ and $d:=\deg(f)$ (note that $d$ is both the degree of the pole divisor of $f$ and its degree as a polynomial). In this framework, we describe in Algorithm 1 the attack of section~\ref{sectionkummer} to recover the polynomial $f$, as well as the secret structure of the public SSAG code.
 
 \begin{algorithm} \label{algo1}
 \SetAlgoVlined
@@ -1276,14 +1288,14 @@ $G \longleftarrow \pi^*(\tilde{G})$ \\
 }
 \end{algorithm}
 
-\begin{prop1} Let $n,k$ be the lenght and the dimension of the public $\ssag$-code respectively. Let $r := n/\ell$ be the number of orbits in $\PR$. If $r \geq d+1$, then Algorithm 1 finds an equation of the cover, as well as the secret structure of the public $\ssag$-code in $\calO(\varphi(\ell)(n^{\w}+n^{\w-1}s(n-k))$ operations over $\fqm$. 
+\begin{prop1} Let $n,k$ be the lenght and the dimension of the public $\ssag$-code respectively. Let $r := n/\ell$ be the number of orbits in $\PR$. If $r \geq d+1$, then Algorithm 1 finds an equation of the cover, as well as the secret structure of the public $\ssag$-code in $\calO(\varphi(\ell)(n^{\w}+n^{\w-1}s(n-k))$ operations over $\Fqm$. 
 \end{prop1}
 
 \begin{proof} see \cite{CF} for details about complexity analysis. \\
-The complexity of solving a linear system with $k$ equations and $n$ unknowns is in $\calO(n^{\w-1}k)$ operations over the base field, where $\w$ is the exponent of linear algebra. As a result, the cost of line 9 is $\calO(n^{\w}+n^{\w-1}s(n-k))$ operations over $\fqm$ (operations need to be done in $\fqm$ and not $\fq$ since the roots of unity might be in $\fqm \backslash \fq$). Since we have to seek for the correct root of unity $\xi$, this step might be repeated at most $\varphi(\ell)$-times, where $\varphi$ is the Euler totient function. Next, we have to realize one Lagrange's interpolation at line 13 in order to recover a defining equation of the Kummer cover. Let $d:=\deg(f)$ and note that at this step of the algorithm, we have recovered all the points in $\PR$, and thus if the number $r$ of orbits in $\PR$ is larger that $d+1$, Lagrange's interpolation finds a unique polynomial $f$ of degree $d$ such that a plane model of the cover is given by $y^{\ell}=f(x)$ in $\calO(d^2)$ operations over $\fqm$. Note that this step is negligible compared to the cost of line 9. Finally, the last step we have to care about is at line 15. In fact, at this stage of the algorithm, the whole cover is known and it remains to compute the pullback of the invariant divisor. As for the support, we need to recover the $y$-coordinates of points in $\Supp(G)$. This can be done by finding roots of several polynomials: indeed, from Kummer's theorem (see \cite{Sti}, Theore 3.3.7), if $x(Q)$ denotes the $x$-coordinate of a point $P \in \Supp(\tilde{G})$, then the $y$-coordinates of the extensions of $P$ in $\Supp(G)$ are exactly the roots of the polynomial $T^{\ell}-f(x(Q)) \in \fqm[T]$. This step can be done by factorizing each polynomial using Berlekamp algorithm, whose cost is $\calO(\ell^{\w}+q^m\ell^{2})$ operations over $\fqm$. In any practical cases, the lenght of the public code is larger that the cardinality of the base field (\textit{ie.} $n > q^m$) and thus this step is also negligible. As a result, the total cost of Algorithm 1 is in $\calO(\varphi(\ell)(n^{\w}+n^{\w-1}s(n-k))$ over $\fqm$.
+The complexity of solving a linear system with $k$ equations and $n$ unknowns is in $\calO(n^{\w-1}k)$ operations over the base field, where $\w$ is the exponent of linear algebra. As a result, the cost of line 9 is $\calO(n^{\w}+n^{\w-1}s(n-k))$ operations over $\Fqm$ (operations need to be done in $\Fqm$ and not $\Fq$ since the roots of unity might be in $\Fqm \backslash \Fq$). Since we have to seek for the correct root of unity $\xi$, this step might be repeated at most $\varphi(\ell)$-times, where $\varphi$ is the Euler totient function. Next, we have to realize one Lagrange's interpolation at line 13 in order to recover a defining equation of the Kummer cover. Let $d:=\deg(f)$ and note that at this step of the algorithm, we have recovered all the points in $\PR$, and thus if the number $r$ of orbits in $\PR$ is larger that $d+1$, Lagrange's interpolation finds a unique polynomial $f$ of degree $d$ such that a plane model of the cover is given by $y^{\ell}=f(x)$ in $\calO(d^2)$ operations over $\Fqm$. Note that this step is negligible compared to the cost of line 9. Finally, the last step we have to care about is at line 15. In fact, at this stage of the algorithm, the whole cover is known and it remains to compute the pullback of the invariant divisor. As for the support, we need to recover the $y$-coordinates of points in $\Supp(G)$. This can be done by finding roots of several polynomials: indeed, from Kummer's theorem (see \cite{Sti}, Theore 3.3.7), if $x(Q)$ denotes the $x$-coordinate of a point $P \in \Supp(\tilde{G})$, then the $y$-coordinates of the extensions of $P$ in $\Supp(G)$ are exactly the roots of the polynomial $T^{\ell}-f(x(Q)) \in \Fqm[T]$. This step can be done by factorizing each polynomial using Berlekamp algorithm, whose cost is $\calO(\ell^{\w}+q^m\ell^{2})$ operations over $\Fqm$. In any practical cases, the lenght of the public code is larger that the cardinality of the base field (\textit{ie.} $n > q^m$) and thus this step is also negligible. As a result, the total cost of Algorithm 1 is in $\calO(\varphi(\ell)(n^{\w}+n^{\w-1}s(n-k))$ over $\Fqm$.
 \end{proof}
 
-Note that Algorithm 1 can also be used in the case of an Artin-Schreier cover of $\PP^1$, by only changing a few lines. In fact, in the latter setup, we have to solve at most $p = \#(\mathbb{F}_p)$ linear system of the form~\eqref{a-s system}, whose total cost is in $\calO(p(n^{\w}+n^{\w-1}s(n-k))$ operations over $\fqm$.
+Note that Algorithm 1 can also be used in the case of an Artin-Schreier cover of $\PP^1$, by only changing a few lines. In fact, in the latter setup, we have to solve at most $p = \#(\mathbb{F}_p)$ linear system of the form~\eqref{a-s system}, whose total cost is in $\calO(p(n^{\w}+n^{\w-1}s(n-k))$ operations over $\Fqm$.
 
 \begin{rq1}
 In Algorithm 1, we describe our attack in the special case were the quotient curve is the projective line $\PP^1$, as it is easier to produce a complexity analysis. However, it can be generalized to any Kummer or Artin-Schreier cover, the only difference being the interpolation step at the end. In fact, in the more general case, the polynomial we have to recover is bivariate, thus the interpolation step might be harder. More precisly, we can use a bivariate Lagrange's interpolation that requires more evaluation points, \textit{ie.} at least $\binom{d^*+2}{d^*}$ of them, where $d^*$ is the degree of $f$ as a bivariate polynomial. Another point that could be problematic is that the corresponding system might have more than one solution.
@@ -1291,7 +1303,7 @@ This is the main counterpart of considering polynomials instead of rational func
 \end{rq1}
 
 \begin{rq1}
-In section~\ref{solvable}, we generalized our attack in the case of a solvable Galois covering, by applying several times the Kummer or Artin-Schreier case. The total cost of the attack in this context corresponds to the number of iterations we have to use Algorithm 1. In particular, if our solvable Galois group has order $p^s\lambda$, with $p=\mathrm{char}(\fqm)$ and $(p,\lambda)=1$, the attack consists in $s+1$-iterations of Algorithm 1. Do not forget that this is possible if and only if the conditions on primitives roots of unity is satisfied. If not, it is possible to extend the base field, say $\mathbb{F}_{q^m} \supseteq \fqm$. Doing so, so complexity of the algorithm is increased since we now have to compte in a bigger field.
+In section~\ref{solvable}, we generalized our attack in the case of a solvable Galois covering, by applying several times the Kummer or Artin-Schreier case. The total cost of the attack in this context corresponds to the number of iterations we have to use Algorithm 1. In particular, if our solvable Galois group has order $p^s\lambda$, with $p=\mathrm{char}(\Fqm)$ and $(p,\lambda)=1$, the attack consists in $s+1$-iterations of Algorithm 1. Do not forget that this is possible if and only if the conditions on primitives roots of unity is satisfied. If not, it is possible to extend the base field, say $\mathbb{F}_{q^m} \supseteq \Fqm$. Doing so, so complexity of the algorithm is increased since we now have to compte in a bigger field.
 \end{rq1}
 
 \newpage
@@ -1312,7 +1324,7 @@ $\C = \mathrm{SSAG}_q(\X,\PR,G)$.}
 $S \leftarrow \{P \in \X ~|~ \mathrm{deg}(P)=1\}$ \eolcomment{The order of $S$ is fixed}\\
 \For{$[G] \in \Cl^r(\X)$}{
     $\C' \leftarrow  \mathrm{SSAG}_q(\X,S,G) $ \eolcomment{$G$ will be a representative of $[G]$}\\
-    \For{$[\mathbf{w}] \in \fqm^n/\mathbb{F}_q^n$ }{\inlcomment{$\mathbf{w}$ will be a representative of $[\mathbf{w}]$}\\
+    \For{$[\mathbf{w}] \in \Fqm^n/\mathbb{F}_q^n$ }{\inlcomment{$\mathbf{w}$ will be a representative of $[\mathbf{w}]$}\\
         \For{$\mathcal{I} \subseteq \{1,\dots,N(\X)-1\} \ \mathrm{with} \ |\mathcal{I}| = n$}{
             $\C_{\mathcal{I}}' \leftarrow \text{Punct}_{\mathcal{I}}(\C')$\\
             $\pi \leftarrow$ SSA($\mathbf{w} \star \C_{\mathcal{I}}',\C$) \eolcomment{SSA return a permutation $\pi$ or `?'}\\
@@ -1327,10 +1339,10 @@ $S \leftarrow \{P \in \X ~|~ \mathrm{deg}(P)=1\}$ \eolcomment{The order of $S$ i
 \end{algorithm}
 
 As it is complicated to provide a complexity analysis for the support recovering, we can at least say that the complexity of Algorithm 2 is at least the cost of the exhaustive search on $G$ and $\mathbf{w}$. For our proposal on the Hermitian curve and using  \eqref{nb of sssag}, the algorithm requires at least
-\[ ((q^m-1)^{n-1}-(q-1)^{n-1})h(\mathcal{H}/\langle \sigma \rangle) \ \mathrm{operations  \ over} \ \fq.\]
+\[ ((q^m-1)^{n-1}-(q-1)^{n-1})h(\mathcal{H}/\langle \sigma \rangle) \ \mathrm{operations  \ over} \ \Fq.\]
 By Theorem~\ref{esti h(X)}, we know that 
 \[(\sqrt{q^m}-1)^{2g(\mathcal{H}/\langle \sigma \rangle)} \leq h(\mathcal{H}/\langle \sigma \rangle) \leq (\sqrt{q^m}-1)^{2g(\mathcal{H}/\langle \sigma \rangle)},\] 
-which leads to $h(\mathcal{H}/\langle \sigma \rangle) \in \mathcal{O}(q^{mg(\mathcal{H}/\langle \sigma \rangle)})$. As a result, the cost of the enumeration of divisors $G$ in $\Cl^r(\mathcal{H}/\langle \sigma \rangle)$ and vectors in $\fqm/\fq$ is in $\mathcal{O}(q^{m(n-1)+mg(\mathcal{H}/\langle \sigma \rangle)})$ operations over $\fq$. \\
+which leads to $h(\mathcal{H}/\langle \sigma \rangle) \in \mathcal{O}(q^{mg(\mathcal{H}/\langle \sigma \rangle)})$. As a result, the cost of the enumeration of divisors $G$ in $\Cl^r(\mathcal{H}/\langle \sigma \rangle)$ and vectors in $\Fqm/\Fq$ is in $\mathcal{O}(q^{m(n-1)+mg(\mathcal{H}/\langle \sigma \rangle)})$ operations over $\Fq$. \\
 \noindent Finally, Proposition~\ref{genus} and Corollary~\ref{lastcorollary} allow us to choose the paramerters (see section~\ref{some parameters}) in order $h(\calH/\langle \sigma \rangle)$ to be high enough to block the brute force attack.
 
 
