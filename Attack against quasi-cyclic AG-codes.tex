@@ -1,5 +1,6 @@
 \documentclass[10pt]{article}
 
+\usepackage{parskip}
 \usepackage{amsmath}
 \usepackage{verbatim}
 \usepackage{amsthm}
@@ -137,44 +138,43 @@ Hugues Randriam\footnote{ANSSI, Laboratoire de Cryptographie \& LTCI équipe C2,
 In the area of post-quantum cryptography, public-key cryptosystems using linear codes look promising. The first such system, based on binary classical Goppa codes, was introduced by McEliece in 1978 \cite{McE}. Its main drawback is that the size of the corresponding public key, \textit{i.e.} a generator matrix of the code, is too large for most practical use cases. Many propositions were made in order to correct this, mostly by considering codes with additional structure, \textit{e.g.} quasi-cyclic codes \cite{BQ}.
 Indeed this makes the public key more compact, since in order to specify a generating matrix of the code, it then suffices to give its first row only.
 
-\vspace*{0.2cm}
-
-\noindent Moreover, replacing classical Goppa codes, defined over the projective line, by their natural generalization, defined on curves of higher genus, should also help in providing more flexibility. 
+Moreover, replacing classical Goppa codes, defined over the projective line, by their natural generalization, defined on curves of higher genus, should also help in providing more flexibility. 
 However, recent works from Couvreur, Marquez-Corbella and Pellikaan \cite{CMP} broke McEliece cryptosystems based on raw AG codes on arbitrary genus curves. So, in the same way that classical Goppa codes can be seen as subfield subcodes of GRS codes, this leads to more specifically consider subfield subcodes of AG codes ($\ssag$ in short), for which there are only few propositions to date. 
 
-\vspace*{0.2cm}
 
-\noindent The present work describes a structural attack on McEliece-like schemes based on structured SSAG codes.
-The security of such a scheme relies on the fact that, given a random generator matrix of an SSAG code, it should be hard to recover the geometric data from which the code was defined, or more generally to find any geometric data giving an equivalent definition.
+
+ The present work describes a structural attack on McEliece-like schemes based on structured SSAG codes.
+The security of such a scheme relies on the fact that, given a random generator matrix of an SSAG code, one should not be able to decode it more efficiently than a generic linear code.
+In particular, it should be difficult to recover the geometric data from which the code was defined, or more generally, to find any geometric data giving an equivalent definition (for this would provide an efficient decoding algorithm).
 However, in our setting where we have an additional structure (\textit{e.g.} quasi-cyclicity), we show that the structural recovery of the public SSAG code reduces to that of its invariant subcode.
 This invariant subcode is also an SSAG code, of which a generator matrix is easily derived from the public data, and it has smaller parameters.
 As a consequence, the parameters of the scheme must be chosen carefully in order to keep this invariant SSAG subcode immune against structural recovery attacks.
 This leads us to review known attacks of this sort, after which we can finally propose a scheme based on quasi-cyclic SSAG Hermitian codes, and provide a set of parameters that seem to secure the corresponding invariant code. 
 
-\vspace*{0.2cm}
 
-\noindent Besides structural recovery attacks, it is also interesting to discuss message recovery attacks.
+
+ Beside structural recovery attacks, it is also interesting to discuss message recovery attacks.
 Essentially the only approach for message recovery is via decoding algorithms for generic linear codes.
 All these algorithms, most of which are variants of Prange's algorithm \cite{PR62}, have exponential complexity. Moreover they do not seem to benefit from the additional quasi-cyclic structure.
 More precisely, given a received word, the additional structure provides other words with a same weight error, on which one could apply Sendrier's Decoding-One-Out-of-Many Algorithm \cite{DOOM}.
 But ultimately this only gives a negligible advantage.
 As a consequence, we see that although the structured SSAG code is equivalent to its invariant subcode from the point of view of structural recovery, then from the point of view of message recovery, it remains more secure.
 
-\vspace*{0.2cm}
 
-\noindent \textbf{Organization of the paper.}
+
+ \textbf{Organization of the paper.}
 In section 2, we give some classical notations and definitions that will be useful, both in algebraic geometry and coding theory. Section 3 is dedicated to the invariant code, with a focus on its geometric structure. In section 4, we present our attack in a general framework, while specific instances such as the Kummer and Artin-Schreier cases are given in section 5. General attacks against SSAG codes are discussed in section 6, such as the brute force search. We conclude with the proposition of a scheme based on SSAG Hermitian codes in section 7.
 
-\vspace*{0.2cm}
 
-\noindent\textbf{Genesis of this work.}
+
+\textbf{Genesis of this work.}
 This work can be seen as an extension of Chapter~5 of the first author's PhD memoir \cite{Bar} and of her unpublished manuscript \cite{Bar2}.
 The general method introduced in \cite{Bar} was slightly simplified, avoiding an unnecessary appeal to the dual code in the security reduction, and it was also widely generalized, making it work with arbitrary solvable coverings of curves.
 On the other hand, the proposed scheme based on quasi-cyclic SSAG Hermitian code was left essentially unchanged.
 
-\vspace*{0.2cm}
 
-\noindent\textbf{Acknowledgements.}
+
+\textbf{Acknowledgements.}
 The authors benefited from the support of ANR-21-CE39-0009 Barracuda.
 
 
@@ -192,19 +192,19 @@ It is well known that the theory of function fields over $\F$ is equivalent to t
 There is an anti-equivalence of categories between smooth, irreducible, projective curves over $\F$, with non-constant morphisms of curves over $\F$, and function fields over $\F$, with field morphisms over $\F$, which to a curve $X$ associates its function field $K=\F(X)$.
 \end{thm}
 
-\noindent Throughout this paper, the word ``curve'' will be a shorthand for ``smooth, irreducible, projective curve''. Moreover, in accordance with \cite[sec.~1.4~ff.]{Sti}, when speaking about a function field $K$ over $\F$, we will always implicitly assume that the field of constants of $K$ is reduced to $\F$. Alternatively, that means that we will always implcitly assume that our curves are \emph{geometrically irreducible}.
+ Throughout this paper, the word ``curve'' will be a shorthand for ``smooth, irreducible, projective curve''. Moreover, in accordance with \cite[sec.~1.4~ff.]{Sti}, when speaking about a function field $K$ over $\F$, we will always implicitly assume that the field of constants of $K$ is reduced to $\F$. Alternatively, that means that we will always implcitly assume that our curves are \emph{geometrically irreducible}.
 
-\vspace*{0.2cm}
 
-\noindent A function field $K$ over $\F$ can always be described as $K=\F(x)[y]$ where $x$ is transcendental over $\F$ and $y$ is a primitive element for $K$ over $\F(x)$.
+
+ A function field $K$ over $\F$ can always be described as $K=\F(x)[y]$ where $x$ is transcendental over $\F$ and $y$ is a primitive element for $K$ over $\F(x)$.
 There is then an (absolutely) irreducible polynomial $f$ in two variables over $\F$, unique up to multiplication by a constant, such that $f(x,y)=0$. This description might be convenient for computations.
 Observe that the zero locus $V(f)$ of $f$ in the affine plane, and also its closure in the projective plane, might be singular.
 In order to recover the (smooth) curve $X$ associated to $K$, we have to consider the normalization of the projective closure of $V(f)$.
 Occasionally we will say that $V(f)$ is a (possibly singular) \emph{plane model} of $X$.
 
-\vspace*{0.2cm}
 
-\noindent Let $\PP_K$ be the set of places of $K$. Any place $P \in \PP_K$ comes with its valuation ring $O_P$ and its discrete valuation $\nu_P : K \rightarrow \Z \cup \{\infty\}$ . The degree of the place $P$, denoted by $\deg(P)$, is defined as the  integer $\deg(P) :=  [O_P/P:\F] < \infty$.
+
+ Let $\PP_K$ be the set of places of $K$. Any place $P \in \PP_K$ comes with its valuation ring $O_P$ and its discrete valuation $\nu_P : K \rightarrow \Z \cup \{\infty\}$ . The degree of the place $P$, denoted by $\deg(P)$, is defined as the  integer $\deg(P) :=  [O_P/P:\F] < \infty$.
 The divisor group of $K$, denoted $\Div(K)$, is the free abelian group on $\mathbb{P}_K$ generated by the sums
 \[A = \sum\limits_{P \in \Supp(A)} \nu_P(A) \cd P,\]
 where $\Supp(A)$ is a finite subset of $\PP_K$, called the support of $A$, whose elements are places such that $\nu_{P}(A) \in \Z \backslash \{0\}$. \\ 
@@ -223,9 +223,9 @@ Let $K$ be an algebraic function field over $\F$ with genus $g(K)$. Then the cla
 Given a divisor $A \in \Div(K)$, its Riemann-Roch space is defined as the $\F$-vector space
 \[\calL_K(A) = \{z \in K \ | \ (z)^L \geq -A\} \cup \{0\},\]
 of dimension $\ell(A):= \dim_{\F}(\calL_K(A))$. If there is no ambiguity with the function field, we just write $\calL(A)$. \\
-Given a tower $\F(x) \su K \su L$ of function fields over $\F$, let us consider a place  $P \in \PP_K$ and one of its extension $Q \in \PP_L$ (noted by $Q|P$). The ramification index is as usual denoted by $e(Q|P)$. \\
 Let $\pi : \Y \rightarrow \X$ be a separable morphism between two curves $\X$ and $\Y$ over $\F$, whose function fields are given by $L := \F(\Y)$ and $K:=\F(\X)$. We define the pullback of $P \in \PP_K$ as the divisor
-\[\pi^{*}P = \sum\limits_{Q|P} e(Q|P) \cd Q \in \Div(L).\]
+\[\pi^{*}P = \sum\limits_{Q|P} e(Q|P) \cd Q \in \Div(L)\]
+where $e(Q|P)$ denotes the ramification index as usual.
 Note that this definition extends to pullback of divisors by linearity. \\
 Throughout the paper, we will make great use of the following lemma, which shows that pullbacks preserve the notion of principal divisors.
 
@@ -291,7 +291,7 @@ Note that this code has repeated entries (\textit{ie.} all its words are equal o
 Suppose $\Sigma = \langle \sigma \rangle$ is cyclic of order $\ell$, and denote by $\sigma_{\mathcal{C}}$ the $\ell$-quasi-cyclic shift restricted to $\mathcal{C}$. Let also $I_{\ell} := \{1,...,n\}\backslash \{1,\ell+1,...,n-\ell+1\}$, where $n=\operatorname{Length}(\mathcal{C})$. Then the punctered invariant code can also be defined as
 \[ \overline{\mathcal{C}}^{\Sigma} := \operatorname{Punct}_{I_{\ell}}(\mathcal{C}^{\Sigma}) = \operatorname{Punct}_{ I_{\ell}}(\ker (\sigma_{\mathcal{C}}-id)),\]
 
-\noindent where for any linear code $\mathcal{C} \su \Fqm^n$, $\mathrm{Punct}_I(\mathcal{C}):= \{(c_i)_{i \in \{1,...,n\}\backslash I} \ | \ \mathbf{c} \in \mathcal{C}\}$. 
+ where for any linear code $\mathcal{C} \su \Fqm^n$, $\mathrm{Punct}_I(\mathcal{C}):= \{(c_i)_{i \in \{1,...,n\}\backslash I} \ | \ \mathbf{c} \in \mathcal{C}\}$. 
 As a consequence, it is possible to build in polynomial time in the parameters of $\mathcal{C}$, a generator matrix of the invariant code from the knowledge of a generator matrix of $\mathcal{C}$ and the induced permutation. 
 \end{rq1}
 
@@ -824,9 +824,9 @@ for some support $\QR_0$ and divisor $G_0$ on $\X_0$. In the context of section 
 \[\C_s:= C_0^{\G} = \ssag_q(\X_s,\QR_s,G_s)\]
 on the smallest curve $\X_s=\X$. It is then possible to attack the secret structure of $\C_0$ from the knowledge of $\C_s$, by applying the attack of section 4 multiple times, each step allowing us to recover a subcode $\C_i=\ssag_q(\X_i,\QR_i,G_i)$ of $\C_0$ defined over $\X_i$. Depending on the order $\G_{i+1}/\G_i$, we are led to use either section~\ref{sectionkummer} or section~\ref{sectionas}.
 
- \noindent More precisly, fix $0 \leq i \leq s-1$ and recall $n_i = p^{r_i}m_i$, with $(m_i,p)=1$ and $m_i \mid q^m-1$. If we know the structure of the code $\C_i = \ssag_q(\X_i,\QR_i,G_i)$ as well as a generator matrix of $\C_0$ and the corresponding automorphism acting on it, we can apply successively $r_i$-times the Artin-Schreier case and one time the Kummer case with degree $m_i$ (possible since $m_i \mid q^m-1$) in order to build an SSAG code $\C_{i+1}$ defined over $\X_{i+1}$. 
+  More precisly, fix $0 \leq i \leq s-1$ and recall $n_i = p^{r_i}m_i$, with $(m_i,p)=1$ and $m_i \mid q^m-1$. If we know the structure of the code $\C_i = \ssag_q(\X_i,\QR_i,G_i)$ as well as a generator matrix of $\C_0$ and the corresponding automorphism acting on it, we can apply successively $r_i$-times the Artin-Schreier case and one time the Kummer case with degree $m_i$ (possible since $m_i \mid q^m-1$) in order to build an SSAG code $\C_{i+1}$ defined over $\X_{i+1}$. 
 
-\noindent This way, we can ride up the sequence of curves~\eqref{curve tower} until we have rebuilt the public code $\C_0$. 
+ This way, we can ride up the sequence of curves~\eqref{curve tower} until we have rebuilt the public code $\C_0$. 
 
 \begin{rq1}
 For every $0 \leq i \leq s-1$, $\C_i := \C_{i+1}^{\G_{i+1}/\G_i}$. 
@@ -850,13 +850,13 @@ In the next section, we will describe some possible attacks against the invarian
 
 In this section, we focus more on the coding theory point of view. In particular, we will be dealing with McEliece's enryption schemes (see~\cite{McE} for more details), which is a public key cryptosystem whose security rely on a linear code. In our settings, the secret key of the scheme is given by the structure of a quasi-cyclic SSAG code. From the attack of section~\ref{sectionfour}, we know that this security reduces (under some assumptions) to the security of the invariant code. 
 
-\vspace*{0.2cm}
 
-\noindent As a consequence, we could decide to choose the invariant code as the public key while building the scheme, which actually would not affect key sizes. Nevertheless, this would make \textit{message recovery attacks} easier, because solving the \textit{Syndrome Decoding Problem} is faster with smaller parameters. We do not go further into details here, but some solving methods are explaned in the paper of Peters \cite{PET}, and come from improvments of the attack by \textit{Information-set Decoding}, introduced by Prange in \cite{PR62}. For the remaining of this section, we will study the security of such schemes.
 
-\vspace*{0.2cm}
+ As a consequence, we could decide to choose the invariant code as the public key while building the scheme, which actually would not affect key sizes. Nevertheless, this would make \textit{message recovery attacks} easier, because solving the \textit{Syndrome Decoding Problem} is faster with smaller parameters. We do not go further into details here, but some solving methods are explaned in the paper of Peters \cite{PET}, and come from improvments of the attack by \textit{Information-set Decoding}, introduced by Prange in \cite{PR62}. For the remaining of this section, we will study the security of such schemes.
 
-\noindent Keeping usual notations, consider a Galois cover $\Y \longrightarrow X$ of smooth irreductible projective curves over $\Fqm$, and let us denote by 
+
+
+ Keeping usual notations, consider a Galois cover $\Y \longrightarrow X$ of smooth irreductible projective curves over $\Fqm$, and let us denote by 
 \[\mathcal{C}_{\mathrm{pub}} = \ssag_q(\Y,\QR,G)\]
 the public $\ell$-quasi-cyclic SSAG code of a McEliece's scheme.
 As shown by Corollary~\ref{ssag}, the invariant subcode $\mathcal{C}_{\mathrm{inv}}$ is an SSAG code on the quotient curve $\X$, say
@@ -895,7 +895,7 @@ Z_rX_r^{k} & \cdots & Z_{r}X_{r}^k
 \cd \mathbf{G}_{\mathrm{inv}}^T= 0.
 \end{equation}
 
-\noindent The first row provides $k=\dim_{\Fq}(\mathcal{C}_{\mathrm{inv}})$ linear equations in the variables $\mathbf{Z}$, and since $k < r$, we can eliminate some variables in the set $\mathbf{Z}$. On the other hand, the 2-transitivity of the affine group on $\Fqm$ allows us to fix arbitrarily 2 unknows, say $x_1$ and $x_2$. Therefore, the above system consist in $kr$ equations in $r-2$ variables $\mathbf{X}$ and $r-k$ variables $\mathbf{Z}$. \\
+ The first row provides $k=\dim_{\Fq}(\mathcal{C}_{\mathrm{inv}})$ linear equations in the variables $\mathbf{Z}$, and since $k < r$, we can eliminate some variables in the set $\mathbf{Z}$. On the other hand, the 2-transitivity of the affine group on $\Fqm$ allows us to fix arbitrarily 2 unknows, say $x_1$ and $x_2$. Therefore, the above system consist in $kr$ equations in $r-2$ variables $\mathbf{X}$ and $r-k$ variables $\mathbf{Z}$. \\
 If we are able to solve it, we recover the function $h$ (and thus the invariant divisor $\tilde{G}$) as well as the support $\PR$; \textit{ie.} the full structure of the invariant code. Since the security of the whole system rely on it, we have broke the scheme.  
 
 \begin{rq1} 
@@ -919,29 +919,29 @@ A brute force attack on it consists in recovering its secret structure from one 
 
 We start by discussing the third step, which is the easiest to formalize. 
 
-\vspace*{0.2cm}
 
-\noindent \textbf{Recovering the invariant support.} Here we assume that the first two steps were done and that a divisor $\tilde{G}$ was found. To recover the invariant support, there are two ways to proceed: 
 
-\vspace*{0.2cm}
+ \textbf{Recovering the invariant support.} Here we assume that the first two steps were done and that a divisor $\tilde{G}$ was found. To recover the invariant support, there are two ways to proceed: 
 
-\noindent The first consists in an exhaustive search on all subset $S \su \X(\Fqm)$ of length $r$, then we recover the good permutation using the SSA algorithm (see \cite{SSA} for more details). 
 
-\vspace*{0.2cm}
 
-\noindent The second is to solve a linear system as in section~\ref{section6.1}. In order to build it, we start by recalling that there exists (from Proposition~\ref{dual}) a divisor $G' \in  \Div(\X)$ such that 
+ The first consists in an exhaustive search on all subset $S \su \X(\Fqm)$ of length $r$, then we recover the good permutation using the SSA algorithm (see \cite{SSA} for more details). 
+
+
+
+ The second is to solve a linear system as in section~\ref{section6.1}. In order to build it, we start by recalling that there exists (from Proposition~\ref{dual}) a divisor $G' \in  \Div(\X)$ such that 
 \[ C_{\calL}(\X,\PR,\tilde{G})^{\perp} = C_{\calL}(\X,\PR,G').\]
 
-\noindent The main difference with the attack of section~\ref{section6.1} is that we do not know the curve $\X$ from our hypotheses. Nevertheless, let us suppose that the attacker found a way to recover it, meaning that it is possible to find a basis of the Riemann-Roch space $\calL_K(G') \su K:=\Fqm(\X)$, \textit{ie.} we have $\calL_K(G') = \langle f_1,...,f_r \rangle_{\Fqm}$, where $r = \dim(G')$. If $\PR := \{P_1,\cdots,P_r\}$, we get 
+ The main difference with the attack of section~\ref{section6.1} is that we do not know the curve $\X$ from our hypotheses. Nevertheless, let us suppose that the attacker found a way to recover it, meaning that it is possible to find a basis of the Riemann-Roch space $\calL_K(G') \su K:=\Fqm(\X)$, \textit{ie.} we have $\calL_K(G') = \langle f_1,...,f_r \rangle_{\Fqm}$, where $r = \dim(G')$. If $\PR := \{P_1,\cdots,P_r\}$, we get 
 \begin{equation*}
 \forall \ 1 \leq i \leq r \ , \ (f_i(P_1),\cdots,f_i(P_r)) \cd \mathbf{G}_{\mathrm{inv}}^T = 0.
 \end{equation*}
 From this point, we can build a linear system whose unknows are the elements of $\PR$.
 Note however that this system is even harder to solve than~\eqref{system_over_P1}, since we can not estimate the form of the rational functions $f_i's$. Even if the system is polynomial, the complexity of solving it using Gröbner bases depends on the form and degree of the polynomials and is thus difficult to forecast.
 
-\vspace*{0.2cm}
 
-\noindent \textbf{Enumeration of divisor classes.} We start by explaining why it is not necessary to enumerate all divisors in to find the correct one. In fact, if the support is fixed, two different divisors can produce the same code. This fact comes from the specific structure of SSAG codes, inherited from AG ones. To precise this, we introduce the notion of diagonal equivalent codes.
+
+ \textbf{Enumeration of divisor classes.} We start by explaining why it is not necessary to enumerate all divisors in to find the correct one. In fact, if the support is fixed, two different divisors can produce the same code. This fact comes from the specific structure of SSAG codes, inherited from AG ones. To precise this, we introduce the notion of diagonal equivalent codes.
 
 \begin{def1} \label{diag}
 Let $\C_1$,$\C_2 \su \Fqm^n$ be two linear codes. We say they are diagonal equivalent, denoted \ $\C_1 \sim_{\mathrm{diag}} \C_2$, if there exist $n$ non zero scalars $\lambda_1,...,\lambda_n$ in $\Fqm$ such that 
@@ -957,7 +957,7 @@ W_1 & \cdots & 0 \\
 \end{pmatrix} \cd \mathbf{H}_{\C_2}^T = 0.
 \end{equation}
 
-\noindent By Definition~\ref{diag}, this system has at least one solution if and only if $\C_1 \sim_{\mathrm{diag}} \C_2$, which provides an easy way to check whever two codes are diagonal equivalent or not. \\
+ By Definition~\ref{diag}, this system has at least one solution if and only if $\C_1 \sim_{\mathrm{diag}} \C_2$, which provides an easy way to check whever two codes are diagonal equivalent or not. \\
 This property leads to a smarter brute force search on the divisor in the case of SSAG codes. We first deal with the case of AG codes as they are easier to treat. 
 
 \begin{thm} [\cite{CMRP}, Corollary 4.15.]  \label{thmequiv}
@@ -1004,7 +1004,7 @@ This leads to the final upper bound
 
 In Annex B, we will formally describe a brute search algorithm on the invariant SSAG code and study its complexity, which is clearly bounded by $h(\X)$. In particular, this will lead to choose optimally the automorphism $\sigma \in \Aut(\Y)$ in order this number to be high enough.
 
-\vspace*{0.2cm}
+
 
 In the next section, we propose a McEliece scheme based on a quasi-cyclic SSAG code defined over the \textit{Hermitian curve}, as well as a set of parameters to secure the corresponding invariant code against the attacks discussed above.
 
@@ -1024,9 +1024,9 @@ y^{q_0}+y=x^{q_0+1}.
 
 The idea is to construct a McEliece scheme based on an SSAG code defined over $\calH$, stable under the action of some cyclic automorphism. There are two motivations to use this curve: first, it is a maximal curve,  meaning that it atteins the Hasse-Weil bound. More precisly, this curve has genus $g(\calH)= \frac{q_0(q_0-1)}{2}$ and $N(\calH)=q_0^3+1$ rational points. It allows us to consider longs codes, and thus more flexibility. Moreover, the automorphism group $\mathrm{Aut}(\mathcal{H})$ is very large and has been well-studied (see \cite{Sti} or \cite{Gar}); which gives us a large choice for our automorphism $\sigma$ (it will be important for the security of the scheme, see section~\ref{choice_of_sigma}). 
 
-\vspace*{0.2cm}
 
-\noindent From now on, we fix the following notations: 
+
+ From now on, we fix the following notations: 
 \begin{enumerate}
 \item[$\bullet$] $\sigma \in \mathrm{Aut}(\calH)$ is an automorphism of order $\ell \in \N^*$ (which will be chosen later);
 \item[$\bullet$] $\QR := \bigsqcup\limits_{i=1}^{r} \mathrm{Orb}_{\sigma}(Q_i)$ is a support made of $r$ distincts orbits under the action of $\sigma$, and $n:=\ell r$ refers to the lenght of the public code;
@@ -1035,9 +1035,9 @@ The idea is to construct a McEliece scheme based on an SSAG code defined over $\
 
 Finally, we suppose as usual that $\Supp(G)\cap \QR = \emptyset$. We can now describe our scheme: 
 
-\vspace*{0.2cm}
 
-\noindent \textbf{Key generation.} We consider the quasi-cyclic code 
+
+ \textbf{Key generation.} We consider the quasi-cyclic code 
 \[\mathcal{C}_{\mathrm{pub}} := \ssag_q(\mathcal{H},\QR,G)\]
 constructed on the Hermitian curve $\mathcal{H}$, with length $n \leq N(\mathcal{H})$ and dimension $k$. Let $t$ be the correction capability of the code and $\mathbf{G}_{\mathrm{pub}} = (I_k | \mathbf{M})$ be a systematic generator matrix of $\mathcal{C}_{\mathrm{pub}}$, where $\mathbf{M}$ is an $\ell$-blocks-circulant matrix, \textit{ie.} of the form 
 
@@ -1055,7 +1055,7 @@ a_1 & \cdots & a_{\ell-1} & a_0
 \end{pmatrix}
 \end{equation*}
 
-\noindent Thus, $\mathbf{G}_{\mathrm{pub}}$ can entirely be described by the set of rows
+ Thus, $\mathbf{G}_{\mathrm{pub}}$ can entirely be described by the set of rows
 \[\rho(\mathbf{G}_{\mathrm{pub}}) := \{M_i \ | \ i \in \{1,\ell+1,2\ell+1,...,(n-k)-\ell+1\}\},\]
 where $M_i$ is the $i$-th row of $\mathbf{M}$. 
 
@@ -1064,15 +1064,15 @@ where $M_i$ is the $i$-th row of $\mathbf{M}$.
 \item[$\bullet$] \textbf{Secret key:} the support $\QR$ and the divisor $G$.
 \end{enumerate}
 
-\noindent \textbf{Encryption.} A plain text $\mathbf{m} \in \Fq^k$ is encrypted by 
+ \textbf{Encryption.} A plain text $\mathbf{m} \in \Fq^k$ is encrypted by 
 \[ \mathbf{y}  = \mathbf{m}\mathbf{G}_{\mathrm{pub}} + \mathbf{e} \ ,\]
 where $\mathbf{e} \in \Fq^n$ is an error vector such that $\w(\mathbf{e}) \leq t$ ($\w$ being the Hamming weight). 
 
-\vspace*{0.2cm}
 
-\noindent \textbf{Decryption.} Using a general decoding algorithm for algebraic geometry codes (see for example \cite{THRP}), we compute $\mathbf{c} = \mathbf{y} - \mathbf{e} \in \mathcal{C}_{\mathrm{pub}}$. From $\mathbf{c}$ and the knowledge of $\mathbf{G}_{\mathrm{pub}}$, we can recover the message $\mathbf{m}$. 
 
-\vspace*{0.2cm}
+ \textbf{Decryption.} Using a general decoding algorithm for algebraic geometry codes (see for example \cite{THRP}), we compute $\mathbf{c} = \mathbf{y} - \mathbf{e} \in \mathcal{C}_{\mathrm{pub}}$. From $\mathbf{c}$ and the knowledge of $\mathbf{G}_{\mathrm{pub}}$, we can recover the message $\mathbf{m}$. 
+
+
 
 The security of the scheme is based on the support $\QR$ and the divisor $G$ which are unknown. However, we know from Corollary~\ref{ssag} that the invariant code is an SSAG code on the quotient curve $\mathcal{H}/\langle \sigma \rangle$. Recall that the attack proposed in section~\ref{sectionfour} shows that the security reduces to the security of the invariant code. To secure our scheme, we need to ensure that it can not be recovered easily. In particular, we propose in the next section a set of parameters to be out of range of the attacks described in section~\ref{section6}.
 
@@ -1101,9 +1101,9 @@ From its definition, the folded code is $\sigma$-invariant, meaning that is is a
 
 The complexity of the brute force attack on $\C_{\textrm{inv}}$, described in \ref{bruteforce}, depends on the class number of the quotient curve $h(\mathcal{H}/\langle \sigma \rangle)$. In particular, from Theorem~\ref{esti h(X)}, this number can be estimated using the genus $g(\mathcal{H}/\langle \sigma \rangle)$. In this section, we detail how to construct an automorphism $\sigma \in \Aut(\h)$ of order $\ell$, with $\ell$ satisfying both conditions of section~\ref{choice of l}. After, we will see the influence of this choice on the genus of the quotient curve. A complete study on the automorphism group of the Hermitian curve can be found in \cite{Gar}. In particular, they compute the class number as well as the genus of several quotient curves. 
 
-\vspace*{0.2cm}
 
-\noindent \textbf{Seeking for an order $\ell$ automorphism.} Let us denote by $\calA := \Aut(\calH)$ the automorphism group of the Hermitian curve. It is isomorphic to the projective unitary group $\mathrm{PGU}_3(\mathbb{F}_{q_0^2})$ (see~\cite{Sti}), and has order 
+
+ \textbf{Seeking for an order $\ell$ automorphism.} Let us denote by $\calA := \Aut(\calH)$ the automorphism group of the Hermitian curve. It is isomorphic to the projective unitary group $\mathrm{PGU}_3(\mathbb{F}_{q_0^2})$ (see~\cite{Sti}), and has order 
 \[\mathrm{ord}(\calA) =  q_0^3(q_0^2-1)(q_0^3+1).\]
 We then introduce the subgroup
 \[\calA(Q_{\infty}) := \{ \sigma \in \calA \ | \ \sigma(Q_{\infty}) = Q_{\infty}\} \su \calA ,\]
@@ -1136,9 +1136,9 @@ p \cd \mathrm{ord}(a), \  \mathrm{otherwise}.
 
 Now, let $\ell$ be an integer satisfying both conditions in~\ref{choice of l}, and such that $\ell \mid q_0^2-1$. We randomly pick $a \in \mathbb{F}_{q_0^2}^*$ of order $\ell$ and $b \in \mathbb{F}_{q_0^2}$. If $\ell \mid q_0+1$, we set $c:=\frac{ab^{q_0+1}}{a-1}$, else we choose any $c$ amoung the roots of $X^{q_0}+X-b^{q_0+1}$. From Lemma~\ref{ordsigma}, the automorphism $\sigma = [a,b,c]$ has order $\ell$. 
 
-\vspace*{0.2cm}
 
-\noindent \textbf{The genus of $\calH/\langle \sigma \rangle$}. The authors in \cite{Gar} provide a genus formula to compute $g(\calH/\langle \sigma \rangle)$ when $\sigma \in \calA(Q_{\infty})$.
+
+ \textbf{The genus of $\calH/\langle \sigma \rangle$}. The authors in \cite{Gar} provide a genus formula to compute $g(\calH/\langle \sigma \rangle)$ when $\sigma \in \calA(Q_{\infty})$.
 
 \begin{prop1} \label{genus}
 Let $\sigma = [a,b,c] \in \calA(P_{\infty})$ be an automorphism of prime order $\ell > 2$.
@@ -1343,7 +1343,7 @@ As it is complicated to provide a complexity analysis for the support recovering
 By Theorem~\ref{esti h(X)}, we know that 
 \[(\sqrt{q^m}-1)^{2g(\mathcal{H}/\langle \sigma \rangle)} \leq h(\mathcal{H}/\langle \sigma \rangle) \leq (\sqrt{q^m}-1)^{2g(\mathcal{H}/\langle \sigma \rangle)},\] 
 which leads to $h(\mathcal{H}/\langle \sigma \rangle) \in \mathcal{O}(q^{mg(\mathcal{H}/\langle \sigma \rangle)})$. As a result, the cost of the enumeration of divisors $G$ in $\Cl^r(\mathcal{H}/\langle \sigma \rangle)$ and vectors in $\Fqm/\Fq$ is in $\mathcal{O}(q^{m(n-1)+mg(\mathcal{H}/\langle \sigma \rangle)})$ operations over $\Fq$. \\
-\noindent Finally, Proposition~\ref{genus} and Corollary~\ref{lastcorollary} allow us to choose the paramerters (see section~\ref{some parameters}) in order $h(\calH/\langle \sigma \rangle)$ to be high enough to block the brute force attack.
+ Finally, Proposition~\ref{genus} and Corollary~\ref{lastcorollary} allow us to choose the paramerters (see section~\ref{some parameters}) in order $h(\calH/\langle \sigma \rangle)$ to be high enough to block the brute force attack.
 
 
 \newpage
