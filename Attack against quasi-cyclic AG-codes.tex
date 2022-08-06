@@ -1222,8 +1222,8 @@ with $f \in \fqm[T]$ and $d:=\deg(f)$ (note that $d$ is both the degree of the p
 \SetAlgoVlined
 \caption{Security reduction in Kummer case}
 \SetKwInOut{Input}{Input} \SetKwInOut{Output}{Output} 
-\Input{A parity check matrix $\mathbf{H}_{\mathrm{pub}}$ of the public code, the invariant support $\tilde{P}=\{P_1,\cdots,P_r\}$ and divisor $\tilde{G}$. Also we are given the quasi-cyclicity order $\ell > 0$ and the integer $d:=\deg(f)$.} 
-\Output{The polynomial $f$ and the secret structure $(\PR,G)$.}
+\Input{A parity check matrix $\mathbf{H}_{\mathrm{pub}}$ of the public code, the invariant support $\PR=\{P_1,\cdots,P_r\}$ and divisor $\tilde{G}$. Also we are given the quasi-cyclicity order $\ell > 0$ and the integer $d:=\deg(f)$.} 
+\Output{The polynomial $f$ and the secret structure $(\QR,G)$.}
 {
 $x \longleftarrow (\underbrace{x(P_1),...,x(P_1)}_{\ell\mathrm{-fois}},...,x(P_r),...,x(P_r))$\\
 $D \longleftarrow \tilde{G} - \lceil d/{\ell} \rceil \cd P_{\infty} \in \Div(\PP^1)$ \\
@@ -1236,11 +1236,11 @@ cpt $:= 0$ \\
 	\If{$\dim(S)=1$}{cpt := 1 \\
 		$y^* \xleftarrow[]{\$} S \backslash \{0\}$ \\
 		$f \longleftarrow$ $\mathrm{Interpolate}(x,y^*)$ \\
-		$\PR \longleftarrow \{P_{ij}=(x_{ij}:y_{ij}:1)\}$
+		$\QR \longleftarrow \{Q_{ij}=(x_{ij}:y_{ij}:1)\}$
 	} 
 } 
 $G \longleftarrow \pi^*(\tilde{G})$ \\
-\Return{$f$, $\PR \ \mathrm{and} \ G$}
+\Return{$f$, $\QR \ \mathrm{and} \ G$}
 }
 \end{algorithm}
 
