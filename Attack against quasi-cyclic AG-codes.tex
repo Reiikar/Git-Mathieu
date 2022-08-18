@@ -189,12 +189,20 @@ Our main reference for function fields will be \cite{Sti}.
 It is well known that the theory of function fields over $\F$ is equivalent to that of algebraic curves over $\F$. More precisely:
 
 \begin{thm}\label{lien curve-function field}
-There is an anti-equivalence of categories between smooth, irreducible, projective curves over $\F$, with non-constant morphisms of curves over $\F$, and function fields over $\F$, with field morphisms over $\F$, which to a curve $X$ associates its function field $K=\F(X)$.
+There is an anti-equivalence between the following two categories:
+\begin{itemize}
+\item smooth, irreducible, projective curves over $\F$, with non-constant morphisms of curves over $\F$
+\item function fields over $\F$, with field morphisms over $\F$,
+\end{itemize}
+which to a curve $X$ associates its function field $K=\F(X)$.
 \end{thm}
 
- Throughout this paper, the word ``curve'' will be a shorthand for ``smooth, irreducible, projective curve''. Moreover, in accordance with \cite[sec.~1.4~ff.]{Sti}, when speaking about a function field $K$ over $\F$, we will always implicitly assume that the field of constants of $K$ is reduced to $\F$. Alternatively, that means that we will always implcitly assume that our curves are \emph{geometrically irreducible}.
+(A proof can be found in \cite[Prop.~7.3.13 and Rem.~7.3.14]{Liu}; observe that over a finite field, or more generally over a perfect field, an irreducible projective curve is normal iff it is smooth.
+One can also look at \cite[\S7.5]{Fulton} or \cite[Cor.~I.6.12]{Hartshorne}, which give a proof over an algebraically closed field, and conclude using a base change argument.)
 
+In accordance with \cite[sec.~1.4~ff.]{Sti}, when speaking about a function field $K$ over $\F$, we will always implicitly assume that the field of constants of $K$ is reduced to $\F$. Alternatively, that means that we will always implcitly assume that our curves are \emph{geometrically irreducible}.
 
+Thus, throughout this paper, the word ``curve'' will be a shorthand for ``smooth, geometrically irreducible, projective curve''. 
 
  A function field $K$ over $\F$ can always be described as $K=\F(x)[y]$ where $x$ is transcendental over $\F$ and $y$ is a primitive element for $K$ over $\F(x)$.
 There is then an (absolutely) irreducible polynomial $f$ in two variables over $\F$, unique up to multiplication by a constant, such that $f(x,y)=0$. This description might be convenient for computations.
