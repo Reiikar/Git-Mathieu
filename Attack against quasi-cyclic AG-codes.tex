@@ -190,7 +190,7 @@ Let $\F$ be a finite field. A function field (of one variable) over $\F$ is a fi
 Our main reference for function fields will be \cite{Sti}.
 It is well known that the theory of function fields over $\F$ is equivalent to that of algebraic curves over $\F$. More precisely:
 
-\begin{thm}\label{lien curve-function field}
+\begin{thm}\label{antieq}
 There is an anti-equivalence between the following two categories:
 \begin{itemize}
 \item smooth, irreducible, projective curves over $\F$, with non-constant morphisms of curves over $\F$
@@ -234,7 +234,7 @@ Given a divisor $A \in \Div(K)$, its Riemann-Roch space is defined as the $\F$-v
 \[\calL_K(A) = \{z \in K \ | \ (z)^L \geq -A\} \cup \{0\},\]
 of dimension $\ell(A):= \dim_{\F}(\calL_K(A))$. If there is no ambiguity with the function field, we just write $\calL(A)$.
 
-Let $\pi : \Y \rightarrow \X$ be a separable morphism between two curves $\X$ and $\Y$ over $\F$, whose function fields are given by $L := \F(\Y)$ and $K:=\F(\X)$. We define the pullback of $P \in \PP_K$ as the divisor
+Let $\pi : \Y \rightarrow \X$ be a morphism between two curves $\X$ and $\Y$ over $\F$, whose function fields are given by $L := \F(\Y)$ and $K:=\F(\X)$. We define the pullback of $P \in \PP_K$ as the divisor
 \[\pi^{*}P = \sum\limits_{Q|P} e(Q|P) \cd Q \in \Div(L)\]
 where $e(Q|P)$ denotes the ramification index as usual.
 Note that this definition extends to pullback of divisors by linearity.
@@ -257,8 +257,8 @@ As explained in the introduction, we will be dealing with SSAG codes, meaning th
 and then we get codes over $\Fq$ using the subfield-subcode construction.
 
 \begin{def1} \label{defagcode}
-Let $\Y$ be a smooth irreducible projective curve over $\Fqm$ with function field $L = \Fqm(\Y)$, $\QR = \{Q_1,...,Q_n\}$ a set of $n$ distinct places of degree one in $L$  and $G \in \Div(L)$ a divisor such that $\Supp(G) \cap \QR = \emptyset$. Suppose that $\deg(G)<n$. Then the AG code associated to the triple $(\Y,\QR,G)$ is defined by
-\[C_{\calL}(\Y,\QR,G) = \{ (f(Q_1),...,f(Q_n)) \ | \ f \in \calL(G)\} \su \Fqm^n.\]
+Let $\Y$ be a smooth irreducible projective curve over $\Fqm$ with function field $L = \Fqm(\Y)$, $\QR = \{Q_1,...,Q_n\}$ an ordered set of $n$ distinct places of degree one in $L$  and $G \in \Div(L)$ a divisor such that $\Supp(G) \cap \QR = \emptyset$. Suppose that $\deg(G)<n$. Then the AG code associated to the triple $(\Y,\QR,G)$ is defined by
+\[C_{\calL}(\Y,\QR,G) = \{ \operatorname{Ev}_{\QR}(f):=(f(Q_1),...,f(Q_n)) \ | \ f \in \calL(G)\} \su \Fqm^n.\]
 \end{def1}
 
 Recall that the dual code $\mathcal{C}^{\perp}$ of a
@@ -276,21 +276,33 @@ Let $C_{\calL}(\Y,\QR,G)$ be an $\mathrm{AG}$-code defined on a curve $\Y$. Then
 \end{prop1}
 See \emph{e.g.} \cite{Sti}, Proposition 2.2.10 for the proof.
 
+In this work we will be more specifically interested in "structured" codes, which means codes with a non trivial permutation group, coming from the underlying geometry.
+
+In order to fix notations, let $\Aut(\Y/\Fqm)$ be the automorphism group of $\Y$ over $\Fqm$, acting on the left.
+Thanks to the anti-equivalence of categories in Theorem~\ref{antieq},
+we can identify $\Aut(L/\Fqm)$ with $\Aut(\Y/\Fqm)$, acting on $L$ on the right:
+for $\sigma\in\Aut(L/\Fqm)=\Aut(\Y/\Fqm)$ and $f\in L$ we set
+$$f^\sigma:=\sigma^*f=f\circ\sigma.$$
+Now consider a finite subgroup $\Sigma\su\Aut(\Y/\Fqm)$,
+and assume that $\QR$ and $G$ are invariant under $\Sigma$;
+observe that this means precisely that $\QR$ is a union, and $G$ a sum, of orbits under $\Sigma$.
+Then each $\sigma\in\Sigma$ induces a permutation automorphism $\tilde{\sigma}$ on the code $C_{\calL}(\Y,\QR,G)$, as follows: if
+$$c=\operatorname{Ev}_{\QR}(f)\in C_{\calL}(\Y,\QR,G)$$
+for $f \in \calL(G)$, then
+$$c^{\tilde{\sigma}}:=\operatorname{Ev}_{\QR}(f^\sigma)\in C_{\calL}(\Y,\QR,G).$$
+As $\sigma$ ranges in $\Sigma$, these $\tilde{\sigma}$ form a subgroup $\tilde{\Sigma}$ of the permutation group of $C_{\calL}(\Y,\QR,G)$, acting on the right.
+ 
 Now we come to SSAG codes.
 
 \begin{def1}
-With notations as above, $\ssag_q(\Y,\QR,G)$ is the subfield subcode of $C_{\calL}(\Y,\QR,G)$ over $\Fq$:
+With notations as in Definition~\ref{defagcode}, $\ssag_q(\Y,\QR,G)$ is the subfield subcode of $C_{\calL}(\Y,\QR,G)$ over $\Fq$:
 \[ \ssag_q(\Y,\QR,G) = C_{\calL}(\Y,\QR,G) \cap \Fq^n.\]
 \end{def1}
 
-In this work we will be more specifically interested in "structured" SSAG codes, which means codes with a non trivial permutation group coming from the underlying geometry.
-To be concrete, let $\Sigma \su \Aut(L/\Fqm)$ be a finite subgroup, 
-%denote by $\mathrm{Orb}_{\Sigma}(Q)$ the orbit of $Q \in \PP_L$ under its action.
-and assume that $\QR$ and $G$ are invariant under $\Sigma$;
-observe that this means precisely that $\QR$ is a union, and $G$ a sum, of orbits under $\Sigma$.
-Then each $\sigma\in\Sigma$ induces a permutation automorphism $\tilde{\sigma}$ on the code $C_{\calL}(\Y,\QR,G)$, which together form a subgroup $\tilde{\Sigma}$ of the permutation group of $C_{\calL}(\Y,\QR,G)$. 
-And in turn, $\tilde{\Sigma}$ also acts on the subfield subcode $\ssag_q(\Y,\QR,G)$.
-Later on we will occasionally abuse notations and write $\sigma$ for $\tilde{\sigma}$.
+It is clear that any permutation automorphism of a linear code stabilizes its subfield subcodes.
+As a consequence, given $\Sigma\su\Aut(\Y/\Fqm)$, and assuming $\QR$ and $G$ invariant under $\Sigma$ as above, we also get a subgroup $\tilde{\Sigma}$ of the permutation group of $\ssag_q(\Y,\QR,G)$, acting on the right.
+
+Later on we will occasionally abuse notations and write $\sigma$ for $\tilde{\sigma}$, and $\Sigma$ for $\tilde{\Sigma}$.
 
 %Throughout the rest of the paper, we will only consider the case where $\Sigma$ is the Galois group of some extension of function fields $L/K$. We detail these settings in section~\ref{sectionfour}.
 %
@@ -301,51 +313,68 @@ Later on we will occasionally abuse notations and write $\sigma$ for $\tilde{\si
 
 \section{Invariant code}
 
-
-\begin{def1} Given an $\ag$-code $\mathcal{C} = C_{\calL}(\Y,\QR,G)$ on a smooth irreducible projective curve $\Y$ with function field $L$ over $\Fqm$, such that $\QR$ and $G$ are invariant under the action of $\Sigma \su \Aut(L/\Fqm)$, we define its invariant code as the subcode 
-\[\mathcal{C}^{\Sigma} := \{c \in \mathcal{C} \ | \ \forall\tilde{\sigma}\in\tilde{\Sigma},\,\tilde{\sigma}(c)=c\}\]
-%where $\tilde{\Sigma}$ is the permutation induced by $\Sigma$.
+\begin{def1} Given a linear code $\mathcal{C}$ together with a subgroup $\Sigma$ of its group of permutation automorphisms, we define the invariant code of $\mathcal{C}$ under $\Sigma$ as the subcode
+$$\mathcal{C}^{\Sigma} := \{c \in \mathcal{C} \ | \ c^\sigma=c,\;\forall\sigma\in\Sigma\}.$$
 \end{def1}
-made of all codewords that are invariant under $\tilde{\Sigma}$ (with notations as above).
 
-Note that this code has repeated entries (\textit{i.e.} all its words are constant on each orbit under $\Sigma$), so we usually use another one: the \emph{punctured invariant code}. It is denoted $\overline{\mathcal{C}}^{\Sigma}$, and is obtained from $\C^{\Sigma}$ by keeping only one entry on each orbit.
+
+Note that this code has repeated entries (\textit{i.e.} all its words are constant on each orbit under $\Sigma$), so we usually use another one: the \emph{punctured invariant code}. It is denoted $\overline{\mathcal{C}}^{\Sigma}$, and is obtained from $\C^{\Sigma}$ by keeping only one entry in each orbit.
 
 \begin{expl}  \label{gen inv}
-Suppose $\Sigma = \langle \sigma \rangle$ is cyclic of order $\ell$, and that the permutation automorphism induced by $\sigma$ on $\mathcal{C}$ is the $\ell$-quasi-cyclic shift. Let also $I_{\ell} := \{1,...,n\}\backslash \{1,\ell+1,...,n-\ell+1\}$, where $n=\operatorname{Length}(\mathcal{C})$. In this situation, the punctered invariant code can also be defined as
+Suppose $\ell|n=\operatorname{Length}(\mathcal{C})$, and $\Sigma = \langle \sigma \rangle$ is cyclic of order $\ell$, generated by the $\ell$-quasi-cyclic shift $\sigma$. Let also $I_{\ell} := \{1,...,n\}\backslash \{1,\ell+1,...,n-\ell+1\}$. In this situation, the punctured invariant code can also be defined as
 \[ \overline{\mathcal{C}}^{\Sigma} := \operatorname{Punct}_{I_{\ell}}(\mathcal{C}^{\Sigma}) = \operatorname{Punct}_{ I_{\ell}}(\ker ((\sigma-\operatorname{id})|\mathcal{C})),\]
-
- where for any linear code $\mathcal{C} \su \Fqm^n$, $\mathrm{Punct}_I(\mathcal{C}):= \{(c_i)_{i \in \{1,...,n\}\backslash I} \ | \ \mathbf{c} \in \mathcal{C}\}$. 
+ where for any linear code $\mathcal{C}$ and any set of indices $I$, $\mathrm{Punct}_I(\mathcal{C}):= \{(c_i)_{i \in \{1,...,n\}\backslash I} \ | \ \mathbf{c} \in \mathcal{C}\}$. 
 As a consequence, it is possible to build in polynomial time in the parameters of $\mathcal{C}$, a generator matrix of the invariant code from the knowledge of a generator matrix of $\mathcal{C}$ and the induced permutation. 
 \end{expl}
 
 Later on, we will always work only with the punctered invariant code. We will then occasionally abuse notations and write $\mathcal{C}^{\Sigma}$ for $\overline{\mathcal{C}}^{\Sigma}$.
 
-In what follows, we study the structure of the invariant code, which will be an important result for the next parts. In particular, we show that this subcode is also an $\ag$-code, defined on the quotient curve $\Y/\Sigma$, whose function field is precisely the fixed field $K:=L^{\Sigma}$ of $L$. Let us start with the following lemma.
+In what follows, we are interested in the case where $\mathcal{C}$ is an AG code (resp. a SSAG code), and $\Sigma$ comes from a group of automorphisms of $\Y$, as in the previous section.
+We study the structure of the invariant code, which will be an important result for the next parts. In particular, we show that this subcode is also an AG code (resp. a SSAG code), defined on the quotient curve $\Y/\Sigma$, whose function field is precisely the fixed field $K:=L^{\Sigma}$ of $L$. Let us start with the following lemma.
 
 \begin{lem1} \label{inv}
-Let $\QR$ and $G$ be as in Definition~$\ref{defagcode}$, and suppose that they are invariant under an automorphism $\sigma \in \Sigma \su \Aut(L/\Fqm)$. If $c = \operatorname{Ev}_{\QR}(g) \in C_{\calL}(\Y,\QR,G)$ is such that $\sigma(c) = c$, then $g$ is $\sigma$-invariant, i.e. $g\circ \sigma = g$. 
+Let $\QR$ and $G$ be as in Definition~$\ref{defagcode}$, and suppose that they are invariant under an automorphism $\sigma \in \Aut(\Y/\Fqm)$. If a codeword $c = \operatorname{Ev}_{\QR}(f) \in C_{\calL}(\Y,\QR,G)$ is $\sigma$-invariant, \emph{i.e} if $c^\sigma = c$, then $f^\sigma = f$ also. 
 \end{lem1}
 
 \begin{proof}
-Let us write $\QR = \{Q_1,...,Q_n\}$, and let $c=(g(Q_1),...,g(Q_n))$ be such that $\sigma(c)=c$. Then we have 
-\begin{align*}
-\forall \ i \in \{1,...,n\} \ , \ g(Q_{\sigma(i)}) = g(Q_i) &\iff \forall \ i \in \{1,...,n\} \ , \ (g \circ \sigma)(Q_i) =g(Q_i) \\
-& \iff \forall \ i \in \{1,...,n\} \ , \ (g\circ \sigma - g)(Q_i) = 0.
-\end{align*}
-Since the divisor $G$ is $\sigma$-invariant, we have $g \circ \sigma \in \calL(G)$, and thus $g\circ \sigma - g \in \calL(G)$ also.
-However the equivalence above gives $n>\deg(G)$ zeroes to this function. This implies $(g \circ \sigma - g) \equiv 0$.
+Let us write $\QR = \{Q_1,...,Q_n\}$.
+We have $$0=c^\sigma-c=\operatorname{Ev}_{\QR}(f^\sigma-f)$$
+so $f^\sigma-f$ admits at least $n$ zeroes $Q_1,...,Q_n$.
+Now, since  $G$ is $\sigma$-invariant, we have $f^\sigma\in\calL(G)$,
+hence $f^\sigma-f\in\calL(G)$.
+However we just saw that this function admits $n$ zeroes, with $n>\deg(G)$ by hypothesis,
+which is possible only if $f^\sigma-f=0$.
 \end{proof}
 
 \begin{def1} \label{pousseavant}
-Consider an extension $L/K$ of function fields corresponding to a separable morphism of curves $\pi:\cal{Y}\rightarrow\cal{X}$.
-Given a divisor $G \in \Div(L)$, we denote by $\tilde{G} \in \Div(K)$ the largest divisor (according to the degree) such that
+Consider an extension $L/K$ of function fields, corresponding to a morphism of curves $\pi:\cal{Y}\rightarrow\cal{X}$.
+Given a divisor $G \in \Div(L)$, we denote by $\tilde{G} \in \Div(K)$ the largest divisor such that
 \[\pi^*\tilde{G} \leq G.\]
 \end{def1} 
  
-\begin{rq1} \label{jsp}
-If $A \in \Div(K)$, we have 
-\[\widetilde{\pi^*A}=A.\]
-\end{rq1}
+\begin{lem1}
+With notations as above:
+\begin{itemize}
+\item[(i)] $\calL_L(G)\cap K = \calL_K(\tilde{G})$
+\item[(ii)] if we write
+$$G=\sum\limits_{S\in\PP_L}t_SS $$
+for integers $t_S$ almost all of which are $0$, then
+$$\tilde{G}=\sum\limits_{R\in\PP_K}\left(\min\limits_{S|R}\left\lfloor\dfrac{t_S}{e(S|R)}\right\rfloor\right)R$$
+\item[(iii)] if $A \in \Div(K)$, we have \[\widetilde{\pi^*A}=A.\]
+\end{itemize}
+\end{lem1}
+\begin{proof}
+\begin{itemize}
+\item[$(i)$] Given $h\in K$ we have $(h)_L=\pi^*((h)_K)$, and thus we have $h\in\calL_L(G)$ iff $\pi^*((h)_K)\geq-G$.
+But by Definition~\ref{pousseavant} this means precisely $(h)_K\geq-\tilde{G}$, \emph{i.e.} $h\in\calL_K(\tilde{G})$.
+\item[$(ii)$] If $\tilde{G}=\sum\limits_{R\in\PP_K}x_RR$, then
+$$\pi^*\tilde{G}=\sum\limits_{R\in\PP_K}\sum\limits_{S|R}x_Re(S|R)S,$$
+and so $\pi^*\tilde{G}\leq G$ iff $$x_R\leq\dfrac{t_S}{e(S|R)}$$ for all $R\in\PP_K$ and all $S|R$.
+Then $\tilde{G}$ is maximal when all $x_R$ are maximal under this condition, which means precisely $$x_R=\min\limits_{S|R}\left\lfloor\dfrac{t_S}{e(S|R)}\right\rfloor.$$
+\item[$(iii)$] Obvious (or direct consequence of $(ii)$).
+\end{itemize}
+\end{proof}
+
 
 \begin{prop1} \label{invrr}
 Let $L/K$ be a Galois extension of function fields over $\Fqm$, with Galois group $\Sigma$,
@@ -353,27 +382,23 @@ and let $G \in \Div(L)$ be a $\Sigma$-invariant divisor. Then:
 \begin{itemize}
 \item[(i)] $\calL_L(G)^{\Sigma} = \calL_K(\tilde{G})$
 \item[(ii)] if we write
-\[G = \sum\limits_{i=1}^s t_i \sum\limits_{Q \in \mathrm{Orb}_{\sigma}(S_i)} Q,\]
+\[G = \sum\limits_{i=1}^s t_i \sum\limits_{Q \in \mathrm{Orb}_{\Sigma}(S_i)} Q,\]
 for places $S_1,...,S_s \in \PP_L$ nonconjugate under $\Sigma$ and integers $t_i \in \Z \backslash \{0\}$, then
 \[\tilde{G}= \sum\limits_{i=1}^s \left\lfloor\dfrac{t_i}{e(S_i|R_i)}\right\rfloor  R_i ,\]
 where $R_i\in\PP_K$ is such that $S_i|R_i$.
 \end{itemize}
 \end{prop1}
-
 \begin{proof}
 \begin{itemize}
-\item[$(i)$] First observe that $\calL_L(G)^{\Sigma}=\calL_L(G)\cap L^\Sigma=\calL_L(G)\cap K$.
-Now given $h\in K$ we have $(h)_L=\pi^*((h)_K)$, and thus we have $h\in\calL_L(G)$ iff $\pi^*((h)_K)\geq-G$.
-But by Definition~\ref{pousseavant} this means precisely $(h)_K\geq-\tilde{G}$, \emph{i.e.} $h\in\calL_K(\tilde{G})$.
-\item[$(ii)$] Given $R\in\PP_K$ and $S\in\PP_L$ with $S|R$, we have
-$$\pi^*R=e(S|R)\sum\limits_{Q \in \mathrm{Orb}_{\sigma}(S)} Q.$$
-As a consequence, for integers $x$ and $t$, we have $$\pi^*(xR)\leq t\sum\limits_{Q \in \mathrm{Orb}_{\sigma}(S)} Q$$ iff $$x\leq\left\lfloor\dfrac{t}{e(S|R)}\right\rfloor.$$ The conclusion follows by linearity of $\pi^*$.
+\item[$(i)$] Since $\calL_L(G)^{\Sigma}=\calL_L(G)\cap L^\Sigma=\calL_L(G)\cap K$,
+this is a special case of $(i)$ in the previous Lemma.
+\item[$(ii)$] Observing that $G$ is $\Sigma$-invariant and that $e(Q|R_i)=e(S_i|R_i)$ for all $Q\in\mathrm{Orb}_{\Sigma}(S_i)$, this is again a special case of $(ii)$ in the previous Lemma.
 \end{itemize}
 \end{proof}
 %\color{black}
 
 \begin{thm} [Structure of the invariant code] \label{invstruct}
-Let $\mathcal{C} := C_{\calL}(\Y,\QR,G)$ be an $\mathrm{AG}$-code defined on a curve $\Y$ with function field $L$, invariant under the action of $\Sigma \su \Aut(L/\Fqm)$. Then its invariant code is also an $\mathrm{AG}$-code, defined on the quotient curve $\Y/\Sigma$. In particular, there exist a support $\PR$ and a divisor $\tilde{G}$ on $\Y/\Sigma$ such that
+Let $\mathcal{C} := C_{\calL}(\Y,\QR,G)$ be an $\mathrm{AG}$-code defined on a curve $\Y$, with $\QR$ and $G$ invariant under the action of $\Sigma \su \Aut(\Y/\Fqm)$. Then its invariant code under $\Sigma$ is also an $\mathrm{AG}$-code, defined on the quotient curve $\Y/\Sigma$. In particular, there exist a support $\PR$ and a divisor $\tilde{G}$ on $\Y/\Sigma$ such that
 \[\mathcal{C}^{\Sigma} = C_{\calL}(\Y/\Sigma,\PR,\tilde{G}).\]
 \end{thm}
 
