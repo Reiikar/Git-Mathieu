@@ -17,6 +17,8 @@
 \usepackage{geometry}
 \geometry{hmargin=3cm,vmargin=1.5cm}
 
+\usepackage{hyperref}
+
 %-----Algorithms-----%
 \usepackage[linesnumbered, ruled]{algorithm2e}
 \newcommand{\inlcomment}[1]{\texttt{\small/* #1 */}}
@@ -286,10 +288,12 @@ $$f^\sigma:=\sigma^*f=f\circ\sigma.$$
 Now consider a finite subgroup $\Sigma\su\Aut(\Y/\Fqm)$,
 and assume that $\QR$ and $G$ are invariant under $\Sigma$;
 observe that this means precisely that $\QR$ is a union, and $G$ a sum, of orbits under $\Sigma$.
-Then each $\sigma\in\Sigma$ induces a permutation automorphism $\tilde{\sigma}$ on the code $C_{\calL}(\Y,\QR,G)$, as follows: if
+By invariance of $\QR$, each $\sigma\in\Sigma$ induces a permutation $\tilde{\sigma}$ of the index set $\{1,\dots,n\}$, such that
+$$\sigma(Q_i)=Q_{\tilde{\sigma}(i)}.$$
+Then $\tilde{\sigma}$ actually defines a permutation automorphism of $C_{\calL}(\Y,\QR,G)$: indeed, if
 $$c=\operatorname{Ev}_{\QR}(f)\in C_{\calL}(\Y,\QR,G)$$
-for $f \in \calL(G)$, then
-$$c^{\tilde{\sigma}}:=\operatorname{Ev}_{\QR}(f^\sigma)\in C_{\calL}(\Y,\QR,G).$$
+for $f\in\calL(G)$, then $f^\sigma\in\calL(G)$ by invariance of $G$, and so
+$$c^{\tilde{\sigma}}=\operatorname{Ev}_{\QR}(f^\sigma)\in C_{\calL}(\Y,\QR,G).$$
 As $\sigma$ ranges in $\Sigma$, these $\tilde{\sigma}$ form a subgroup $\tilde{\Sigma}$ of the permutation group of $C_{\calL}(\Y,\QR,G)$, acting on the right.
  
 Now we come to SSAG codes.
