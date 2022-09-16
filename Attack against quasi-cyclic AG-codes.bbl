@@ -1,0 +1,146 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{{M}c{E}78}
+
+\bibitem[Bar17]{Bar1}
+Elise Barelli.
+\newblock On the security of some compact keys for {M}c{E}liece scheme.
+\newblock {\em WCC Workshop on Coding and Cryptography}, September 2017.
+
+\bibitem[Bar18a]{Bar}
+Elise Barelli.
+\newblock {\em On the security of short {M}c{E}liece keys from algebraic and
+  algebraic geometry codes with automorphisms}.
+\newblock PhD thesis, universite Paris-Saclay, 2018.
+
+\bibitem[Bar18b]{Bar2}
+Elise Barelli.
+\newblock Short {M}c{E}liece keys from {H}ermitian curves.
+\newblock {\em Manuscript}, 2018.
+
+\bibitem[BBB{\etalchar{+}}17]{BQ}
+Magali Bardet, Elise Barelli, Olivier Blazy, Rodolfo Canto-Torres, Alain
+  Couvreur, Philippe Gaborit, Ayoub Otmani, Nicolas Sendrier, and Jean-Pierre
+  Tillich.
+\newblock Big quake.
+\newblock {\em NIST Round~1 submission for Post-Quantum Cryptography}, 2017.
+
+\bibitem[BCG{\etalchar{+}}17]{CF}
+Alin Bostan, Frédéric Chyzak, Marc Giusti, Romain Lebreton, Grégoire Lecerf,
+  Bruno Salvy, and Éric Schost.
+\newblock {\em Algorithmes efficaces en calcul formel}.
+\newblock Frédéric Chyzak (auto-édit.), Palaiseau, September 2017.
+
+\bibitem[CMCP14]{CMP}
+Alain Couvreur, Irene Marquez-Corbella, and Ruud Pellikaan.
+\newblock A polynomial time attack against algebraic geometry codes based
+  public key cryptosystems.
+\newblock {\em Proc. IEEE Int. Symposium Inf. Theory- ISIT}, pages 1446--1450,
+  2014.
+
+\bibitem[CMCP17]{Cou}
+Alain Couvreur, Irene Marquez-Corbella, and Ruud Pellikaan.
+\newblock Cryptanalysis of {M}c{E}liece cryptosystem based on algebraic
+  geometry codes ans their subcodes.
+\newblock {\em IEEE Trans. Inform. Theory \bf{63}}, no.8:5404--5418, 2017.
+
+\bibitem[CT16]{CAWOF}
+Rodolfo Cantos-Torres.
+\newblock {C}a{W}o{F}, {C} library for computing asymptotic exponents of
+  generic decoding work factors.
+\newblock no.8:5404--5418, 2016.
+
+\bibitem[FOP{\etalchar{+}}16a]{FOP}
+Jean-Charles Faugere, Ayoub Otmani, Ludovic Perret, Frederic de~Portzamparc,
+  and Jean-Pierre Tillich.
+\newblock Folding alternant and {G}oppa codes with non-trivial automorphism
+  groups.
+\newblock {\em IEEE. Trans. Inform. Theory}, 62(1):184--198, 2016.
+
+\bibitem[FOP{\etalchar{+}}16b]{FOP1}
+Jean-Charles Faugere, Ayoub Otmani, Ludovic Perret, Frederic de~Portzamparc,
+  and Jean-Pierre Tillich.
+\newblock Structural cryptanalysis of {M}c{E}liece schemes with compact keys.
+\newblock {\em Des. Codes Cryptogr.}, 79(1):87--112, 2016.
+
+\bibitem[FOPT10]{FOP2}
+Jean-Charles Faugere, Ayoub Otmani, Ludovic Perret, and Jean-Pierre Tillich.
+\newblock Algebraic cryptanalysis of {M}c{E}liece variants with compact keys.
+\newblock {\em Advances in Cryptology - EURO-CRYPT 2010, LNCS}, vol.
+  6110:279--298, • 2010.
+\newblock •.
+
+\bibitem[Ful69]{Fulton}
+William Fulton.
+\newblock {\em Algebraic Curves}.
+\newblock Benjamin, 1969.
+
+\bibitem[GSX00]{Gar}
+Arnaldo Garci, Henning Stichtenoch, and Chao-Ping Xing.
+\newblock On subfields of the {H}ermitian function field.
+\newblock {\em Compositio Mathematica \bf{120}}, no.2:137--170, 2000.
+
+\bibitem[Har77]{Hartshorne}
+Robin Hartshorne.
+\newblock {\em Algebraic geometry}, volume~52 of {\em Graduate Texts in
+  Mathematics}.
+\newblock Springer, 1977.
+
+\bibitem[HP95]{THRP}
+Tom Høholft and Ruud Pellikaan.
+\newblock On the decoding of algebraic-geometric codes.
+\newblock {\em IEEE Transactions on Information Theory \bf{41}},
+  no.6:1589--1614, 1995.
+
+\bibitem[Liu02]{Liu}
+Qing Liu.
+\newblock {\em Algebraic geometry and arithmetic curves}.
+\newblock Oxford, 2002.
+
+\bibitem[{M}c{E}78]{McE}
+Robert~J. {M}c{E}liece.
+\newblock A public-key cryptosystem based on algebraic coding theory.
+\newblock {\em DSN Progress Report 44}, pages 114--116, 1978.
+
+\bibitem[MP93]{CMRP}
+Carlos Munuera and Ruud Pellikaan.
+\newblock Equality of geometric {G}oppa codes and equivalence of divisors.
+\newblock {\em Journal of Pure and Applied Algebra \bf{90}}, no.3:229--252,
+  1993.
+
+\bibitem[Pet10]{PET}
+Christiane Peters.
+\newblock Information-set decoding for linear codes over {${\mathbf F}_q$}.
+\newblock In {\em Post-Quantum Cryptography 2010}, volume 6061 of {\em LNCS},
+  pages 81--94. Springer, 2010.
+
+\bibitem[Pra62]{PR62}
+Eugene Prange.
+\newblock The use of information sets in decoding cyclic codes.
+\newblock {\em IRE Transactions on Information Theory \textbf{8}}, no.5:5--9,
+  1962.
+
+\bibitem[Sen00]{SSA}
+Nicolas Sendrier.
+\newblock Finding the permutation between equivalent linear codes: The support
+  splitting algorithm.
+\newblock {\em IEEE Transactions on Information Theory \bf{46}},
+  no.4:1193--1203, 2000.
+
+\bibitem[Sen11]{DOOM}
+Nicolas Sendrier.
+\newblock Decoding one out of many.
+\newblock In {\em Post-Quantum Cryptography 2011}, volume 7071 of {\em LNCS},
+  pages 51--67. Springer, 2011.
+
+\bibitem[Sti09]{Sti}
+Henning Stichtenoch.
+\newblock {\em Algebraic Function Fields and Codes}, volume 254 of {\em
+  Graduate Texts in Mathematics}.
+\newblock Springer, 2nd edition, 2009.
+
+\bibitem[TVN07]{Tsf}
+Michael~A. Tsfasman, Serge~G. Vladut, and Dmitry Nogin.
+\newblock {\em Algebraic geometric codes: basic notions}.
+\newblock no.139, American Mathematical Soc., 2007.
+
+\end{thebibliography}
