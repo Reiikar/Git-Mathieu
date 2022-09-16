@@ -1,0 +1,88 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{verbatim}
+\usepackage{amsthm}
+\usepackage{geometry}
+\geometry{hmargin=2cm,vmargin=1.5cm}
+
+\newtheorem{prop1}{Proposition}
+\newtheorem{coro1}{Corollary}
+\newtheorem{thm}{Theorem}
+\newtheorem{def1}{Definition}
+\newtheorem{lem1}{Lemma}
+
+\newcommand{\calP}{\mathcal{P}}
+\newcommand{\calH}{\mathcal{H}}
+\newcommand{\calL}{\mathcal{L}}
+\newcommand{\calC}{\mathcal{C}}
+\newcommand{\Tr}{\operatorname{Tr}}
+
+
+\title{Test attack on SSAG codes}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+In the tables below, we present some results of our attack both in the case of a Kummer and Artin-Schreir cover of the projective line. Computations are made using \textit{Magma} with an Intel(R) Xeon(R) CPU E5-2667 v3 @ 3.20GHz. We take the following notations:
+\begin{enumerate}
+    \item[-] $q^m$ is the cardinality of the field $\mathbb{F}_{q^m}$;
+    \item[-] $\ell$ is the order of quasi-cyclicity (equals to $p$ in the Artin-Schreier case);
+    \item[-] $d$ is the degree of the polynomial $f$ (actually it doesn't impact the complexity of the attack);
+    \item[-] $n,k$ are respectively the lenght and dimension of the public code, while $n_0,k_0$ are those of the invariant subcode;
+    \item[-] \textbf{Time} is the average running time of the algorithm.
+\end{enumerate}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+   $q$ & $m$ & $\ell$ & $d$ & $n$ & $k$ & $n_0$ & $k_0$ & \textbf{Time}  \\
+    \hline
+    $2$ & $10$ & $3$ & $5$ & $750$ & $537$ & $250$ & $181$ & $48$ secs \\
+    \hline
+    $2$ & $12$ & $3$ & $5$ & $1500$ & $1077$ & $500$ & $361$ & $449$ secs \\
+    \hline
+    $2$ & $12$ & $5$& $5$  & $2400$ & $897$ & $800$ & $301$ & $1471$ secs \\
+     \hline
+     $3$  & $8$ & $5$ & $4$ & $1000$ & $395$ & $200$ & $81$ & $73$ secs \\
+     \hline
+     $3$ & $8$ & $5$ & $4$ & $2500$ & $845$ & $500$ & $171$ & $5170$ secs \\
+     \hline
+      $5$ & $5$ & $11$ & $4$ & $2200$ & $1031$ & $200$ & $96$ & $434$ secs \\
+     \hline
+      $5$ & $5$ & $11$ & $4$ & $3080$ & $1251$ & $280$ & $116$ & $1276$ secs \\
+     \hline
+\end{tabular}
+\caption{Kummer over $\mathbb{P}^1$}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+    \hline
+   $q$ & $m$ & $\ell$ & $d$ & $n$ & $k$ & $n_0$ & $k_0$ & \textbf{Time}  \\
+   \hline
+     $3$& $8$ & $3$ & $4$ & $1200$ & $718$ & $400$ & $241$ & $207$ secs \\
+     \hline
+       $3$ & $8$ & $3$ & $4$ & $2850$ & $1018$ & $950$ & $341$ & $2045$ secs\\
+     \hline
+       $5$& $5$ & $5$ & $3$ & $1250$ & $697$ & $250$ & $141$ & $105$ secs \\
+     \hline
+       $5$& $5$&$5$ &$3$ &$2725$ &$697$ &$250$ &$141$ & $112,06$ secs \\
+     \hline
+       $7$&$4$ &$7$ &$3$ &$1120$ &$765$ &$160$ &$111$ &$52,57$ secs \\
+     \hline
+       $7$&$5$ &$7$ &$3$ &$2450$ &$1325$ &$350$ &$191$ & $1748$ secs\\
+     \hline
+\end{tabular}
+\caption{Artin-Schreier over $\mathbb{P}^1$}
+\end{center}
+\end{table}
+\end{document}
+
