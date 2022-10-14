@@ -385,7 +385,7 @@ Let $L/K$ be a Galois extension of function fields over $\Fqm$, with Galois grou
 and let $G \in \Div(L)$ be a $\Sigma$-invariant divisor. Then:
 \begin{itemize}
 \item[(i)] $\calL_L(G)^{\Sigma} = \calL_K(\tilde{G})$
-\item[(ii)] if we write
+\item[(ii)] if we write $G$ as a sum of orbits under $\Sigma$, so
 \[G = \sum\limits_{i=1}^s t_i \sum\limits_{Q \in \mathrm{Orb}_{\Sigma}(S_i)} Q,\]
 for places $S_1,...,S_s \in \PP_L$ nonconjugate under $\Sigma$ and integers $t_i \in \Z \backslash \{0\}$, then
 \[\tilde{G}= \sum\limits_{i=1}^s \left\lfloor\dfrac{t_i}{e(S_i|R_i)}\right\rfloor  R_i ,\]
@@ -436,26 +436,26 @@ Immediate consequence of Theorem~\ref{invstruct} and Remark~\ref{commute}.
 
 Throughout all this section, we work in the finite field $\Fqm$, with $m \geq 1$ and $q=p^s$ a prime power. Let us consider a Galois cover 
 \[\pi : \Y \longrightarrow \X\]
-between smooth, irreducible and projective curves defined over $\Fqm$. It corresponds to a Galois extension of function fields $K \su L$,
+between curves over $\Fqm$, of Galois group $\Sigma$. It corresponds to a Galois extension of function fields $K \su L$,
 where $K=\Fqm(\X)$ and $L=\Fqm(\Y)$. In particular, there exists a primitive element $y \in L$ such that $L=K(y)$ and
 \[ H(y)=0 \ , \ H \in K[T] \ \mathrm{irreducible \ polynomial.}\]
-In order to recover an equation of $\Y$, we need to find the minimal polynomial $H$ of $y$ over $K$. Denote by $\ell=[L:K]$ the degree of the extension $L/K$ (\textit{i.e.} the order of its Galois group) and suppose that we are given a set of $r$ places of degree one in $K$, say $\PR = \{P_1,...,P_r\}$, that totally split in $L/K$. For any $1 \leq i \leq r$, we then have
+By an equation of $\Y$ over $\X$, we mean the minimal polynomial $H$ of such an $y$ over $K$.
+Denote by $\ell=[L:K]=|\Sigma|$ the degree of the extension, and suppose that we are given a set of $r$ places of degree one in $K$, say $\PR = \{P_1,...,P_r\}$, that totally split in $L/K$. For any $1 \leq i \leq r$, we then have
 \[\pi^*P_i = Q_{i,1} + ... + Q_{i,\ell},\]
 where $Q_{i,j}|P_i$. In particular, it means that for all $1\leq i\leq r$, we have 
-\[\mathrm{Orb}_{\Gal(L/K)}(Q_{i,1})=\{Q_{i,1} + ... + Q_{i,\ell}\}.\]
-Denote by $\QR = \{Q_{i,j} \ | \ 1 \leq i \leq r \ \mathrm{and} \ 1 \leq j \leq \ell\}$ the set of all extensions of the $P_i$'s in $L$. Note that the set $\QR$ is an ordered set, which in general is not ordered by orbits of length $\ell$ (we will sometimes make this assumption later to simplify the computations). \\
-Let $G \in \Div(L)$ be an invariant divisor as in Proposition~\ref{invrr}, such that $\Supp(G) \cap \QR = \emptyset$ and \\ $\deg(G)<n:=\ell r$. Also, we denote by $\tilde{G} \in \Div(K)$ the corresponding divisor given by Proposition~\ref{invrr}, $(i)$, which satisfies $\Supp(\tilde{G}) \cap \PR = \emptyset$. 
+\[\mathrm{Orb}_{\Gal(L/K)}(Q_{i,1})=\{Q_{i,1}, ..., Q_{i,\ell}\}.\]
+Denote by $\QR = \{Q_{i,j} \ | \ 1 \leq i \leq r \ \mathrm{and} \ 1 \leq j \leq \ell\}$ the set of all extensions of the $P_i$'s in $L$.
 
-\begin{rq1} 
-The situation above can be described in terms of AG codes. In fact, it is clear from the construction that both the support $\QR$ and the divisor $G$ are invariant under the action of $\Sigma$, which then induces a permutation on the AG code $C_{\calL}(\Y,\QR,G)$, whose invariant code is then given by $C_{\calL}(\X,\PR,\tilde{G})$. 
-\end{rq1}
+Let $G \in \Div(L)$ be a $\Sigma$-invariant divisor, such that $\Supp(G) \cap \QR = \emptyset$ and $\deg(G)<n:=\ell r$. Also, denote by $\tilde{G} \in \Div(K)$ the corresponding divisor given by Proposition~\ref{invrr}, $(ii)$, which satisfies $\Supp(\tilde{G}) \cap \PR = \emptyset$. 
+According to Theorem~\ref{invstruct} the AG code $C_{\calL}(\Y,\QR,G)$ then admits $C_{\calL}(\X,\PR,\tilde{G})$ as its invariant subcode under the action of $\Sigma$.
 
+Now we describe the general principles of our method that allows to recover an equation of $\Y$ over $\X$.
 Before describing our method to recover an equation of $\Y$, let us put together our assumptions:
 
 \begin{enumerate}
-\item We know a parity check matrix $\mathbf{H}$ of the SSAG code  \[\mathcal{C} := \ssag_q(\Y,\QR,G);\]
-\item We have full knowledge of the invariant code $\C^{\Sigma}$: more precisly, we know the quotient curve $\X$ (and thus its function field $K$), the finite set of places $\PR$ of $K$ and the divisor $\tilde{G} \in \Div(K)$;
-\item We have some information about the action of $\Gal(L/K)$ on the unkown support $\QR$. In particular, for any known place $P \in \PR$, we know the positions of its $\ell$ extensions in the ordered set $\QR$;
+\item We know a parity check matrix $\mathbf{H}$ of the SSAG code  \[\mathcal{C} := \ssag_q(\Y,\QR,G).\]
+\item We have full knowledge of the invariant code $\C^{\Sigma}$: more precisely, we know the quotient curve $\X$ (and thus its function field $K$), the finite set of places $\PR$ of $K$ and the divisor $\tilde{G} \in \Div(K)$.
+\item We know the action of $\Sigma$ on $\mathcal{C}$. In particular, for any known place $P \in \PR$, we know the positions of its $\ell$ extensions in the ordered set $\QR$, and we know how they are permuted by $\Sigma$.
 \item We have \emph{enough information} on the pole divisor of $y$, where $y \in L$ is such that $L=K(y)$. This assumption will be discussed later, since the key point will be to control the divisor 
 \[\widetilde{(y)^L_{\infty}} \in \Div(K).\] 
 \end{enumerate}
