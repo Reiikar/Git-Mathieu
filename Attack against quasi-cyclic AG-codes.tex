@@ -381,7 +381,7 @@ Then $\tilde{G}$ is maximal when all $x_R$ are maximal under this condition, whi
 
 
 \begin{prop1} \label{invrr}
-Let $L/K$ be a Galois extension of function fields over $\Fqm$, with Galois group $\Sigma$,
+Let $L/K$ be a Galois extension of function fields, with Galois group $\Sigma$,
 and let $G \in \Div(L)$ be a $\Sigma$-invariant divisor. Then:
 \begin{itemize}
 \item[(i)] $\calL_L(G)^{\Sigma} = \calL_K(\tilde{G})$
@@ -402,7 +402,7 @@ this is a special case of $(i)$ in the previous Lemma.
 %\color{black}
 
 \begin{thm} [Structure of the invariant code] \label{invstruct}
-Let $\mathcal{C} := C_{\calL}(\Y,\QR,G)$ be an $\mathrm{AG}$-code defined on a curve $\Y$, with $\QR$ and $G$ invariant under the action of $\Sigma \su \Aut(\Y/\Fqm)$. Then its invariant code under $\Sigma$ is also an $\mathrm{AG}$-code, defined on the quotient curve $\Y/\Sigma$. In particular, there exist a support $\PR$ and a divisor $\tilde{G}$ on $\Y/\Sigma$ such that
+Let $\mathcal{C} := C_{\calL}(\Y,\QR,G)$ be an AG code defined on a curve $\Y$ over $\Fqm$, with $\QR$ and $G$ invariant under the action of $\Sigma \su \Aut(\Y/\Fqm)$. Then its invariant code under $\Sigma$ is also an AG code, defined on the quotient curve $\Y/\Sigma$. In particular, there exist a support $\PR$ and a divisor $\tilde{G}$ on $\Y/\Sigma$ such that
 \[\mathcal{C}^{\Sigma} = C_{\calL}(\Y/\Sigma,\PR,\tilde{G}).\]
 \end{thm}
 
@@ -434,7 +434,7 @@ Immediate consequence of Theorem~\ref{invstruct} and Remark~\ref{commute}.
 \section{Recovering the equation of a Galois cover} \label{sectionfour}
 
 
-Throughout all this section, we work in the finite field $\Fqm$, with $m \geq 1$ and $q=p^s$ a prime power. Let us consider a Galois cover 
+Let us consider a Galois cover 
 \[\pi : \Y \longrightarrow \X\]
 between curves over $\Fqm$, of Galois group $\Sigma$. It corresponds to a Galois extension of function fields $K \su L$,
 where $K=\Fqm(\X)$ and $L=\Fqm(\Y)$. In particular, there exists a primitive element $y \in L$ such that $L=K(y)$ and
@@ -447,31 +447,67 @@ where $Q_{i,j}|P_i$. In particular, it means that for all $1\leq i\leq r$, we ha
 Denote by $\QR = \{Q_{i,j} \ | \ 1 \leq i \leq r \ \mathrm{and} \ 1 \leq j \leq \ell\}$ the set of all extensions of the $P_i$'s in $L$.
 
 Let $G \in \Div(L)$ be a $\Sigma$-invariant divisor, such that $\Supp(G) \cap \QR = \emptyset$ and $\deg(G)<n:=\ell r$. Also, denote by $\tilde{G} \in \Div(K)$ the corresponding divisor given by Proposition~\ref{invrr}, $(ii)$, which satisfies $\Supp(\tilde{G}) \cap \PR = \emptyset$. 
-According to Theorem~\ref{invstruct} the AG-code $C_{\calL}(\Y,\QR,G)$ then admits $C_{\calL}(\X,\PR,\tilde{G})$ as its invariant subcode under the action of $\Sigma$,
+According to Theorem~\ref{invstruct} the AG code $C_{\calL}(\Y,\QR,G)$ then admits $C_{\calL}(\X,\PR,\tilde{G})$ as its invariant subcode under the action of $\Sigma$,
 and likewise the SSAG-code
 \[\mathcal{C} := \ssag_q(\Y,\QR,G)\]
 admits $\C^{\Sigma}=\ssag_q(\X,\PR,\tilde{G})$ as its invariant subcode.
 
-Now we describe the general principles of our method that allows to recover an equation of $\Y$ over $\X$,
-under the following assumptions:
+Let us then make the following assumptions:
+\begin{itemize}
+\item[A1.] We know a parity check matrix $\mathbf{H}$ of the SSAG code $\mathcal{C}$.
+\item[A2.] We know the subgroup of the group of permutation automorphisms of $\mathcal{C}$ induced from $\Sigma$.
+\item[A3.] We know the underlying geometric structure of the invariant subcode $\C^{\Sigma}$: that is, we know the quotient curve $\X$ or equivalently its function field $K$, the finite set of places $\PR$ of $K$, and the divisor $\tilde{G} \in \Div(K)$.
+\end{itemize}
 
-\begin{enumerate}
-\item We know a parity check matrix $\mathbf{H}$ of the SSAG code $\mathcal{C}$.
-\item We have full knowledge of the invariant subcode $\C^{\Sigma}$, including its underlying geometric structure: that is, we know the quotient curve $\X$ (and thus its function field $K$), the finite set of places $\PR$ of $K$, and the divisor $\tilde{G} \in \Div(K)$.
-\item We know the subgroup of the group of permutation automorphisms of $\mathcal{C}$ induced from $\Sigma$; as a consequence, we know the degree $\ell$ of the cover, and for any place $P \in \PR$, we know the coordinate positions of $\mathcal{C}$ corresponding to the $\ell$ extensions of $P$ in $\QR$.
-\item We have \emph{enough information} on the pole divisor of $y$, where $y \in L$ is such that $L=K(y)$; actually what we will need is some control on the divisor 
-\[\widetilde{(y)^L_{\infty}} \in \Div(K).\] 
-\end{enumerate}
+From this our aim is to recover an equation of $\Y$ over $\X$.
+We will describe the general principles of our method that allows to do so, at least under a further assumption that will be given later.
 
-The first three of these assumptions are natural from the cryptographic context we have in mind.
-The looser, fourth assumption means we have some a priori information on the underlying geometric objects. 
+Observe first that, as a consequence of A2 and A3, we know the degree $\ell$ of the cover, and for any place $P_i \in \PR$, we know the coordinate positions of $\mathcal{C}$ corresponding to the $\ell$ extensions $Q_{i,j}$ of $P_i$ in $\QR$.
 
-Our method works as follows. The main idea is first to recover the finite set of points $\QR$ in $\Y$, and then to recover the minimal polynomial of $y$ using interpolation.
-Thanks to hypothesis $2$, we know the coordinates of the rational points corresponding to the places $P_i$'s in $K$. Since places in $\QR$ are extensions of places in $\PR$ (\textit{i.e.} for all $Q \in \mathcal{Q}$, there exist $P \in \PR$ such that $P=Q\cap K$), we only need to recover the $y$-evaluation of points in $\QR$. Thus, we are led to find the row vector
-\begin{equation}
-\textbf{y} = (y_{i,j})_{i,j},
+As justified by the following Proposition, the main ingredient of our method will be to find the evaluation vector
+$$\mathbf{y} = (y(Q_{i,j}))_{i,j}$$
+of length $n=\ell r$, for some primitive element $y\in L$ satisfying certain degree conditions.
+
+\begin{prop1}
+Let $y$ be a primitive element for $L$ over $K$, and
+$$H(T)=T^\ell + h_{\ell-1}T^{\ell-1} + \cdots + h_1T + h_0 \in K[T]$$
+be its minimal polynomial.
+For each $k\in\{0,\dots,\ell-1\}$, assume that either:
+\begin{itemize}
+\item the divisor of poles $(h_k)_\infty^K$ is known, and of degree $\deg(h_k)_\infty^K<n$; or:
+\item the divisor of poles $(h_k)_\infty^K$ is unknown, but at least it is known that it has degree $\deg(h_k)_\infty^K<n/2.$
+\end{itemize}
+Then the polynomial $H(T)$ is entirely determined by the evaluation vector $\mathbf{y} = (y(Q_{i,j}))_{i,j}$.
+\end{prop1}
+\begin{proof}
+By Galois theory, the roots of $H$ are $\sigma_1(y),\dots,\sigma_\ell(y)$, where we write $\Sigma=\{\sigma_1,\dots,\sigma_\ell\}$; and so for each $k$ we have
+$$h_k=(-1)^{\ell-k}s_{\ell-k}(\sigma_1(y),\dots,\sigma_\ell(y))$$
+where $s_{\ell-k}$ stands for the degree $\ell-k$ elementary symmetric polynomial.
+Evaluating at $Q_{i,j}$ we deduce
+\begin{equation}\label{systemeinterpolation}
+h_k(P_i)=(-1)^{\ell-k}s_{\ell-k}(y(Q_{i,1}),\dots,y(Q_{i,\ell})),\qquad\textrm{for all $i$}.
 \end{equation}
-where $y_{i,j} := y(Q_{i,j})$, for every $1 \leq i \leq r$ and $1 \leq j \leq \ell$.
+We have to show that \eqref{systemeinterpolation} entirely determines $h_k$.
+
+In the case that $D_k=(h_k)_\infty^K$ is known, and of degree $\deg(D_k)<n$, let $h_k'\in\mathcal{L}(D_k)$ be another solution of \eqref{systemeinterpolation}. Then we have $h_k-h_k'\in\mathcal{L}(D_k)$ but $h_k-h_k'$ has at least $n$ zeroes, hence $h_k-h_k'=0$.
+
+In the case that we only know that $\deg(h_k)_\infty^K<n/2$, let $h_k'$ be another solution of \eqref{systemeinterpolation} with $\deg(h_k')_\infty^K<n/2$, and set $D_k=(h_k)_\infty^K+(h_k')_\infty^K$, so $\deg(D_k)<n$.
+Then again we have $h_k-h_k'\in\mathcal{L}(D_k)$ but $h_k-h_k'$ has at least $n$ zeroes, hence $h_k-h_k'=0$.
+\end{proof}
+
+\textcolor{magenta}{[Discussion...]}
+
+
+Now we focus on the task of finding the evaluation vector $\mathbf{y}$.
+For this we will need a fourth assumption:
+
+\begin{itemize}
+\item[A4.] We have \emph{enough information} on the pole divisor of $y$, where $y \in L$ is such that $L=K(y)$; actually what we will need is some control on the divisor 
+\[\widetilde{(y)^L_{\infty}} \in \Div(K).\] 
+\end{itemize}
+
+\textcolor{magenta}{[...]}
+
 For this purpose, we construst a linear system of which it is solution: recall that by definition, the parity check matrix of the code $\mathcal{C}=\ssag_q(\Y,\QR,G)$ satisfies
 \begin{equation} \label{two}
 \mathbf{c} \in \mathcal{C} \iff \mathbf{Hc}^T = 0.
