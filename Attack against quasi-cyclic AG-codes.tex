@@ -447,20 +447,27 @@ where $Q_{i,j}|P_i$. In particular, it means that for all $1\leq i\leq r$, we ha
 Denote by $\QR = \{Q_{i,j} \ | \ 1 \leq i \leq r \ \mathrm{and} \ 1 \leq j \leq \ell\}$ the set of all extensions of the $P_i$'s in $L$.
 
 Let $G \in \Div(L)$ be a $\Sigma$-invariant divisor, such that $\Supp(G) \cap \QR = \emptyset$ and $\deg(G)<n:=\ell r$. Also, denote by $\tilde{G} \in \Div(K)$ the corresponding divisor given by Proposition~\ref{invrr}, $(ii)$, which satisfies $\Supp(\tilde{G}) \cap \PR = \emptyset$. 
-According to Theorem~\ref{invstruct} the AG code $C_{\calL}(\Y,\QR,G)$ then admits $C_{\calL}(\X,\PR,\tilde{G})$ as its invariant subcode under the action of $\Sigma$.
+According to Theorem~\ref{invstruct} the AG-code $C_{\calL}(\Y,\QR,G)$ then admits $C_{\calL}(\X,\PR,\tilde{G})$ as its invariant subcode under the action of $\Sigma$,
+and likewise the SSAG-code
+\[\mathcal{C} := \ssag_q(\Y,\QR,G)\]
+admits $\C^{\Sigma}=\ssag_q(\X,\PR,\tilde{G})$ as its invariant subcode.
 
-Now we describe the general principles of our method that allows to recover an equation of $\Y$ over $\X$.
-Before describing our method to recover an equation of $\Y$, let us put together our assumptions:
+Now we describe the general principles of our method that allows to recover an equation of $\Y$ over $\X$,
+under the following assumptions:
 
 \begin{enumerate}
-\item We know a parity check matrix $\mathbf{H}$ of the SSAG code  \[\mathcal{C} := \ssag_q(\Y,\QR,G).\]
-\item We have full knowledge of the invariant code $\C^{\Sigma}$: more precisely, we know the quotient curve $\X$ (and thus its function field $K$), the finite set of places $\PR$ of $K$ and the divisor $\tilde{G} \in \Div(K)$.
-\item We know the action of $\Sigma$ on $\mathcal{C}$. In particular, for any known place $P \in \PR$, we know the positions of its $\ell$ extensions in the ordered set $\QR$, and we know how they are permuted by $\Sigma$.
-\item We have \emph{enough information} on the pole divisor of $y$, where $y \in L$ is such that $L=K(y)$. This assumption will be discussed later, since the key point will be to control the divisor 
+\item We know a parity check matrix $\mathbf{H}$ of the SSAG code $\mathcal{C}$.
+\item We have full knowledge of the invariant subcode $\C^{\Sigma}$, including its underlying geometric structure: that is, we know the quotient curve $\X$ (and thus its function field $K$), the finite set of places $\PR$ of $K$, and the divisor $\tilde{G} \in \Div(K)$.
+\item We know the subgroup of the group of permutation automorphisms of $\mathcal{C}$ induced from $\Sigma$; as a consequence, we know the degree $\ell$ of the cover, and for any place $P \in \PR$, we know the coordinate positions of $\mathcal{C}$ corresponding to the $\ell$ extensions of $P$ in $\QR$.
+\item We have \emph{enough information} on the pole divisor of $y$, where $y \in L$ is such that $L=K(y)$; actually what we will need is some control on the divisor 
 \[\widetilde{(y)^L_{\infty}} \in \Div(K).\] 
 \end{enumerate}
 
-Let us now explain what we plan to do. The main idea is first to recover the finite set of points $\QR$ in $\Y$, in order to recover the minimal polynomial of $y$ using interpolation. Thanks to hypothesis $2$, we know the coordinates of the rational points corresponding to the places $P_i$'s in $K$. Since places in $\QR$ are extensions of places in $\PR$ (\textit{i.e.} for all $Q \in \mathcal{Q}$, there exist $P \in \PR$ such that $P=Q\cap K$), we only need to recover the $y$-evaluation of points in $\QR$. Thus, we are led to find the row vector
+The first three of these assumptions are natural from the cryptographic context we have in mind.
+The looser, fourth assumption means we have some a priori information on the underlying geometric objects. 
+
+Our method works as follows. The main idea is first to recover the finite set of points $\QR$ in $\Y$, and then to recover the minimal polynomial of $y$ using interpolation.
+Thanks to hypothesis $2$, we know the coordinates of the rational points corresponding to the places $P_i$'s in $K$. Since places in $\QR$ are extensions of places in $\PR$ (\textit{i.e.} for all $Q \in \mathcal{Q}$, there exist $P \in \PR$ such that $P=Q\cap K$), we only need to recover the $y$-evaluation of points in $\QR$. Thus, we are led to find the row vector
 \begin{equation}
 \textbf{y} = (y_{i,j})_{i,j},
 \end{equation}
