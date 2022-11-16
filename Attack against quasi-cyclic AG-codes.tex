@@ -433,6 +433,7 @@ Immediate consequence of Theorem~\ref{invstruct} and Remark~\ref{commute}.
 
 \section{Recovering the equation of a Galois cover} \label{sectionfour}
 
+\subsection{Setting}
 
 Let us consider a Galois cover 
 \[\pi : \Y \longrightarrow \X\]
@@ -468,35 +469,47 @@ As justified by the following Proposition, the main ingredient of our method wil
 $$\mathbf{y} = (y(Q_{i,j}))_{i,j}$$
 of length $n=\ell r$, for some primitive element $y\in L$ satisfying certain degree conditions.
 
-\begin{prop1}
+\begin{prop1}\label{propositioninterpolation}
 Let $y$ be a primitive element for $L$ over $K$, and
 $$H(T)=T^\ell + h_{\ell-1}T^{\ell-1} + \cdots + h_1T + h_0 \in K[T]$$
 be its minimal polynomial.
 For each $k\in\{0,\dots,\ell-1\}$, assume that either:
 \begin{itemize}
-\item the divisor of poles $(h_k)_\infty^K$ is known, and of degree $\deg(h_k)_\infty^K<n$; or:
-\item the divisor of poles $(h_k)_\infty^K$ is unknown, but at least it is known that it has degree $\deg(h_k)_\infty^K<n/2.$
+\item we know a priori some divisor $D_k$, of degree $\deg(D_k)<n$, such that $h_k\in\mathcal{L}(D_k)$; or:
+\item the support of $(h_k)_\infty^K$ is unknown, but we know that it has degree $\deg(h_k)_\infty^K<n/2.$
 \end{itemize}
 Then the polynomial $H(T)$ is entirely determined by the evaluation vector $\mathbf{y} = (y(Q_{i,j}))_{i,j}$.
 \end{prop1}
 \begin{proof}
-By Galois theory, the roots of $H$ are $\sigma_1(y),\dots,\sigma_\ell(y)$, where we write $\Sigma=\{\sigma_1,\dots,\sigma_\ell\}$; and so for each $k$ we have
-$$h_k=(-1)^{\ell-k}s_{\ell-k}(\sigma_1(y),\dots,\sigma_\ell(y))$$
+By Galois theory, the roots of $H$ are $y^{\sigma_1},\dots,y^{\sigma_\ell}$, where we write $\Sigma=\{\sigma_1,\dots,\sigma_\ell\}$; and so for each $k$ we have
+$$h_k=(-1)^{\ell-k}s_{\ell-k}(y^{\sigma_1},\dots,y^{\sigma_\ell})$$
 where $s_{\ell-k}$ stands for the degree $\ell-k$ elementary symmetric polynomial.
 Evaluating at $Q_{i,j}$ we deduce
 \begin{equation}\label{systemeinterpolation}
 h_k(P_i)=(-1)^{\ell-k}s_{\ell-k}(y(Q_{i,1}),\dots,y(Q_{i,\ell})),\qquad\textrm{for all $i$}.
 \end{equation}
-We have to show that \eqref{systemeinterpolation} entirely determines $h_k$.
+Now it suffices to show that \eqref{systemeinterpolation} entirely determines $h_k$.
 
-In the case that $D_k=(h_k)_\infty^K$ is known, and of degree $\deg(D_k)<n$, let $h_k'\in\mathcal{L}(D_k)$ be another solution of \eqref{systemeinterpolation}. Then we have $h_k-h_k'\in\mathcal{L}(D_k)$ but $h_k-h_k'$ has at least $n$ zeroes, hence $h_k-h_k'=0$.
+In the case that $h_k\in\mathcal{L}(D_k)$ for a known $D_k$ of degree $\deg(D_k)<n$, let $h_k'\in\mathcal{L}(D_k)$ be another solution of \eqref{systemeinterpolation}. Then we have $h_k-h_k'\in\mathcal{L}(D_k)$ but $h_k-h_k'$ has at least $n$ zeroes, hence $h_k-h_k'=0$.
 
 In the case that we only know that $\deg(h_k)_\infty^K<n/2$, let $h_k'$ be another solution of \eqref{systemeinterpolation} with $\deg(h_k')_\infty^K<n/2$, and set $D_k=(h_k)_\infty^K+(h_k')_\infty^K$, so $\deg(D_k)<n$.
 Then again we have $h_k-h_k'\in\mathcal{L}(D_k)$ but $h_k-h_k'$ has at least $n$ zeroes, hence $h_k-h_k'=0$.
 \end{proof}
+Observe that finding $H$ from $\mathbf{y}$ reduces to an interpolation problem:
+find the $h_k$ knowing their values $h_k(P_i)$.
+Ultimately this boils down to solving a linear system.
+However, the algorithmic complexity of writing down this linear system will depend on the geometry.
+In case $h_k\in\mathcal{L}(D_k)$ for a known $D_k$, we face a generalized Lagrange interpolation problem on $\X$.
+In case we only have control on the degree of $(h_k)_\infty^K$, we face a generalized rational function reconstruction problem on $\X$.
 
-\textcolor{magenta}{[Discussion...]}
+In any case, Proposition~\ref{propositioninterpolation} roughly asserts that the system will have a unique solution provided the cover $\Y$ over $\X$ can be defined by an equation $H$ whose coefficients $h_k$ are small enough compared to the length $n$ of $\mathcal{C}$.
 
+in section~\ref{sectionKummerArtinSchreier}
+
+\textcolor{magenta}{[...]}
+
+
+\subsection{Finding the $y$-evaluation vector}
 
 Now we focus on the task of finding the evaluation vector $\mathbf{y}$.
 For this we will need a fourth assumption:
@@ -619,7 +632,7 @@ The above proposition proves that the space of solutions doesn't depend on the n
 We will see in some examples later that we can explicitely decide whenever a function gives a solution or not, depending on the divisor $(y)^L_{\infty}$. This leads to a problem: how to find $\mathbf{y}$ among all possible solutions? We will see in practical examples later that depending on the cover, and especially on the action of the automorphism group $\Sigma$,  we can add other equations to~\eqref{system} that are only satisfied by $\mathbf{y}$, allowing us to separate it from other solutions.
 
 \section{Applications}
-
+\label{sectionKummerArtinSchreier}
 
 \subsection{About the quotient curve}
 
