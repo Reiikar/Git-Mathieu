@@ -509,7 +509,7 @@ in section~\ref{sectionKummerArtinSchreier}
 \textcolor{magenta}{[...]}
 
 
-\subsection{Finding the $y$-evaluation vector}
+\subsection{Finding the $y$-evaluation vector} \label{section:4.2}
 
 Now we focus on the task of finding the evaluation vector $\mathbf{y}$.
 For this we will need a fourth assumption:
@@ -636,107 +636,55 @@ We will see in some examples later that we can explicitely decide whenever a fun
 
 \subsection{About the quotient curve}
 
-As we saw in section~\ref{sectionfour}, our method allows us to recover a defining equation of a smooth irreducible projective curve $\Y$, provided that we are given enough information about one of its quotient curves $\X$. We can wonder for which kind of curve $\X$ we can apply the attack described in section~\ref{sectionfour}: a first idea could be to take $\X$ equals to the projective line $\PP^1$ over $\Fqm$.
-In this situation, the AG code we are looking for is a Generalized Reed-Solomon code (GRS in short). As the dual of a GRS-code is also a GRS-code, the corresponding invariant SSAG code turns out to be an alternant code. Note that is easy to pass from the description of an SSAG code over $\PP^1$ to a description of an alternant code (see~\cite{Sti}, Chapter 2). \\
-In~\cite{FOP2}, the authors proposed a new method to break cryptographic schemes based on alternant codes, called \emph{algebraic attacks}. In particular, they show that the secret structure of these codes satisfy a system of polynomial equations (we give more explanations in section~\ref{bruteforce}). Despite the fact that the cost of solving such systems might be hard to estimate, it seems reasonable to consider a more general class of curves for the choice of $\X$ in order to protect future schemes from this attack.
+As we saw in section~\ref{sectionfour}, our method allows us to recover a defining equation of a smooth irreducible projective curve $\Y$, provided that we are given enough information about one of its quotient curves $\X$. We can wonder which kind of curve $\X$ makes the attack possible. The first natural idea is to take $\X$ equals to the projective line $\mathbb{P}^1$. In this case, the invariant AG code $C_{\calL}(\X,\PR,\tilde{G})$ is a Generalized Reed-Solomon code (GRS in short). As the dual of a GRS code is also a GRS code, the corresponding invariant SSAG is an alternant code.\\
+In~\cite{FOP2}, the authors proposed a new way to break cryptographic schemes based on alternant codes, called \emph{algebraic attacks}. In particular, they show that the secret structure of these codes satisfy a system of polynomial equations (we give more explanations in section~\ref{bruteforce}). As a consequence, restricting the quotient curve to the projective line would not provide new results for cryptography perspectives.
 
-
-From hypothesis $4$ (see section~\ref{sectionfour}), we would like to control the divisor $\widetilde{(y)}^L_{\infty}$, where $y$ is a primitive element of $L/K$. It is clear that if $K=\PP^1$, this divisor is only support by the extension of the point at infinity $\infty$ in the projective line. 
-
-
-
-\begin{def1} \label{courbes a variables separees}
-Let $K$ be a function field of one variable over $\Fqm$. We say it has separated variables if there exist two functions $x,\alpha$ such that $K=\Fqm(x,\alpha)$, with
-\[F_1(\alpha) = F_2(x),\]
-where $F_1,F_2 \in \Fqm[T]$ and $[K:\Fqm(x)] = \deg({F_1})$.
-Naturally, we say that a smooth irreducible projective curve $\X$ over $\Fqm$ has separated variables if its function field $\Fqm(\X)$ has separated variables.
-\end{def1}
-
-Notice that the above definition hightly rely on the choice of $x$ and $\alpha$. The following lemma explains why these curves are interesting in our case.
-
-\begin{lem1} \label{lemdegre}
-Let $\X$ be a curve with separated variables, whose function field $K=\Fqm(x,\alpha)$ is given by the equation
-\[F_1(\alpha) = F_2(x),\]
-where $F_1,F_2 \in \Fqm[T]$ are two univariate polynomials with coprime degrees, and denote by $\pi : \X \longrightarrow \PP^1$  the corresponding morphism of curves. If $\infty$ is the pole of $x$ in $\Fqm(x)$, then it totally ramifies in $K/\Fqm(x)$, and its extension $P_{\infty} \in K$ is the unique pole of $\alpha \in \PP_K$. Moreover, we have 
-\[(\alpha)^K_{\infty} = \deg{(F_2) \cd P_{\infty}}.\]
-\end{lem1}
-
-\begin{proof}
-Let $P_{\infty}$ be some extension of $\infty$ in $K$. Obviously, we have
-\[e(P_{\infty}|\infty) \leq \deg(F_1)=[K:\Fqm(x)].\]
-On the other side, from the defining equation of $K$, we get
-\[F_1(\alpha) = F_2(x) \Rightarrow \deg(F_1) \cd \nu_{P_{\infty}}(\alpha) = e(P_{\infty}|\infty) \cd \deg(F_2) \cd \underbrace{\nu_{R_{\infty}}(x)}_{=-1}.\]
-Since $\gcd(\deg(F_1),\deg( F_2))=1$, we get $\deg(F_1)|e(P_{\infty}|\infty)$, and thus $e(P_{\infty}|\infty)=\deg(F_1)$. Moreover, we have 
-\begin{align*}
-\deg(F_1) \cd (\alpha)^K_{\infty} &= \deg(F_2) \cd \pi^*(x)^{\Fq(x)}_{\infty} \\
-&= \deg(F_2) \cd \pi^*\infty \\
-&= \deg(F_2) \cd e(P_{\infty}|\infty) \cd P_{\infty},
-\end{align*}
-which gives the result.
-\end{proof}
-
-The main point in this type of curves is that we keep track of the place at infinity (namely $\infty$) in the corresponding extension of function fields. This will later allows us to look at the ramification of $\infty$ in the tower $\Fqm(x) \su K \su L$, giving us a good way to describe the divisor $\widetilde{(y)_{\infty}^L} \in \Div(K)$.
-
+From hypothesis A.$4$ (see section~\ref{sectionfour}), our attack works provided that the divisor $\widetilde{(y)}^L_{\infty} \in \Div(K)$ is simple enough. It is clear that if $K=\mathbb{F}_{q^m}(x)$ is the rational function field, then this divisor is only supported by the point at infinity $\infty \in \mathbb{P}^1(\mathbb{F}_{q^m})$.
+A natural generalisation is to consider $\X$ as a finite cover of $\mathbb{P}^1$ which is fully ramified at infinity. Doing so, the divisor $\widetilde{(y)}^L_{\infty}$ will be only supported by the extension of $\infty$ in $K$.
 
 \subsection{Kummer covering} \label{sectionkummer}
 
-
-Let $\X$ be a curve over $\Fqm$ with separated variables (see. Definition~\ref{courbes a variables separees}), whose function field is given by $K=\Fqm(x,\alpha)$, with
-\[F_1(\alpha) = F_2(x),\] 
-such that $F_1,F_2 \in \Fqm[T]$ and $\gcd(\deg(F_1),\deg(F_2))=1$. 
-
+Let $\X$ be a smooth projective curve over $\mathbb{F}_{q^m}$, $K=\mathbb{F}_{q^m}(\X)$ and $f \in K$ a function that defines a degree $d$ morphism from $\X$ to $\mathbb{P}^1$, which is fully ramified at infinity. If $P_{\infty}$ denotes the unique extension of $\infty$ in $K$, this means that 
+\[ e(P_{\infty}|\infty)=d \quad \mathrm{and} \quad (f)^K_{\infty} = dP_{\infty}.\] 
 Let $\ell \mid q^m-1$ be an integer (not necessarly a prime), and consider the extension $L=K(y)$, with
 \begin{equation} \label{kummer}
-y^{\ell} = f(x,\alpha) \ , \ f \in \Fqm[X,T]. 
+y^{\ell} = f. 
 \end{equation}
-Set $d:=\deg\left((f)^L_{\infty}\right)$, and suppose also that $\gcd(d,\ell)=1$. Then $L/K$ is a Kummer extension (see~\cite{Sti} Annex A.13), cyclic of order $\ell=[L:K]$ and 
+Suppose $(\ell,d)=1$. Then $L/K$ is a Kummer extension (see~\cite{Sti} Annex A.13), cyclic of order $\ell=[L:K]$ and 
 \[\Gal(L/K) = \{ \sigma : y \mapsto \xi \cd y \ | \ \xi \in \mu^*_{\ell}(\Fqm)\}.\] 
 
+Note that the assumption $\ell \mid q^m-1$ implies that the primitive $\ell$-th roots of unity are indeed $\mathbb{F}_{q^m}$.
+
 \begin{rq1} \label{pk des polynomes}
-This special case of cyclic extensions have been extensively studied and are well-known. With Artin-Schreier extensions, they caracterize in a sense all cyclic extensions (see \cite{Sti} Annex A.13). In particular, the element $f$ in \eqref{kummer} should be an element in $K$, that is potentially a rational function. Above, we supposed that $f$ is a polynomial, since we can always reduce to this case using a change of variables.
+This special case of cyclic extensions have been extensively studied and are well-known. With Artin-Schreier extensions, they caracterize in a sense all cyclic extensions (see \cite{Sti} Annex A.13).
 \end{rq1}
 
-Let us explain the hypotheses given in section~\ref{sectionfour}) in this famework. Denote by $\pi : \Y \longrightarrow \X$ a morphism of algebraic curves that corresponds to a Kummer extension of function fields $L/K$. Suppose we are given an $\ssag$ code $\mathcal{C}$ on $\Y$, that is invariant under the action of $\Gal(L/K)$. This group being well-known, the corresponding action is completely determined by the choice of an $\ell^{th}$-root of unity $\xi \in \mu^*_{\ell}(\Fqm)$. Our hypotheses are then the following:
+Let $\Y$ be the curve associated to the function field $L$, with respect to Theorem \ref{antieq}, and denote by $\pi : \Y \longrightarrow \X$ the corresponding degree $\ell$ cover. Suppose we are given an $\ssag$ code $\mathcal{C}$ on $\Y$ whichis invariant under the action of $\Gal(L/K)$.
+This group being well-known, the corresponding action is completely determined by the choice of an $\ell^{th}$-root of unity $\xi \in \mu^*_{\ell}(\Fqm)$. In order to find a defining equation for the curve $\Y$, we make the following hypotheses:
 
 \begin{enumerate}
-\item We know a parity check matrix $\mathbf{H}$ of the code $\mathcal{C} = \ssag_q(\Y,\QR,G)$;
-\item The quotient curve $\X$ is known (and thus both polynomials $F_1$ and $F_2$), as well as the structure of the invariant code of $\mathcal{C}$, \textit{i.e.} $\PR$ and $\tilde{G}$ such that $\mathcal{C}^{\sigma} = \ssag_q(\X,\PR,\tilde{G})$;
-\item We know how the automorphism $\sigma \in \Gal(L/K)$ permutes the support $\QR$, but we do not know the primitive root of unity $\xi$ that defines it.
+\item[A.1] We know a parity check matrix $\mathbf{H}$ of the code $\mathcal{C} = \ssag_q(\Y,\QR,G)$, invariant under the action of $\sigma \in \Gal(L/K)$;
+\item[A.2] We know how $\sigma$ permutes the support $\QR$, but we do not know the primitive root of unity $\xi$ that defines it;
+\item[A.3] The quotient curve $\X$ is known, as well as the structure of the invariant code $\mathcal{C}^{\sigma} = \ssag_q(\X,\PR,\tilde{G})$.
 \end{enumerate}
 
-As for the last hypothese, we need to control the divisor $\widetilde{(y)^L_{\infty}}$, which is the point of the upcoming results: 
+As for the last hypothese, we need to control the divisor $\widetilde{(y)^L_{\infty}} \in \Div(K)$, which is the point of the upcoming result: 
 
-\begin{lem1} \label{ramification}
-Keep notations as in Lemma~\ref{lemdegre} and denote by $P_{\infty}$ the unique pole of $\alpha$ in $K$. Then $P_{\infty}$ is totally ramified in $L/K$ and its extension $Q_{\infty} \in L$ is the unique pole of $y$ in $L$. 
-\end{lem1}
-
-\begin{proof}
-See \cite{Sti}, Proposition 3.7.3.
-\end{proof}
-
-\begin{prop1} \label{propcle}
-We have
-\[(x)^L_{\infty} = \ell \cd \deg(F_1) \cd Q_{\infty},\]
-\[(\alpha)^L_{\infty} = \ell \cd \deg(F_2) \cd Q_{\infty},\]
-and
-\[(y)^L_{\infty} = d \cd Q_{\infty}.\]
+\begin{prop1} \label{prop:div_pole_kummer}
+Let $P_{\infty}$ be the place in $K$ above $\infty$. Then $P_{\infty}$ is fully ramified in $L$. Moreover, if $Q_{\infty}$ denotes its unique extension, then
+\[(y)^L_{\infty} = d \cd Q_{\infty}.\] 
 \end{prop1}
 
 \begin{proof}
-Let $\infty$ be the simple pole of $x$ in $\Fqm(x)$. It is totally ramified in $K/\Fqm(x)$ (see Lemma~\ref{lemdegre}), so $(x)^K = \deg(F_1) \cd P_{\infty}$. We also know the divisor of poles of $\alpha$ in $K$, so using Lemma~\ref{tirarr} yields
-\[(x)^L_{\infty} = \pi^*(x)^K_{\infty} = \deg(F_1) \cd \pi^*P_{\infty} = \ell \cd \deg(F_1) \cd Q_{\infty},\]
-and
-\[(\alpha)^L_{\infty} = \deg(F_2) \cd \pi^*P_{\infty} = \ell \cd \deg(F_2) \cd Q_{\infty}.\]
-Next, by hypothesis we have $(f)^K_{\infty} = d \cd P_{\infty}$ (recall that $P_{\infty}$ is the unique pole of $x$ and $\alpha$ and $K$), so the equation $y^n=f$ gives
-\begin{align*} \ell \cd (y)^L_{\infty} &= \pi^*(f)^K_{\infty} \\
-&= d \cd e(Q_{\infty}|P_{\infty}) \cd Q_{\infty}.
-\end{align*}
+From the study of Kummer extensions (see \cite{Sti}, Proposition 3.7.3), we know that 
+\[e(Q_{\infty}|P_{\infty})= \dfrac{\ell}{(\ell,\nu_{P_{\infty}}(f))} = \ell,\]
+since $ \nu_{P_{\infty}}(f)=d$ and $(\ell,d)=1$. Moreover, from the equation $y^{\ell}=f$, we deduce 
+\[ \ell (y)^L_{\infty} = \pi^* (f)^K_{\infty} = \pi^* (dP_{\infty}) = \ell d Q_{\infty},\]
+which gives the desired result.
 \end{proof}
 
-\begin{rq1} The pole divisor of $y$ we are interested in is particularly simple here because it is only supported by one place, which is the unique extension of the point at infinity $\infty$ in the tower $\Fqm(x) \su K \su L$.
-\end{rq1}
-
-Proposition~\ref{propcle} above allows us to give the precise structure of the divisor $D$ defined in \eqref{four}, section 4.
+The pole divisor of $y$ is easyly described in our settings since it is only supported by one place, which is the unique extension of $\infty$ in the tower of function field  $\Fqm(x) \su K \su L$.
+This allows us to give the precise structure of the divisor $D$ defined in \eqref{four}.
 
 \begin{coro1} \label{diviseurDKummer}
 We have
@@ -744,31 +692,26 @@ We have
 \end{coro1}
 
 \begin{proof}
-From the structure of $(y)^L_{\infty}$ given in Proposition~\ref{propcle}, it is clear that 
+From the structure of $(y)^L_{\infty}$ given in Proposition~\ref{prop:div_pole_kummer}, it is clear that 
 \[\Supp\left(\widetilde{(y)^L_{\infty}}\right) \su \{P_{\infty}\},\]
-since $Q_{\infty}$ is fully ramified. 
-It remains to show that if $D$ is defined as above, then $D = \tilde{G} - \widetilde{(y)^L_{\infty}}$. In fact, we have
+since $Q_{\infty}$ is fully ramified in $L/K$. 
+It remains to show that if $D$ is defined as above, then $D$ is the largest divisor in $K$ such that $\pi^* G - (y)^L_{\infty}$. In fact, we have
 \begin{align*}
 \pi^*D &= \pi^* \left(\tilde{G} - \left\lceil\frac{d}{\ell}\right\rceil \cd P_{\infty}\right) \\
 &\leq G - \ell \cd \left\lceil\frac{d}{\ell}\right\rceil \cd Q_{\infty} \ \quad (\textrm{since} \ \pi^*P_{\infty} = \ell \cd Q_{\infty})\\
 & \leq G - d \cd Q_{\infty} \\
 &= G-(y)^L_{\infty},
 \end{align*}
-the last equality coming from Proposition~\ref{propcle}. 
+the last inequality behing optimal since $(\ell,d)=1$. 
 \end{proof}
 
-Note that the divisor $D$ in the above corollary is known in this context from our hypotheses, and thus we can construct the corresponding linear system~\eqref{system}.
+The divisor $D$  is known from our hypotheses, meaning that we can construct the corresponding linear system~\eqref{system} in order to recover the valuation vector $\mathbf{y} = (y(Q_{i,j}))_{i,j}$.
 
-As we already mentionned earlier,~\eqref{system} does not only have the vector \textbf{y} as solution, but also any evaluation vector that comes from a function $h \in L$ such that 
-\[(h)^L_{\infty} \leq (y)^L_{\infty} = d \cd Q_{\infty}.\]
-In the context of a Kummer covering, we can easily find other solutions. In fact, let $h := x^i\alpha^j \in K$ be a function that only depend on variables $x$ and $\alpha$, and denote by $\mathbf{h} := \textbf{x}^i\boldsymbol{\alpha}^j$ its corresponding evaluation vector (at the places in $\QR$). Using Proposition~\ref{propcle}, and in particular the description of the pole divisors of $x$ and $\alpha$, we see that 
-\[ (h)^L_{\infty} = \ell \left(i  \deg(F_1)+j \deg(F_{\rm 2})\right) \cd Q_{\infty}.\]
-As a result, $\mathbf{h}$ is also a solution of the system~\eqref{system}, provided that
-\[\ell \left(i \deg(F_1)+j \deg(F_{\rm 2})\right) \leq d.\]
+As we already mentionned in Proposition \ref{othersolutions}, the system ~\eqref{system} may have several solutions. In order to find the one we want, the idea is to add other equations that are only satisfied by \textbf{y}. Since the action of $\sigma$ on the support is given, for every $Q \in \QR$,  by 
+\[ \sigma(y(Q)) = \xi \cd y(Q),\]
+with some $\xi \in \mu_{\ell}^*(\mathbb{F}_{q^m})$, the components of \textbf{y} satisfy a geometric progression by orbit. In fact, suppose that $\QR$ is ordered by orbits, \emph{i.e} if $\PR = \{P_1,...,P_r\}$, then the elements at indices $(i-1)\ell+1,...,i\ell$ in the ordered set $\QR$ correspond to the $\ell$ extensions of $P_{i}$ in $L$ (for every $1\leq i \leq r$).
 
-Since we have found other potential solutions, we need to choose the vector $\mathbf{y}$ among them. This can be done by adding other equations to the system, that are only satisfied by $\mathbf{y}$. Indeed, since the action of the automorphism group $\Sigma = \langle\sigma\rangle$ that acts on the support $\QR$ of the code $\mathcal{C}$ is given by 
-\[\sigma : y \longrightarrow \xi \cd y,\]
-with $\xi \in \mu^*_{\ell}(\Fqm)$, the components of $\mathbf{y}$ satisfy a geometric progression by orbit: recall that the set $\QR$ is made of $r$ orbits of length $\ell$, and to simplify the notations, suppose its elements are ordered orbit by orbit. To be concrete, if $\PR = \{P_1,...,P_r\} \su \PP_K$, then elements of $\QR$ at indices $(i-1)\ell+1,...,i\ell$ correspond to the $\ell$ extensions of $P_{i}$ in $L$ (for every $1\leq i \leq r$). Let us now consider the following block matrices
+Let us now consider the following block matrices
 \begin{equation*} 
 \mathbf{A}(\xi) := 
 \begin{pmatrix}
@@ -804,49 +747,46 @@ and thus
 \cd \mathbf{y}^T = 0.
 \end{equation}
 
-The system \eqref{system kummer} is enough to recover $\mathbf{y}$ since the other solutions of $(5)$ do not satisfy this geometric progression structure, because it is clear by construction that the evaluation vectors $\mathbf{x}$ and $\boldsymbol{\alpha}$ are equal on each orbit of length $\ell$, since $\sigma$ only acts on $y$-coordinates.
+The system \eqref{system kummer} is enough to recover $\mathbf{y}$ since the other solutions of $(5)$ do not satisfy this geometric progression. In fact, any 
+solution different from \textbf{y} comes from the evaluation at $Q_{i,j}$'s of some function $h \in L$ such that $(h)^L_{\infty} \leq (y)^L_{\infty}$ (see Proposition \ref{othersolutions}). It is clear that this condition on pole divisors is possible if and only if $h$ does not depend on $y$, meaning that it as to be the pullback of some function in $K$. Since $\sigma$ acts trivially on $K$, the corresponding solution can not satisfy specific structure descrbied above, and thus is not a solution of \eqref{system kummer}.
 
-\begin{rq1} Since, $\sigma$ (and so $\xi$) is supposed to be unknown at the beginning of the attack, one may have to test all the possibilities for $\xi$ in order to find the correct one. This leads to solve at most $\#\mu^*_{\ell}(\Fq) = \varphi(\ell)$ linear systems like \eqref{system kummer}, which remains feasable since $\varphi(\ell)$ is rather small.
+\begin{rq1} Since $\sigma$ (and thus $\xi$) is supposed to be unknown at the beginning of the attack, one may have to test all the possibilities for $\xi$ in order to find the correct one. This leads to solve at most $\#\mu^*_{\ell}(\Fq) = \varphi(\ell)$ linear systems like \eqref{system kummer}, which remains feasable since $\varphi(\ell)$ is rather small.
 \end{rq1}
 
-In all our computing experiences, system \eqref{system kummer} allows us to recover the desired vector \textbf{y}. To finish the attack, we only have to recover the polynomial $f$ that defines the extension $L/K$ by using a bivariate polynomial interpolation method. A detailed algorithm for this attack can be found in Annex~\ref{annexA}, as well as a complexity analysis.
+In all our computing experiences, the resolution of \eqref{system kummer} allows us to recover the desired vector \textbf{y}. To finish the attack, we only have to recover the function $f$ by using an appropriate interpolation method. A detailed algorithm for this attack can be found in Annex~\ref{annexA}, as well as a complexity analysis.
 
 \subsection{Artin-Schreier covering} \label{sectionas}
 
-As in section~\ref{sectionkummer}, the quotient curve $\X$ is taken as a curve over $\Fqm$ with separated variables, whose function field $K = \Fq(x,\alpha)$ satisfies 
-\[F_1(\alpha) = F_2(x),\] 
-with $F_1,F_2 \in \Fqm[T]$ and $\gcd(\deg(F_1),\deg(F_2))=1$. \\ 
-Let $p:=\mathrm{char}(\Fqm)$ and consider the extension $L=K(y)$ of $K$ defined by
-\[y^p-y = f(x,\alpha),\]
-with $\ f \in \Fqm[X,T]$. Set $d:=\deg\left((f)^L_{\infty}\right)$ and suppose $\gcd(d,p)=1$. Then the extension $L/K$ is an Artin-Schreier extension, cyclic of order $p$ and 
-\[\Gal(L/K) = \{ \sigma : y \mapsto y + \beta \ , \ \beta \in \{0,...,p-1\}\}.\]
-Once again, we took $f$ as a polynomial instead of a potential rational function for the same reasons as in section 5.2 (see. Remark~\ref{pk des polynomes}).
+Let us consider a curve $\X$ as in section~\ref{sectionkummer}. Denote $p:=\mathrm{char}(\Fqm)$ and consider the extension $L=K(y)$ of $K$ defined by
+\[y^p-y = f.\]
+If $(p,d)=1$, then $L/K$ is an Artin-Schreier extension, cyclic of order $p$ and 
+\[\Gal(L/K) = \{ \sigma : y \mapsto y + \beta \ , \ \beta \in \mathbb{F}_p\}.\]
 
-In this case, the hypotheses of our procedure are the same as in section 5.2, knowing that this time the automorphism is completely determined by the choice of an element $\beta \in \mathbb{F}_p$. Here again, our goal is to recover $f \in \Fqm[X,T]$. Using the defining equation of the function field $L$ and the fact that $d$ is prime to $p$, we can show that the place $Q_{\infty} \in \PP_K$ (same notations as in Lemma~\ref{ramification}) is totally ramified in $L/K$. As usual, we denote by $P_{\infty}$ its unique extension in $L$. With our choice of parameters and hypotheses, we can prove:
+In this case, the hypotheses of our procedure are the same as in section 5.2, knowing that this time the automorphism is completely determined by the choice of an element $\beta \in \mathbb{F}_p$.
 
-\begin{prop1} \label{propcle2}
-We have
-\[(x)^L_{\infty} = p \cd \deg(F_1) \cd Q_{\infty},\]
-\[(\alpha)^L_{\infty} = p \cd \deg(F_2) \cd Q_{\infty},\]
-and
-\[(y)^L_{\infty} = d \cd Q_{\infty}.\]
+\begin{prop1} \label{prop:div_pol_artin_schreier}
+Let $P_{\infty}$ be the place in $K$ above $\infty$. Then $P_{\infty}$ is fully ramified in $L$. Moreover, if $Q_{\infty}$ denotes its unique extension, then
+\[(y)^L_{\infty} = d \cd Q_{\infty}.\] 
 \end{prop1}
 
 \begin{proof}
-Similar to the proof of Proposition~\ref{propcle} above.
+Remarking that $\nu_{P_{\infty}}(f) = -d$ and $(\ell,d)=1$, we conclude from Proposition 3.7.8 of \cite{Sti} that $e(Q_{\infty}|P_{\infty})=[L:K]=p$. From the equation $y^p-y=f$, we get 
+\[ p(y)^L_{\infty} = \pi^* (f)^K_{\infty} = \pi^* (dP_{\infty}) = pd Q_{\infty},\]
+which conclude the proof.
 \end{proof}
 
-Note that this is almost the same result as in the Kummer case, and that the pole divisor of $y$ in $L$ is only supported by $P_{\infty}$ also. As a result, the divisor in $K$ that we will use to construct our linear system is here given by 
+\begin{coro1} \label{diviseurDArtinSchreier}
+We have
 \[D = \tilde{G} - \left\lceil\frac{d}{p}\right\rceil \cd P_{\infty} \in \Div(K).\]
-This allows us to construct the linear system (5), since $D$ can be constructed from our hypotheses. 
+\end{coro1}
 
-In the Artin-Schreier case, a monomial $x^i\alpha^j \in K$ gives a solution vector if and only if 
+\begin{proof}
+Similar to the proof of Corollary \ref{diviseurDKummer}.
+\end{proof}
 
-\[p  (i \deg(F_1)+j \deg(F_2)) \leq d.\]
-
-To find the good solution, we again add other equations that are only satisfied by it. Here, the action of $\sigma$ on $\QR$ is given by 
-\[\sigma : y \longmapsto y + \beta,\]
-where $\beta \in \mathbb{F}_p$. Thus the vector \textbf{y} we are searching for satisfies an arithmetic progression by orbit. In order to see it fluently, let us assume again that the support $\QR$ is ordered by orbit. We consider the following block matrices:
+$D$ being known, we can construct the system \eqref{system}. In order to find the desired solution amoung all the possible ones, we again add other solutions. This time, the action of $\sigma$ is defined for every $Q \in \QR$ by 
+\[ \sigma(y(Q)) = y(Q) + \beta,\]
+for some $\beta \in \mathbb{F}_p$. As a consequence, \textbf{y} satisfy an arithmetic progression by orbits. Let us suppose that $\QR$ is agains ordered the right way, and consider the following block matrices:
 
 \begin{equation*} 
 \mathbf{C} := 
@@ -895,7 +835,7 @@ where $\beta$ is the element in $\mathbb{F}_p$ that defines the automorphism $\s
 \end{pmatrix} 
 \end{equation}
 
-The new system \eqref{a-s system} allows us to isolate \textbf{y}, since the other solutions do not satisfy this arithmetic progression, for the same reason as in the Kummer case. Finally, we can finish the attack by retrieving the polynomial $f$ using an interpolation method. 
+The new system \eqref{a-s system} allows us to isolate \textbf{y}, since the other solutions do not satisfy this arithmetic progression (for the reason explained in the previous section). Any suitable interpolation method allows us to retrieve the function $f$, finishing the attack.
 
 \subsection{Extension to solvable Galois covering} \label{solvable}
 
@@ -905,7 +845,8 @@ In Sections~\ref{sectionkummer} and~\ref{sectionas}, we applied our attack in th
 We warn the reader about the definition of Kummer extensions. In fact, let $L/K$ be an order $\ell$ cyclic extension of function fields over $\Fqm$. If $\gcd(\ell,\mathrm{char}(\Fqm))=1$, then $L/K$ is a Kummer extension if and only if the primitive $\ell$-th roots of unity are in $\Fqm$, which is given by the condition $\ell \mid q^m-1$. As we aim to apply several times the attack described in section \ref{sectionkummer} in our generalization, this condition needs to be satisfied at each iteration.
 \end{rq1}
 
-Throughout all this section, we keep the same notations as in section~\ref{sectionfour}, and we add the assumption that the Galois group $\G := \mathrm{Gal}(L/K)$ is solvable,   meaning that there exist a sequence of normal subgroups 
+Throughout this section, we keep notations as in section~\ref{sectionfour}.
+In addition, we suppose that there exist a morphism from $\Y$ to $\mathbb{P}^1$ which is fully ramified at infinity, and that $\X$ is a subcover such that the extension $L/K$ is Galois, with solvable Galois group $\G := \mathrm{Gal}(L/K)$. By definition of solvability, there exist a sequence of normal subgroups 
 \begin{equation} \label{jordan holder seq}
  \{Id\} := \G_0 \triangleright \G_1 \triangleright \cdots \triangleright \G_s := \G, 
 \end{equation} 
@@ -913,7 +854,7 @@ such that any quotient $\G_{i+1}/\G_i$ in~\eqref{jordan holder seq} is cyclic of
 More precisly, let $p := \mathrm{char}(\Fqm)$ and write $n_i = p^{r_i}m_i$, with $(m_i,\mathrm{char}(\Fqm))=1$. According to Remark~\ref{racinesdel'unite}, we also suppose that $m_i \mid q^m-1$ for all $0\leq i\leq s-1$, meaning that $\Fqm$ contains all the $m_i's$ primitive roots of unity. 
 
 \begin{rq1} \label{base_filed_extension}
-The above conditions on roots of unity is not mandatory since we could extend the base field. Nevertheless, considering bigger base field would increase the complexity of our algorithms, as we will see later in Annex B. For simplicity, we will stick with these assumptions for the remaining of this section, even it weakens our generalization.  
+The above conditions on roots of unity are not mandatory since we could extend the base field. Nevertheless, considering bigger base field would increase the complexity of our algorithms, as we will see later in Annex B. For simplicity, we will stick with these assumptions for the remaining of this section, even if it weakens our generalization.  
 \end{rq1}
 
 Let us denote $L_i := L^{\G_i}$ the fixed field by $\G_i$, for all $0 \leq i \leq s$. Note that $L_0=L$ and $L_s=K$. From Galois theory, the sequence \eqref{jordan holder seq} leads to a tower of function fields
@@ -924,6 +865,7 @@ such that for every $0\leq i\leq s-1$, the extension $L_i/L_{i+1}$ is cyclic, wi
 \begin{equation} \label{curve tower}
 \Y := \X_0 \longrightarrow \X_1 \longrightarrow \cdots \longrightarrow \X_s := \X.
 \end{equation}
+
 For every $0 \leq i \leq s-1$, the curve $\X_i$ is equipped with the action of the group $\G_{i+1}/\G_i$, and $\X_{i+1}$ is the corresponding quotient curve. \\
 Now let us assume that we want to attack the secret structure of a public SSAG code on the curve $\Y=\X_0$, say
 \[\C_0 := \ssag_q(\X_0,\QR_0,G_0),\]
@@ -931,15 +873,17 @@ for some support $\QR_0$ and divisor $G_0$ on $\X_0$. In the context of section 
 \[\C_s:= C_0^{\G} = \ssag_q(\X_s,\QR_s,G_s)\]
 on the smallest curve $\X_s=\X$. It is then possible to attack the secret structure of $\C_0$ from the knowledge of $\C_s$, by applying the attack of section 4 multiple times, each step allowing us to recover a subcode $\C_i=\ssag_q(\X_i,\QR_i,G_i)$ of $\C_0$ defined over $\X_i$. Depending on the order $\G_{i+1}/\G_i$, we are led to use either section~\ref{sectionkummer} or section~\ref{sectionas}.
 
-  More precisly, fix $0 \leq i \leq s-1$ and recall $n_i = p^{r_i}m_i$, with $(m_i,p)=1$ and $m_i \mid q^m-1$. If we know the structure of the code $\C_i = \ssag_q(\X_i,\QR_i,G_i)$ as well as a generator matrix of $\C_0$ and the corresponding automorphism acting on it, we can apply successively $r_i$-times the Artin-Schreier case and one time the Kummer case with degree $m_i$ (possible since $m_i \mid q^m-1$) in order to build an SSAG code $\C_{i+1}$ defined over $\X_{i+1}$. 
+ More precisly, fix $0 \leq i \leq s-1$ and recall $n_i = p^{r_i}m_i$, with $(m_i,p)=1$ and $m_i \mid q^m-1$. If we know the structure of the code $\C_i = \ssag_q(\X_i,\QR_i,G_i)$ as well as a generator matrix of $\C_0$ and the corresponding automorphism acting on it, we can apply successively $r_i$-times the Artin-Schreier case and one time the Kummer case with degree $m_i$ (possible since $m_i \mid q^m-1$) in order to build an SSAG code $\C_{i+1}$ defined over $\X_{i+1}$. This way, we can ride up the sequence of curves~\eqref{curve tower} until we have rebuilt the public code $\C_0$. 
 
- This way, we can ride up the sequence of curves~\eqref{curve tower} until we have rebuilt the public code $\C_0$. 
+ 
+ Note that since we supposed $\infty$ to be fully ramified in $L$, we know that it is also in any intermediary subfield $L_i$. This remark is really important since it shows that at each iteration of the attack, the divisor $D \in L_i$ used to build the linear system remains only supported by one place, which is the extension of $\infty$ in $L_i$.
+
 
 \begin{rq1}
 For every $0 \leq i \leq s-1$, $\C_i := \C_{i+1}^{\G_{i+1}/\G_i}$. 
 \end{rq1}
 
-\begin{rq1} \label{induced permutation} The hypothesis 3 in section~\ref{sectionfour} needs to be explained a bit in this framework. It says that for any place in the invariant support $\QR_s$, we know which elements in $\QR_0$ are its extensions. From this knowledge, we can extract a parity check matrix of any code in the sequence $(\C_i)_i$ from the public generator matrix, which is necessary to build the linear systems we have to solve at each step. 
+\begin{rq1} \label{induced permutation} Hypothesis A.2 in section~\ref{sectionfour} needs to be explained a bit in this framework. It says that for any place in the invariant support $\QR_s$, we know which elements in $\QR_0$ are its extensions. From this knowledge, we can extract a parity check matrix of any code in the sequence $(\C_i)_i$ from the public generator matrix, which is necessary to build the linear systems we have to solve at each step. 
 \end{rq1}
 
 \begin{expl} With previous notations, let $\G=\Gal(L/K)$ be a solvable Galois group of order $\#\G = ps$, with $(p,s)=1$ and $s \mid q^m-1$. Suppose we are given a generator matrix of the code $\C_0 = \ssag_q(\Y,\QR,G)$, as well as the knowledge of its invariant code $\C_2 := \ssag_q(\X,\PR,\tilde{G})$. We proceed as follow: 
